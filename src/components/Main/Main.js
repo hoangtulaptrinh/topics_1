@@ -1,7 +1,7 @@
-import React from "react";
-import ROUTES, { RenderRoutes } from "../RenderRoutes/RenderRoutes";
+import React from 'react';
+import ROUTES, { RenderRoutes } from '../RenderRoutes/RenderRoutes';
 
-import Wrapper from "./Main.styled";
+import Wrapper from './Main.styled';
 
 const Main = () => {
   return (

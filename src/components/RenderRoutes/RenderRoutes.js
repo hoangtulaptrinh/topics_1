@@ -36,6 +36,7 @@ const ROUTES = [
 export default ROUTES;
 
 function RouteWithSubRoutes(route) {
+  console.log(route);
   return (
     <Route
       path={route.path}
@@ -51,7 +52,10 @@ export function RenderRoutes({ routes }) {
       {routes.map(route => {
         return <RouteWithSubRoutes key={route.key} {...route} />;
       })}
-      <Route component={() => <h1>Not Found!</h1>} />
+      {/* <Route component={() => <h1>Not Found!</h1>} /> */}
+      <Route path="/test">
+        <h1>Test</h1>
+      </Route>
     </Switch>
   );
 }

@@ -1,6 +1,6 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import listTopics from "./ListTopics";
+import listTopics from './ListTopics';
 
 const rootReducer = combineReducers({ listTopics: listTopics });
 
