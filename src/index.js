@@ -1,22 +1,23 @@
 import React from 'react';
+import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ReactDOM from 'react-dom';
 
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import * as serviceWorker from './serviceWorker';
-import configureStore from './store';
+import configureStore, { history } from './store';
 import Main from './components/Main';
 
 const store = configureStore();
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
+      {/* place ConnectedRouter under Provider */}
       <Main />
       <ToastContainer />
-    </BrowserRouter>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),
 );

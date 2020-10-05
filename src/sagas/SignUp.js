@@ -2,10 +2,8 @@ import { call, takeLatest } from 'redux-saga/effects';
 
 import { toastSuccess, toastError } from '../helper/toastHelper';
 
-// import { loadTopics } from '../actions';
 import { USER } from '../constants';
 import { signUp } from '../api';
-// import history from '../helper/history';
 
 export function* handleSignUp(action) {
   console.log(action);

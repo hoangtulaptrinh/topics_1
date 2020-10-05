@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 
 import listTopics from './ListTopics';
 
-const rootReducer = combineReducers({ listTopics: listTopics });
-
-export default rootReducer;
+const createRootReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    listTopics: listTopics,
+  });
+export default createRootReducer;
