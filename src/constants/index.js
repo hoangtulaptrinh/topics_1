@@ -7,6 +7,8 @@ const TOPICS = {
 };
 
 const USER = {
+  GET_ALL_USERS: 'GET_ALL_USERS',
+  SET_ALL_USERS: 'SET_ALL_USERS',
   SIGN_IN: 'SIGN_IN',
   SIGN_UP: 'SIGN_UP',
 };

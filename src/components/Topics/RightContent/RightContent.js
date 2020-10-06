@@ -1,13 +1,26 @@
 import React, { useMemo } from 'react';
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import Wrapper from './RightContent.styled';
 
-const List = () => {
+const List = ({ listUsers }) => {
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
   let history = useHistory();
+
+  const idTopics = useMemo(
+    () => window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
+    [],
+  );
+
+  const listUserBuyThisCourse = useMemo(
+    () =>
+      !!listUsers.length &&
+      listUsers.filter(user => !!user.course && user.course.filter(course => course.id === idTopics)),
+    [idTopics, listUsers],
+  );
+
   return (
     <Wrapper>
       <div className="progress-course">
@@ -65,12 +78,40 @@ const List = () => {
             </div>
           ))}
       </div>
-      <div className="user-buy-course">Những Thành Viên Khác Trong Topic</div>
+      <div className="user-buy-course">
+        <p className="title">Những Thành Viên Khác Trong Topic</p>
+        {!!listUserBuyThisCourse.length &&
+          listUserBuyThisCourse.map((user, index) => (
+            <div key={index}>
+              <div className="header">
+                <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+                <div className="info">
+                  <p className="left-info">{user.name}</p>
+                  <div className="right-info">
+                    <span className="role">
+                      {user.role === 'admin' ? (
+                        <span>
+                          Quản trị viên
+                          <StarOutlined />
+                        </span>
+                      ) : (
+                        <span>
+                          Học Viên
+                          <UserOutlined />
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
     </Wrapper>
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ listUsers }) => ({ listUsers });
 
 const mapDispatchToProps = () => ({});
 

@@ -1,5 +1,24 @@
 import { TOPICS, USER } from '../constants';
 
+export const getAllUsers = () => ({
+  type: USER.GET_ALL_USERS,
+});
+
+export const setAllUsers = data => ({
+  type: USER.SET_ALL_USERS,
+  data,
+});
+
+export const signIn = data => ({
+  type: USER.SIGN_IN,
+  data,
+});
+
+export const signUp = data => ({
+  type: USER.SIGN_UP,
+  data,
+});
+
 export const loadTopics = () => ({
   type: TOPICS.LOAD,
 });
@@ -21,15 +40,5 @@ export const addThread = data => ({
 
 export const addComment = data => ({
   type: TOPICS.ADD_COMMENT,
-  data,
-});
-
-export const signIn = data => ({
-  type: USER.SIGN_IN,
-  data,
-});
-
-export const signUp = data => ({
-  type: USER.SIGN_UP,
   data,
 });

@@ -36,7 +36,6 @@ const ROUTES = [
 export default ROUTES;
 
 function RouteWithSubRoutes(route) {
-  console.log(route);
   return (
     <Route
       path={route.path}

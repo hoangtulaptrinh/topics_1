@@ -4,7 +4,7 @@ export default styled.div`
   width: 300px;
 
   position: fixed;
-  margin-left: 1000px;
+  margin-right: 1000px;
 
   .title {
     font-weight: bold;

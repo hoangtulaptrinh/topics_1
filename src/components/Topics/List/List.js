@@ -7,8 +7,9 @@ import * as Yup from 'yup';
 import { loadTopics, addThread } from '../../../actions';
 import Icon from '../Item/Icon';
 import Item from '../Item';
-import Wrapper from './List.styled';
+import LeftContent from '../LeftContent/LeftContent';
 import RightContent from '../RightContent';
+import Wrapper from './List.styled';
 
 const List = ({ listTopics, fetchTopics, addThread }) => {
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
@@ -34,6 +35,7 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
   return (
     <Wrapper>
       <div className="total">
+        <LeftContent />
         <div className="list-topics">
           <form onSubmit={formik.handleSubmit}>
             <div className="new-thread">
@@ -110,7 +112,7 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
           {!loading && data && data.thread && data.thread.map((topic, index) => <Item topic={topic} key={index} />)}
           {!loading && err && <h1>{err}</h1>}
         </div>
-        <RightContent></RightContent>
+        <RightContent />
       </div>
     </Wrapper>
   );

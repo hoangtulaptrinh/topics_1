@@ -5,7 +5,8 @@ import AddComment from './AddComment';
 import AddThread from './AddThread';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import Users from './Users';
 
 export default function* rootSaga() {
-  yield all([ListTopics(), AddComment(), AddThread(), SignIn(), SignUp()]);
+  yield all([ListTopics(), AddComment(), AddThread(), SignIn(), SignUp(), Users()]);
 }

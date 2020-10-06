@@ -2,6 +2,12 @@ import axios from 'axios';
 
 const SEVER_URL = 'http://localhost:5000';
 
+export const getAllUser = () => axios.get(`${SEVER_URL}/users`);
+
+export const signIn = data => axios.post(`${SEVER_URL}/users/login`, data);
+
+export const signUp = data => axios.post(`${SEVER_URL}/users/create`, data);
+
 export const fetchTopics = async id => {
   const response = await fetch(`${SEVER_URL}/topics/show_all_threads_on_topic/${id}`);
   const data = await response.json();
@@ -37,7 +43,3 @@ export const addThread = (data, id) => {
 
   return axios.post(`${SEVER_URL}/topics/create/${id}`, obj);
 };
-
-export const signIn = data => axios.post(`${SEVER_URL}/users/login`, data);
-
-export const signUp = data => axios.post(`${SEVER_URL}/users/create`, data);
