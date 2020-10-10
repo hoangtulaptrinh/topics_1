@@ -3,32 +3,30 @@ import { Route, Switch } from 'react-router-dom';
 
 import ListTopics from '../Topics/List';
 import SignInSignUp from '../SignInSignUp';
+import HomePage from '../../admin/HomePage';
+import QUanly from '../../admin/QuanlyUser';
 
 const ROUTES = [
   { path: '/', key: 'SignInSignUp', exact: true, component: SignInSignUp },
   { path: '/topics', key: 'ROOT', component: ListTopics },
   {
-    path: '/app',
-    key: 'APP',
+    path: '/admin',
+    key: 'ADMIN',
     component: props => {
-      // if (!localStorage.getItem("user")) {
-      //   alert("You need to log in to access app routes");
-      //   return <Redirect to={"/"} />;
-      // }
       return <RenderRoutes {...props} />;
     },
     routes: [
       {
-        path: '/app',
-        key: 'APP_ROOT',
+        path: '/admin',
+        key: 'ADMIN_ROOT',
         exact: true,
-        component: () => <h1>App Index</h1>,
+        component: HomePage,
       },
       {
-        path: '/app/page',
+        path: '/admin/quanly',
         key: 'APP_PAGE',
         exact: true,
-        component: () => <h1>App Page</h1>,
+        component: QUanly,
       },
     ],
   },
