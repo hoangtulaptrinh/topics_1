@@ -1,4 +1,4 @@
-import { TOPICS } from "../constants";
+import { TOPICS } from '../constants';
 
 const initialState = { loading: false, listTopics: {}, err: null };
 

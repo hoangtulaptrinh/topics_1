@@ -4,7 +4,21 @@ export default styled.div`
   width: 300px;
 
   position: fixed;
-  margin-left: 1000px;
+  margin-right: 1000px;
+
+  .header {
+    margin: 15px;
+    font-size: 15px;
+    img {
+      max-height: 50px;
+    }
+    .left-info {
+      margin: 5px;
+    }
+    .right-info {
+      margin-left: 10px;
+    }
+  }
 
   .title {
     font-weight: bold;
@@ -61,16 +75,5 @@ export default styled.div`
     height: 400px;
     border: 1px solid #e7e9ec;
     border-radius: 4px;
-
-    .header {
-      margin: 15px;
-      font-size: 15px;
-      img {
-        max-height: 50px;
-      }
-      .left-info {
-        margin: 5px;
-      }
-    }
   }
 `;

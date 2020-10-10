@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default styled.div`
   margin-top: 20px;
@@ -71,7 +71,7 @@ export default styled.div`
     }
 
     .download {
-      margin: 20px 0;
+      margin: 15px 0;
       span {
         font-size: 20px;
         margin-right: 10px;
@@ -173,21 +173,24 @@ export default styled.div`
   }
 
   .action {
-    margin: 15px 0;
+    margin: 10px 0;
     display: flex;
 
-    .action-like,
+    .action-care,
     .action-comment {
       cursor: pointer;
+      display: flex;
+      align-items: center;
       margin-right: 30px;
       span {
+        margin-top: 3px;
         color: #ff865a;
         font-size: 20px;
         margin-right: 10px;
       }
     }
 
-    .action-like:hover,
+    .action-care:hover,
     .action-comment:hover {
       color: #e36436;
       span {
