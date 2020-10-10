@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  LikeOutlined,
   CommentOutlined,
   DownloadOutlined,
   StarOutlined,
@@ -9,15 +8,16 @@ import {
   FileImageOutlined,
   VideoCameraOutlined,
   FileTextOutlined,
+  HeartOutlined,
 } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import Wrapper from './Item.styled';
 import Icon from './Icon';
-import { addComment } from '../../../actions';
+import { addComment, careTopics } from '../../../actions';
 
-const Item = ({ topic, addComment }) => {
+const Item = ({ topic, addComment, careTopics }) => {
   const [showComment, setShowComment] = useState(false);
 
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
@@ -35,6 +35,17 @@ const Item = ({ topic, addComment }) => {
       });
     },
   });
+
+  const handlecareTopics = topic => {
+    const careList = currentUser.care;
+    console.log(careList);
+    console.log(topic);
+    const infoTopic = {};
+    const indexTopicInList = careList.findIndex(item => item.id === topic.id);
+    if (indexTopicInList === -1) {
+      careList.push();
+    }
+  };
 
   return (
     <Wrapper>
@@ -77,9 +88,9 @@ const Item = ({ topic, addComment }) => {
       </div>
 
       <div className="action">
-        <div className="action-like">
-          <LikeOutlined />
-          Thích
+        <div className="action-care" onClick={() => handlecareTopics(topic)}>
+          <HeartOutlined />
+          Quan Tâm
         </div>
         <div className="action-comment" onClick={() => setShowComment(!showComment)}>
           <CommentOutlined />
@@ -202,6 +213,7 @@ const mapStatetoProps = () => {
 const mapDispatchToProps = dispatch => {
   return {
     addComment: data => dispatch(addComment(data)),
+    careTopics: data => dispatch(careTopics(data)),
   };
 };
 

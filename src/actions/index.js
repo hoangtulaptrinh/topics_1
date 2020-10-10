@@ -19,6 +19,11 @@ export const signUp = data => ({
   data,
 });
 
+export const careTopics = data => ({
+  type: TOPICS.CARE_TOPICS,
+  data,
+});
+
 export const loadTopics = () => ({
   type: TOPICS.LOAD,
 });
