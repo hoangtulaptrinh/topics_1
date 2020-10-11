@@ -1,4 +1,4 @@
-import { TOPICS, USER } from '../constants';
+import { HELPER, TOPICS, USER } from '../constants';
 
 export const getAllUsers = () => ({
   type: USER.GET_ALL_USERS,
@@ -17,6 +17,10 @@ export const signIn = data => ({
 export const signUp = data => ({
   type: USER.SIGN_UP,
   data,
+});
+
+export const refreshCurrentUser = () => ({
+  type: USER.REFRESH_CURRENT_USER,
 });
 
 export const careTopics = data => ({
@@ -46,4 +50,8 @@ export const addThread = data => ({
 export const addComment = data => ({
   type: TOPICS.ADD_COMMENT,
   data,
+});
+
+export const reRender = () => ({
+  type: HELPER.RE_RENDER,
 });

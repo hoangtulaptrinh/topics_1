@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
   CommentOutlined,
@@ -20,7 +20,7 @@ import { addComment, careTopics } from '../../../actions';
 const Item = ({ topic, addComment, careTopics }) => {
   const [showComment, setShowComment] = useState(false);
 
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const formik = useFormik({
     initialValues: { content: '', image: null, video: null, outline: null },
@@ -38,13 +38,17 @@ const Item = ({ topic, addComment, careTopics }) => {
 
   const handlecareTopics = topic => {
     const careList = currentUser.care;
-    console.log(careList);
-    console.log(topic);
-    const infoTopic = {};
-    const indexTopicInList = careList.findIndex(item => item.id === topic.id);
-    if (indexTopicInList === -1) {
-      careList.push();
+
+    const indexTopicInCareList = careList.findIndex(item => item.id === topic.id);
+
+    if (indexTopicInCareList === -1) {
+      careList.push({ ...topic });
+      careTopics(careList);
+      return;
     }
+
+    const careListAfterFilter = careList.filter(item => item.id !== topic.id);
+    careTopics(careListAfterFilter);
   };
 
   return (
@@ -88,11 +92,19 @@ const Item = ({ topic, addComment, careTopics }) => {
       </div>
 
       <div className="action">
-        <div className="action-care" onClick={() => handlecareTopics(topic)}>
+        <div
+          className="action-care"
+          style={currentUser.care.findIndex(item => item.id === topic.id) !== -1 ? { color: '#e36436' } : {}}
+          onClick={() => handlecareTopics(topic)}
+        >
           <HeartOutlined />
           Quan Tâm
         </div>
-        <div className="action-comment" onClick={() => setShowComment(!showComment)}>
+        <div
+          className="action-comment"
+          style={!!showComment ? { color: '#e36436' } : {}}
+          onClick={() => setShowComment(!showComment)}
+        >
           <CommentOutlined />
           Comment
         </div>
@@ -192,12 +204,14 @@ const Item = ({ topic, addComment, careTopics }) => {
 
               <div className="content">
                 <p>{comment.content}</p>
-                <img src={comment.image} alt="img-content" />
-                <video src={comment.video} alt="video-content" controls />
-                <div className="download">
-                  <DownloadOutlined />
-                  <a href={comment.outline}> Nhấn Vào Đây Để Tải Tài Liệu Đính Kèm</a>
-                </div>
+                {comment.image && <img src={comment.image} alt="img-content" />}
+                {comment.video && <video src={comment.video} alt="video-content" controls />}
+                {comment.outline && (
+                  <div className="download">
+                    <DownloadOutlined />
+                    <a href={comment.outline}> Nhấn Vào Đây Để Tải Tài Liệu Đính Kèm</a>
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -207,8 +221,8 @@ const Item = ({ topic, addComment, careTopics }) => {
   );
 };
 
-const mapStatetoProps = () => {
-  return {};
+const mapStatetoProps = ({ reRender }) => {
+  return { reRender };
 };
 const mapDispatchToProps = dispatch => {
   return {

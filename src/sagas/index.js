@@ -7,7 +7,8 @@ import ListTopics from './ListTopics';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Users from './Users';
+import RefreshCurrentUser from './RefreshCurrentUser';
 
 export default function* rootSaga() {
-  yield all([ListTopics(), AddComment(), AddThread(), CareTopics(), SignIn(), SignUp(), Users()]);
+  yield all([ListTopics(), AddComment(), AddThread(), CareTopics(), SignIn(), SignUp(), Users(), RefreshCurrentUser()]);
 }
