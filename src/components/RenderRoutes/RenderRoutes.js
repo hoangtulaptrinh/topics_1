@@ -1,12 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+//topics
 import ListTopics from '../Topics/List';
+//topics
+
 import SignInSignUp from '../SignInSignUp';
 
+//users
+import HomePage from '../User/HomePage';
+//users
+
 const ROUTES = [
-  { path: '/', key: 'SignInSignUp', exact: true, component: SignInSignUp },
+  { path: '/login', key: 'SignInSignUp', exact: true, component: SignInSignUp },
   { path: '/topics', key: 'ROOT', component: ListTopics },
+  { path: '/', key: 'Users', component: HomePage },
   {
     path: '/app',
     key: 'APP',

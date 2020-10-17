@@ -7,7 +7,7 @@ import Wrapper from './RightContent.styled';
 
 const List = ({ listUsers }) => {
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
-  let history = useHistory();
+  const history = useHistory();
 
   const idTopics = useMemo(
     () => window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],

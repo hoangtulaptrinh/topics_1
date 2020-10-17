@@ -1,14 +1,25 @@
 import { all } from 'redux-saga/effects';
 
-import AddComment from './AddComment';
-import AddThread from './AddThread';
-import CareTopics from './CareTopics';
-import ListTopics from './ListTopics';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Users from './Users';
-import RefreshCurrentUser from './RefreshCurrentUser';
+import addComment from './AddComment';
+import addThread from './AddThread';
+import careTopics from './CareTopics';
+import listTopics from './ListTopics';
+import signIn from './SignIn';
+import signUp from './SignUp';
+import users from './Users';
+import refreshCurrentUser from './RefreshCurrentUser';
+import listCourses from './ListCourses';
 
 export default function* rootSaga() {
-  yield all([ListTopics(), AddComment(), AddThread(), CareTopics(), SignIn(), SignUp(), Users(), RefreshCurrentUser()]);
+  yield all([
+    listTopics(),
+    addComment(),
+    addThread(),
+    careTopics(),
+    signIn(),
+    signUp(),
+    users(),
+    refreshCurrentUser(),
+    listCourses(),
+  ]);
 }
