@@ -1,4 +1,4 @@
-import { USER, COURSES, TOPICS, HELPER } from '../constants';
+import { USER, COURSES, TOPICS, HELPER, CATEGORY } from '../constants';
 
 export const getAllUsers = () => ({
   type: USER.GET_ALL_USERS,
@@ -29,6 +29,15 @@ export const getAllCourses = () => ({
 
 export const setAllCourses = data => ({
   type: COURSES.SET_ALL_COURSES,
+  data,
+});
+
+export const getAllCategory = () => ({
+  type: CATEGORY.GET_ALL_CATEGORY,
+});
+
+export const setAllCategory = data => ({
+  type: CATEGORY.SET_ALL_CATEGORY,
   data,
 });
 

@@ -16,6 +16,8 @@ export const signUp = data => axios.post(`${SEVER_URL}/users/create`, data);
 
 export const getAllCourses = () => axios.get(`${SEVER_URL}/courses`);
 
+export const getAllCategory = () => axios.get(`${SEVER_URL}/categorys`);
+
 export const fetchTopics = async id => {
   const response = await fetch(`${SEVER_URL}/topics/show_all_threads_on_topic/${id}`);
   const data = await response.json();

@@ -4,6 +4,7 @@ export default styled.div`
   width: 20%;
 
   img {
+    cursor: pointer;
     width: 100%;
   }
 

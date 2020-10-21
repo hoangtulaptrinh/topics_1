@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { getAllCourses } from '../../../actions';
 import CourseItem from '../Courses/Item';
 import Header from '../Header';
 import Wrapper from './HomePage.styled';
@@ -10,10 +10,8 @@ import NUMBER_USERS from '../../../assets/img/NUMBER_USERS.png';
 import NUMBER_COURSES from '../../../assets/img/NUMBER_COURSES.png';
 import WHERE_TO_LEARNS from '../../../assets/img/WHERE_TO_LEARNS.png';
 
-const HomePage = ({ listCourses, getAllCourses }) => {
-  useEffect(() => {
-    getAllCourses();
-  }, [getAllCourses]);
+const HomePage = ({ listCourses }) => {
+  const history = useHistory();
 
   return (
     <Wrapper>
@@ -23,7 +21,7 @@ const HomePage = ({ listCourses, getAllCourses }) => {
         <div className="intro">
           <p className="intro-1">Đầu Tư Cho Kiến Thức Chưa Bao Giờ Là Phí Phạm</p>
           <p className="intro-2">BẤT KỲ AI CŨNG NÊN HỌC LẬP TRÌNH, VÌ NÓ DẠY TA CÁCH TƯ DUY, Steve Jobs</p>
-          <button>Tìm Hiểu Ngay</button>
+          <button onClick={() => history.push('/courses')}>Tìm Hiểu Ngay</button>
         </div>
       </div>
 
@@ -53,10 +51,10 @@ const HomePage = ({ listCourses, getAllCourses }) => {
 
           {!!listCourses.length && (
             <div className="courses">
-              <CourseItem course={listCourses[0]} />
-              <CourseItem course={listCourses[0]} />
-              <CourseItem course={listCourses[0]} />
-              <CourseItem course={listCourses[0]} />
+              {/* fix me later */}
+              {listCourses.slice(0, 4).map((course, index) => (
+                <CourseItem course={course} key={index} />
+              ))}
             </div>
           )}
         </div>
@@ -69,4 +67,4 @@ const mapStatetoProps = ({ listCourses }) => {
   return { listCourses };
 };
 
-export default connect(mapStatetoProps, { getAllCourses })(HomePage);
+export default connect(mapStatetoProps, {})(HomePage);

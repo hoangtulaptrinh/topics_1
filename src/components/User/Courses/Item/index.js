@@ -1,15 +1,16 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { GiBookmark, GiTwoCoins } from 'react-icons/gi';
 import { IoIosPeople } from 'react-icons/io';
 
 import Wrapper from './Item.styled';
 
 const Item = ({ course }) => {
-  console.log(course);
+  const history = useHistory();
+
   return (
     <Wrapper>
-      <img src={course.image} alt="course-img" />
+      <img src={course.image} onClick={() => history.push(`/courses/detail/${course._id}`)} alt="course-img" />
       <div className="course">
         <p className="course__name">{course.name}</p>
         <p className="course__intro">{course.intro}</p>

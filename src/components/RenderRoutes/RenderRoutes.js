@@ -9,12 +9,44 @@ import SignInSignUp from '../SignInSignUp';
 
 //users
 import HomePage from '../User/HomePage';
+import ListCourses from '../User/Courses/List';
+import Detail from '../User/Courses/Detail';
 //users
 
 const ROUTES = [
   { path: '/login', key: 'SignInSignUp', exact: true, component: SignInSignUp },
   { path: '/topics', key: 'ROOT', component: ListTopics },
-  { path: '/', key: 'Users', component: HomePage },
+  {
+    path: '/',
+    key: 'Users',
+    component: props => {
+      // if (!localStorage.getItem("user")) {
+      //   alert("You need to log in to access app routes");
+      //   return <Redirect to={"/"} />;
+      // }
+      return <RenderRoutes {...props} />;
+    },
+    routes: [
+      {
+        path: '/',
+        key: 'users_homepage',
+        exact: true,
+        component: HomePage,
+      },
+      {
+        path: '/courses',
+        key: 'users_courses',
+        exact: true,
+        component: ListCourses,
+      },
+      {
+        path: '/courses/detail',
+        key: 'users_courses',
+        exact: false,
+        component: Detail,
+      },
+    ],
+  },
   {
     path: '/app',
     key: 'APP',
