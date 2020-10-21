@@ -3,7 +3,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import ReactDOM from 'react-dom';
-
+import 'antd/dist/antd.css';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import * as serviceWorker from './serviceWorker';
