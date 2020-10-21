@@ -202,4 +202,8 @@ export default styled.div`
   .login-html > label {
     cursor: pointer;
   }
+  .button.height {
+    cursor: pointer;
+    outline: none;
+  }
 `;

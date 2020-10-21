@@ -1,4 +1,4 @@
-import { TOPICS, USER } from '../constants';
+import { USER, COURSES, TOPICS, HELPER, CATEGORY } from '../constants';
 
 export const getAllUsers = () => ({
   type: USER.GET_ALL_USERS,
@@ -16,6 +16,28 @@ export const signIn = data => ({
 
 export const signUp = data => ({
   type: USER.SIGN_UP,
+  data,
+});
+
+export const refreshCurrentUser = () => ({
+  type: USER.REFRESH_CURRENT_USER,
+});
+
+export const getAllCourses = () => ({
+  type: COURSES.GET_ALL_COURSES,
+});
+
+export const setAllCourses = data => ({
+  type: COURSES.SET_ALL_COURSES,
+  data,
+});
+
+export const getAllCategory = () => ({
+  type: CATEGORY.GET_ALL_CATEGORY,
+});
+
+export const setAllCategory = data => ({
+  type: CATEGORY.SET_ALL_CATEGORY,
   data,
 });
 
@@ -46,4 +68,8 @@ export const addThread = data => ({
 export const addComment = data => ({
   type: TOPICS.ADD_COMMENT,
   data,
+});
+
+export const reRender = () => ({
+  type: HELPER.RE_RENDER,
 });

@@ -1,16 +1,16 @@
-import { call, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 
 import { TOPICS } from '../constants';
-import { careTopics } from '../api';
+import { updateCurrentUser } from '../api';
+import { refreshCurrentUser } from '../actions';
 
 export function* handleCareTopics(action) {
-  yield console.log(action.data);
-  // try {
-  //   yield call(careTopics, { ...action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
-  //   yield put(loadTopics());
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
+  try {
+    yield call(updateCurrentUser, { care: action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
+    yield put(refreshCurrentUser());
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 export default function* watchAddThread() {

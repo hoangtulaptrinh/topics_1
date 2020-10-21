@@ -6,9 +6,17 @@ const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 export const getAllUser = () => axios.get(`${SEVER_URL}/users`);
 
+export const getDetailUser = () => axios.get(`${SEVER_URL}/users/${currentUser._id}`);
+
+export const updateCurrentUser = data => axios.put(`${SEVER_URL}/users/update_info/${currentUser._id}`, data);
+
 export const signIn = data => axios.post(`${SEVER_URL}/users/login`, data);
 
 export const signUp = data => axios.post(`${SEVER_URL}/users/create`, data);
+
+export const getAllCourses = () => axios.get(`${SEVER_URL}/courses`);
+
+export const getAllCategory = () => axios.get(`${SEVER_URL}/categorys`);
 
 export const fetchTopics = async id => {
   const response = await fetch(`${SEVER_URL}/topics/show_all_threads_on_topic/${id}`);
@@ -45,5 +53,3 @@ export const addThread = (data, id) => {
 
   return axios.post(`${SEVER_URL}/topics/create/${id}`, obj);
 };
-
-export const careTopics = data => axios.post(`${SEVER_URL}/users//update_info/${currentUser._id}`, data);

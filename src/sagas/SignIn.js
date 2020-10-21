@@ -12,7 +12,7 @@ export function* handleSignIn(action) {
     const response = yield call(signIn, { ...action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     localStorage.currentUser = JSON.stringify(response.data.user);
     toastSuccess('đăng nhập thành công');
-    yield put(push('/topics'));
+    yield put(push('/'));
   } catch (error) {
     toastError('đăng nhập thất bại');
     console.log(error.message);
