@@ -1,7 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaLaptopCode } from 'react-icons/fa';
 import moment from 'moment';
+import { BookFilled } from '@ant-design/icons';
+import { AiFillClockCircle } from 'react-icons/ai';
 
 import Header from '../../Header';
 import Wrapper from './Detail.styled';
@@ -15,6 +17,18 @@ const HomePage = ({ listCategorys, listCourses }) => {
   }, [listCourses]);
 
   const diffDayUpdate = useCallback(dayUpdate => moment().diff(moment(dayUpdate), 'days'), []);
+
+  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+
+  const HasThisCourse = useMemo(() => {
+    if (!course) return false;
+    const pathname = window.location.pathname;
+    if (currentUser.course.find(course => course.id === pathname.substring(pathname.lastIndexOf('/') + 1))) return true;
+
+    return false;
+  }, [course, currentUser]);
+
+  console.log(course, currentUser);
 
   return (
     <Wrapper>
@@ -71,7 +85,32 @@ const HomePage = ({ listCategorys, listCourses }) => {
                 </div>
               ))}
           </div>
-          <div className="right"></div>
+          <div className="right">
+            <img src={course.image} alt="course" />
+            <div className="right__info">
+              <span className="has-course">
+                {HasThisCourse && 'Bạn Đã Mua Khóa Học Này'}
+                {!HasThisCourse && 'Bạn Chưa Mua Khóa Học Này'}
+              </span>
+
+              <button>Mua Ngay</button>
+
+              <div className="detail">
+                <div className="info">
+                  <BookFilled />
+                  <span className="content">Tổng số {course.lesson.length} bài học</span>
+                </div>
+                <div className="info">
+                  <AiFillClockCircle />
+                  <span className="content">Cần 50 giờ để học</span>
+                </div>
+                <div className="info">
+                  <FaLaptopCode />
+                  <span className="content">Học mọi lúc, mọi nơi</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </Wrapper>
