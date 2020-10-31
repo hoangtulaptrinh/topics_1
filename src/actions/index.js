@@ -19,6 +19,11 @@ export const signUp = data => ({
   data,
 });
 
+export const buyThisCourse = data => ({
+  type: USER.BUY_THIS_COURSE,
+  data,
+});
+
 export const refreshCurrentUser = () => ({
   type: USER.REFRESH_CURRENT_USER,
 });

@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { getAllCourses, getAllCategory } from '../../../actions';
 import { toastSuccess } from '../../../helper/toastHelper';
 import Wrapper from './Header.styled';
+import { refreshCurrentUser } from '../../../actions';
 
 import LOGO from '../../../assets/img/LOGO.png';
 
@@ -23,7 +24,7 @@ const LIST_NAV_BAR = [
     href: '/topics',
   },
 ];
-const Header = ({ getAllCourses, getAllCategory }) => {
+const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
   const history = useHistory();
 
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
@@ -37,7 +38,8 @@ const Header = ({ getAllCourses, getAllCategory }) => {
   useEffect(() => {
     getAllCourses();
     getAllCategory();
-  }, [getAllCategory, getAllCourses]);
+    refreshCurrentUser();
+  }, [getAllCategory, getAllCourses, refreshCurrentUser]);
 
   useEffect(() => {
     window.location.pathname === '/' && window.addEventListener('scroll', handleScroll);
@@ -110,4 +112,4 @@ const Header = ({ getAllCourses, getAllCategory }) => {
 
 const mapStateToProps = () => ({});
 
-export default connect(mapStateToProps, { getAllCourses, getAllCategory })(Header);
+export default connect(mapStateToProps, { refreshCurrentUser, getAllCourses, getAllCategory })(Header);

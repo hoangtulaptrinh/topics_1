@@ -14,6 +14,8 @@ export const signIn = data => axios.post(`${SEVER_URL}/users/login`, data);
 
 export const signUp = data => axios.post(`${SEVER_URL}/users/create`, data);
 
+export const buyThisCourseService = data => axios.patch(`${SEVER_URL}/users/buy_course/${currentUser._id}`, data);
+
 export const getAllCourses = () => axios.get(`${SEVER_URL}/courses`);
 
 export const getAllCategory = () => axios.get(`${SEVER_URL}/categorys`);

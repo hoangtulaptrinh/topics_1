@@ -5,7 +5,9 @@ import { ToastContainer } from 'react-toastify';
 import ReactDOM from 'react-dom';
 
 import './index.css';
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import 'react-toastify/dist/ReactToastify.css';
+import 'video-react/dist/video-react.css';
 import * as serviceWorker from './serviceWorker';
 import configureStore, { history } from './store';
 import Main from './components/Main';

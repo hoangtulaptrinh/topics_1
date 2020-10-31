@@ -11,6 +11,7 @@ import SignInSignUp from '../SignInSignUp';
 import HomePage from '../User/HomePage';
 import ListCourses from '../User/Courses/List';
 import Detail from '../User/Courses/Detail';
+import Learn from '../User/Learn';
 //users
 
 const ROUTES = [
@@ -44,6 +45,12 @@ const ROUTES = [
         key: 'users_courses',
         exact: false,
         component: Detail,
+      },
+      {
+        path: '/learn',
+        key: 'users_learn',
+        exact: false,
+        component: Learn,
       },
     ],
   },
