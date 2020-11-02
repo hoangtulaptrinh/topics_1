@@ -17,7 +17,7 @@ import Courses from '../Courses/index';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-class HomePage extends React.Component {
+class Dashboard extends React.Component {
   state = {
     collapsed: false,
     test: 'courses',
@@ -36,15 +36,15 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const { test, currentUser } = this.state;
+    const { test } = this.state;
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+        <Sider collapsed={this.state.collapsed}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })}>
-              Course
+            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })} >
+              Coures
             </Menu.Item>
 
             <Menu.Item key="2" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'users' })}>
@@ -60,7 +60,7 @@ class HomePage extends React.Component {
             })}
           </Header>
           <Content style={{ margin: '0 16px' }}>
-            {test === 'users' && <Users currentUser={currentUser} />}
+            {test === 'users' && <Users />}
             {test === 'courses' && <Courses />}
           </Content>
         </Layout>
@@ -69,4 +69,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default Dashboard;

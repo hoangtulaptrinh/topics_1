@@ -6,8 +6,8 @@ import ListTopics from '../Topics/List';
 //topics
 
 import SignInSignUp from '../SignInSignUp';
-import HomePage from '../../admin/HomePage';
-import QUanly from '../../admin/QuanlyUser';
+import Dashboard from '../../admin/Dashboard/index';
+import Users from '../../admin/Users/index';
 
 //users
 import HomePage from '../User/HomePage';
@@ -19,8 +19,6 @@ const ROUTES = [
   { path: '/login', key: 'SignInSignUp', exact: true, component: SignInSignUp },
   { path: '/topics', key: 'ROOT', component: ListTopics },
   {
-    path: '/admin',
-    key: 'ADMIN',
     path: '/',
     key: 'Users',
     component: props => {
@@ -49,6 +47,18 @@ const ROUTES = [
         exact: false,
         component: Detail,
       },
+      {
+        path: '/admin',
+        key: 'ADMIN_ROOT',
+        exact: true,
+        component: Dashboard,
+      },
+      // {
+      //   path: '/admin/quanly',
+      //   key: 'APP_PAGE',
+      //   exact: true,
+      //   component: Users,
+      // },
     ],
   },
   {
@@ -62,13 +72,13 @@ const ROUTES = [
         path: '/admin',
         key: 'ADMIN_ROOT',
         exact: true,
-        component: HomePage,
+        component: Dashboard,
       },
       {
         path: '/admin/quanly',
         key: 'APP_PAGE',
         exact: true,
-        component: QUanly,
+        component: Users,
       },
     ],
   },

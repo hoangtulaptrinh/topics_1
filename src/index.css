@@ -44,7 +44,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .site-layout .site-layout-background {
-  background: #fff;
+  background: #001529;
 }
 [data-theme='dark'] .site-layout .site-layout-background {
   background: #141414;
@@ -56,8 +56,17 @@ body::-webkit-scrollbar-thumb {
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
+  color: rgb(196, 196, 196)
 }
 
 .trigger:hover {
+  color: #1890ff;
+}
+
+.styled-icon {
+  cursor: pointer;
+}
+
+.styled-icon:hover {
   color: #1890ff;
 }
