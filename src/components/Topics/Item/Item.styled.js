@@ -120,7 +120,7 @@ export default styled.div`
         }
 
         .submit-comment {
-          margin-top: 25px;
+          margin-top: 10px;
 
           button {
             cursor: pointer;

@@ -1,6 +1,7 @@
 import { put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import { getAllUser, buyThisCourseService } from '../api';
+import { push } from 'connected-react-router';
 import { refreshCurrentUser, setAllUsers } from '../actions';
 import { toastSuccess, toastWarning } from '../helper/toastHelper';
 import { USER } from '../constants';
@@ -22,6 +23,7 @@ export function* handleBuyThisCourse(action) {
     yield call(buyThisCourseService, data); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     yield put(refreshCurrentUser());
     toastSuccess('Mua khóa học thành công');
+    yield put(push(`/learn/${action.data}`));
   } catch (error) {
     toastWarning('Bạn Không Đủ Coin Để Mua Khóa Học Này');
     console.log(error.message);

@@ -26,6 +26,17 @@ export default styled.div`
           margin-left: 5px;
           font-size: 25px;
         }
+
+        .play-video-icon {
+          color: #ff6a00;
+        }
+      }
+
+      .go-to-forum {
+        color: #ff6a00;
+        cursor: pointer;
+        padding: 12px 16px;
+        border-bottom: solid 1px rgb(217, 217, 217, 1);
       }
     }
   }
