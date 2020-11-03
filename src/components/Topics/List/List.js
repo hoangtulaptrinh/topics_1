@@ -10,6 +10,7 @@ import Item from '../Item';
 import LeftContent from '../LeftContent/LeftContent';
 import RightContent from '../RightContent';
 import Wrapper from './List.styled';
+import Header from '../../User/Header';
 
 const List = ({ listTopics, fetchTopics, addThread }) => {
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
@@ -32,8 +33,11 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
 
   const { loading, listTopics: data, err } = listTopics;
 
+  console.log(formik.values);
+
   return (
     <Wrapper>
+      <Header />
       <div className="total">
         <LeftContent />
         <div className="list-topics">

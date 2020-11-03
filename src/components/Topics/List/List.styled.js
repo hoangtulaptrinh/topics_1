@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default styled.div`
   display: flex;
   justify-content: space-around;
 
   .total {
+    margin-top: 80px;
     width: 1500px;
 
     display: flex;
@@ -57,7 +58,7 @@ export default styled.div`
 
   .new-thread {
     background: #fff;
-    height: 210px;
+    height: 220px;
     margin-bottom: 20px;
     padding: 10px 15px;
     border: solid 1px #e7e9ec;
@@ -99,7 +100,7 @@ export default styled.div`
         }
 
         .submit-comment {
-          margin-top: 25px;
+          margin-top: 10px;
 
           button {
             cursor: pointer;

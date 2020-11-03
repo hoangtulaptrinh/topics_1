@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { AiFillClockCircle } from 'react-icons/ai';
 import { BookFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
@@ -9,11 +9,8 @@ import moment from 'moment';
 import { buyThisCourse } from '../../../../actions';
 import Header from '../../Header';
 import Wrapper from './Detail.styled';
-import { useHistory } from 'react-router-dom';
 
 const HomePage = ({ buyThisCourse, listCourses }) => {
-  const history = useHistory();
-
   const [modalBuy, setModalBuy] = useState(false);
 
   const pathname = window.location.pathname;
@@ -35,13 +32,6 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
 
     return false;
   }, [course, currentUser, idThisCourse]);
-
-  useEffect(() => {
-    if (!course || !currentUser.course) return;
-    if (!HasThisCourse) return;
-
-    history.push(`/learn/${course._id}`);
-  }, [HasThisCourse, course, currentUser.course, history]);
 
   console.log(modalBuy, course, currentUser);
 

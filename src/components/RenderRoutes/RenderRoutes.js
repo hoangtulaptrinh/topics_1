@@ -13,6 +13,7 @@ import Users from '../../admin/Users/index';
 import HomePage from '../User/HomePage';
 import ListCourses from '../User/Courses/List';
 import Detail from '../User/Courses/Detail';
+import Learn from '../User/Learn';
 //users
 
 const ROUTES = [
@@ -48,6 +49,7 @@ const ROUTES = [
         component: Detail,
       },
       {
+
         path: '/admin',
         key: 'ADMIN_ROOT',
         exact: true,
@@ -59,6 +61,12 @@ const ROUTES = [
       //   exact: true,
       //   component: Users,
       // },
+      {
+        path: '/learn',
+        key: 'users_learn',
+        exact: false,
+        component: Learn,
+      },
     ],
   },
   {
