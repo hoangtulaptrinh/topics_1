@@ -2,14 +2,14 @@ body {
   overflow-x: hidden;
   background: #faf9f7;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 body::-webkit-scrollbar-track {
@@ -46,7 +46,7 @@ body::-webkit-scrollbar-thumb {
 .site-layout .site-layout-background {
   background: #001529;
 }
-[data-theme='dark'] .site-layout .site-layout-background {
+[data-theme="dark"] .site-layout .site-layout-background {
   background: #141414;
 }
 
@@ -56,7 +56,7 @@ body::-webkit-scrollbar-thumb {
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
-  color: rgb(196, 196, 196)
+  color: rgb(196, 196, 196);
 }
 
 .trigger:hover {
@@ -68,5 +68,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 .styled-icon:hover {
+  color: #1890ff;
+}
+
+.btn-ban {
+  cursor: pointer;
+}
+
+.btn-ban:hover {
   color: #1890ff;
 }

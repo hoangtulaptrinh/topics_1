@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Table, Space, Modal, Input, Button, Form, Popconfirm } from "antd";
-import { FaPencilAlt, FaTrashAlt, FaBan } from "react-icons/fa";
-import { MdAddCircle } from "react-icons/md";
+import { FaBan } from "react-icons/fa";
 import { DollarOutlined } from "@ant-design/icons";
+import { connect } from "react-redux";
+import { getAllUsers } from "../../actions/index"
 
 const layout = {
   labelCol: {
@@ -29,25 +30,22 @@ class Users extends Component {
     };
   }
 
+  componentDidMount() {
+
+  }
+
   columns = [
-    {
-      align: "center",
-      title: "STT",
-      dataIndex: "stt",
-      key: "stt",
-      //   render: (text) => <a href="/">{text}</a>,
-    },
+    // {
+    //   align: "center",
+    //   title: "STT",
+    //   dataIndex: "stt",
+    //   key: "stt",
+    // },
     {
       align: "center",
       title: "Tên đăng nhập",
       dataIndex: "name",
       key: "name",
-    },
-    {
-      align: "center",
-      title: "Mật khẩu",
-      dataIndex: "password",
-      key: "password",
     },
     {
       align: "center",
@@ -75,7 +73,6 @@ class Users extends Component {
       render: () => (
         <Space size="middle">
           <DollarOutlined className="styled-icon" onClick={this.showModalAddMoney} />
-          <FaPencilAlt className="styled-icon" onClick={this.showModalDetail} />
           <Popconfirm
             placement="leftTop"
             title="Bạn chắc chắn muốn cấm người dùng này ? ?"
@@ -84,9 +81,7 @@ class Users extends Component {
             okText="Yes"
             cancelText="No"
           >
-            <Button className="btn-delete" shape="circle" type="button">
-              <FaBan />
-            </Button>
+            <FaBan className="btn-ban" />
           </Popconfirm>
         </Space>
       ),
@@ -112,13 +107,6 @@ class Users extends Component {
     });
   };
 
-  showModalAdd = () => {
-    this.setState({
-      visible: true,
-      isAddNew: true,
-    });
-  };
-
   showModalAddMoney = () => {
     this.setState({
       visibleModalAddMoney: true,
@@ -131,18 +119,25 @@ class Users extends Component {
     });
   };
 
+  handleCanCelModalAddMoney = () => {
+    this.setState({
+      visibleModalAddMoney: false
+    })
+  }
+
   render() {
     const { isAddNew, visible, visibleModalAddMoney } = this.state;
+    console.log(this.props, "props co nhung gi nao")
     return (
       <div className="admin-management">
         <div className="feature-add">
           <h2> Danh sách người dùng </h2>
-          <div style={{ display: 'flex', marginBottom: '16px', cursor: 'pointer' }} onClick={this.showModalAdd}>
+          {/* <div style={{ display: 'flex', marginBottom: '16px', cursor: 'pointer' }} onClick={this.showModalAdd}>
             <MdAddCircle size="20" className="styled-icon" />
             <span style={{ marginLeft: '4' }}> Thêm người dùng </span>
-          </div>
+          </div> */}
         </div>
-        <Table dataSource={this.data} columns={this.columns} bordered />
+        <Table dataSource={this.props.listUser.listUsers} columns={this.columns} bordered />
         {/* Modal Add and Detail */}
         <Modal
           title={isAddNew ? 'Thêm người dùng' : 'Sửa thông tin người dùng'}
@@ -188,4 +183,17 @@ class Users extends Component {
   }
 }
 
-export default Users;
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    listUser: state.listUsers,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchAllUser: (data) => (dispatch(getAllUsers(data))),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
