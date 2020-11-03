@@ -8,7 +8,7 @@ import { toastSuccess } from '../../../helper/toastHelper';
 import Wrapper from './Header.styled';
 import { refreshCurrentUser } from '../../../actions';
 
-import LOGO from '../../../assets/img/LOGO.png';
+import EAT_SLEEP_CODE from '../../../assets/img/EAT_SLEEP_CODE.jpg';
 
 const LIST_NAV_BAR = [
   {
@@ -81,7 +81,7 @@ const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
     <Wrapper>
       <div className="total-header">
         <div className="left">
-          <img alt="logo" src={LOGO} onClick={() => history.push('/')} />
+          <img alt="logo" src={EAT_SLEEP_CODE} onClick={() => history.push('/')} />
           <div className="nav-bar">
             {LIST_NAV_BAR.map((item, index) => (
               <p className="nav-bar__item" key={index} onClick={() => history.push(item.href)}>
