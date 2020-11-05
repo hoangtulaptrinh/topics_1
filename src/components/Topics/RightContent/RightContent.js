@@ -9,10 +9,9 @@ const List = ({ listUsers }) => {
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
   const history = useHistory();
 
-  const idTopics = useMemo(
-    () => window.location.pathname.split('/')[window.location.pathname.split('/').length - 1],
-    [],
-  );
+  const query = new URLSearchParams(window.location.search);
+
+  const idTopics = query.get('idThread');
 
   const listUserBuyThisCourse = useMemo(
     () =>
@@ -37,7 +36,7 @@ const List = ({ listUsers }) => {
                   : {}
               }
               key={index}
-              onClick={() => history.push(`/topics/${course.id}`)}
+              onClick={() => history.push(`/topics?idThread=${course.id}`)}
             >
               <div
                 className="is-completed"

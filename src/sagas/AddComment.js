@@ -5,7 +5,9 @@ import { TOPICS } from '../constants';
 import { addComment } from '../api';
 
 export function* handleAddComment(action) {
-  const idTopics = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
+  const query = new URLSearchParams(window.location.search);
+
+  const idTopics = query.get('idThread');
 
   try {
     yield call(addComment, { ...action.data }, idTopics); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))

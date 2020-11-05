@@ -31,6 +31,17 @@ export const fetchTopics = async id => {
   return data;
 };
 
+export const fetchDetailTopics = async (idThread, id) => {
+  const response = await fetch(`${SEVER_URL}/topics/${idThread}?id=${id}`);
+  const data = await response.json();
+
+  if (response.status >= 400) {
+    if (response.status === 404) throw new Error('không tìm thấy');
+    throw new Error('đã xảy ra lỗi');
+  }
+  return data;
+};
+
 export const addComment = (data, id) => {
   const obj = new FormData();
 

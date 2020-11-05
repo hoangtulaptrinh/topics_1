@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 //topics
 import ListTopics from '../Topics/List';
+import DetailTopic from '../Topics/Detail';
 //topics
 
 import SignInSignUp from '../SignInSignUp';
@@ -18,7 +19,27 @@ import Learn from '../User/Learn';
 
 const ROUTES = [
   { path: '/login', key: 'SignInSignUp', exact: true, component: SignInSignUp },
-  { path: '/topics', key: 'ROOT', component: ListTopics },
+  {
+    path: '/topics',
+    key: 'TOPICS',
+    component: props => {
+      return <RenderRoutes {...props} />;
+    },
+    routes: [
+      {
+        path: '/topics',
+        key: 'LIST_TOPICS',
+        exact: true,
+        component: ListTopics,
+      },
+      {
+        path: '/topics/detail',
+        key: 'DETAIL_TOPICS',
+        exact: false,
+        component: DetailTopic,
+      },
+    ],
+  },
   {
     path: '/',
     key: 'Users',
@@ -49,7 +70,6 @@ const ROUTES = [
         component: Detail,
       },
       {
-
         path: '/admin',
         key: 'ADMIN_ROOT',
         exact: true,

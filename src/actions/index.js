@@ -4,12 +4,12 @@ export const getAllUsers = () => ({
   type: USER.GET_ALL_USERS,
 });
 
-export const getAllUsersSuccess = (data) => ({
+export const getAllUsersSuccess = data => ({
   type: USER.GET_ALL_USERS_SUCCESS,
   payload: data,
 });
 
-export const getAllUsersFail = (err) => ({
+export const getAllUsersFail = err => ({
   type: USER.GET_ALL_USERS_FAIL,
   err,
 });
@@ -72,6 +72,20 @@ export const setTopics = topics => ({
 
 export const setTopicsError = error => ({
   type: TOPICS.LOAD_FAIL,
+  error,
+});
+
+export const loadDetailTopics = () => ({
+  type: TOPICS.LOAD_DETAIL,
+});
+
+export const setDetailTopics = topic => ({
+  type: TOPICS.LOAD_DETAIL_SUCCESS,
+  topic,
+});
+
+export const setDetailTopicsError = error => ({
+  type: TOPICS.LOAD_DETAIL_FAIL,
   error,
 });
 

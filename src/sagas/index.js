@@ -3,6 +3,7 @@ import { all } from 'redux-saga/effects';
 import addComment from './AddComment';
 import addThread from './AddThread';
 import careTopics from './CareTopics';
+import detailTopic from './DetailTopic';
 import listCategory from './ListCategory';
 import listCourses from './ListCourses';
 import listTopics from './ListTopics';
@@ -16,6 +17,7 @@ export default function* rootSaga() {
     addComment(),
     addThread(),
     careTopics(),
+    detailTopic(),
     listCategory(),
     listCourses(),
     listTopics(),
