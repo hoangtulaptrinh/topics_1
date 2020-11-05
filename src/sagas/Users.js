@@ -1,15 +1,16 @@
 import { put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 
+import { getAllUsersSuccess, setAllUsers, refreshCurrentUser } from '../actions';
 import { getAllUser, buyThisCourseService } from '../api';
 import { push } from 'connected-react-router';
-import { refreshCurrentUser, setAllUsers } from '../actions';
 import { toastSuccess, toastWarning } from '../helper/toastHelper';
+
 import { USER } from '../constants';
 
 export function* handleGetAllUsers() {
   try {
     const response = yield call(getAllUser); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
-    yield put(setAllUsers(response.data.listUser));
+    yield put(getAllUsersSuccess(response.data.listUser));
   } catch (error) {
     console.log(error.message);
   }

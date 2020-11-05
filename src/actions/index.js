@@ -4,6 +4,16 @@ export const getAllUsers = () => ({
   type: USER.GET_ALL_USERS,
 });
 
+export const getAllUsersSuccess = (data) => ({
+  type: USER.GET_ALL_USERS_SUCCESS,
+  payload: data,
+});
+
+export const getAllUsersFail = (err) => ({
+  type: USER.GET_ALL_USERS_FAIL,
+  err,
+});
+
 export const setAllUsers = data => ({
   type: USER.SET_ALL_USERS,
   data,

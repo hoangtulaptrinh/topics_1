@@ -6,6 +6,8 @@ import ListTopics from '../Topics/List';
 //topics
 
 import SignInSignUp from '../SignInSignUp';
+import Dashboard from '../../admin/Dashboard/index';
+import Users from '../../admin/Users/index';
 
 //users
 import HomePage from '../User/HomePage';
@@ -47,6 +49,19 @@ const ROUTES = [
         component: Detail,
       },
       {
+
+        path: '/admin',
+        key: 'ADMIN_ROOT',
+        exact: true,
+        component: Dashboard,
+      },
+      // {
+      //   path: '/admin/quanly',
+      //   key: 'APP_PAGE',
+      //   exact: true,
+      //   component: Users,
+      // },
+      {
         path: '/learn',
         key: 'users_learn',
         exact: false,
@@ -58,24 +73,20 @@ const ROUTES = [
     path: '/app',
     key: 'APP',
     component: props => {
-      // if (!localStorage.getItem("user")) {
-      //   alert("You need to log in to access app routes");
-      //   return <Redirect to={"/"} />;
-      // }
       return <RenderRoutes {...props} />;
     },
     routes: [
       {
-        path: '/app',
-        key: 'APP_ROOT',
+        path: '/admin',
+        key: 'ADMIN_ROOT',
         exact: true,
-        component: () => <h1>App Index</h1>,
+        component: Dashboard,
       },
       {
-        path: '/app/page',
+        path: '/admin/quanly',
         key: 'APP_PAGE',
         exact: true,
-        component: () => <h1>App Page</h1>,
+        component: Users,
       },
     ],
   },
