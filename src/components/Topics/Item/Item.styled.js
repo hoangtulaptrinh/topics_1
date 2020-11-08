@@ -207,6 +207,10 @@ export default styled.div`
     padding: 0 15px 0;
     border-radius: 0 0 4px 4px;
 
+    .content {
+      margin-left: 40px;
+    }
+
     .header {
       margin-top: 20px;
     }

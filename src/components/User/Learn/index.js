@@ -111,7 +111,7 @@ const HomePage = ({ listCourses }) => {
                   ))}
                 </Collapse>
               </Panel>
-              <div onClick={() => history.push(`/topics/${course._id}`)} className="go-to-forum">
+              <div onClick={() => history.push(`/topics?idThread=${course._id}`)} className="go-to-forum">
                 Đến Forum Thảo Luận Về Bài Học
               </div>
             </Collapse>
