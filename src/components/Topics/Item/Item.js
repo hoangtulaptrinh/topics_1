@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   CommentOutlined,
@@ -12,12 +12,13 @@ import {
 } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import moment from 'moment';
 
 import Wrapper from './Item.styled';
 import Icon from './Icon';
 import { addComment, careTopics } from '../../../actions';
 
-const Item = ({ topic, addComment, careTopics }) => {
+const Item = ({ topic, addComment, careTopics, isDetail }) => {
   const [showComment, setShowComment] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -27,7 +28,7 @@ const Item = ({ topic, addComment, careTopics }) => {
     validationSchema: Yup.object({
       content: Yup.string().required('hãy nhập comment'),
     }),
-    onSubmit: values => {
+    onSubmit: async values => {
       addComment({
         ...values,
         id_author_comment: currentUser._id,
@@ -51,6 +52,31 @@ const Item = ({ topic, addComment, careTopics }) => {
     careTopics(careListAfterFilter);
   };
 
+  const shouldShowComment = useMemo(() => {
+    if (isDetail) return true;
+    return showComment;
+  }, [isDetail, showComment]);
+
+  useEffect(() => {
+    if (isDetail) {
+      const detailComment = document.querySelector("[class='detail-comment comment']");
+      detailComment && detailComment.scrollTo({ top: 9999999999 });
+    }
+  }, [isDetail]);
+
+  const diffUpdate = useCallback(item => {
+    const diffDayUpdate = moment().diff(moment(item.date_create), 'days');
+    const diffHourUpdate = moment().diff(moment(item.date_create), 'hours');
+    const diffMinuteUpdate = moment().diff(moment(item.date_create), 'minutes');
+    const diffSecondUpdate = moment().diff(moment(item.date_create), 'seconds');
+
+    if (diffDayUpdate) return `${diffDayUpdate} ngày trước`;
+    if (diffHourUpdate) return `${diffHourUpdate} giờ trước`;
+    if (diffMinuteUpdate) return `${diffMinuteUpdate} phút trước`;
+    if (!diffSecondUpdate) return `vừa xong`;
+    return `${diffSecondUpdate} giây trước`;
+  }, []);
+
   return (
     <Wrapper>
       <div className="header">
@@ -61,7 +87,7 @@ const Item = ({ topic, addComment, careTopics }) => {
             <span>đã đăng một chủ đề thảo luận</span>
           </p>
           <div className="right-info">
-            <span>11 phút trước ,</span>
+            <span>{diffUpdate(topic)} ,</span>
             <span className="role">
               {topic.author.role === 'admin' ? (
                 <span>
@@ -109,6 +135,45 @@ const Item = ({ topic, addComment, careTopics }) => {
           Comment
         </div>
       </div>
+
+      {shouldShowComment && topic.comment && !!topic.comment.length && (
+        <div
+          id="id-comment"
+          className={`${isDetail ? 'detail-comment' : ''} comment`}
+          style={showComment ? { borderTop: '1px solid #e7e9ec' } : { borderTop: 'none' }}
+        >
+          {topic.comment.map((comment, index) => (
+            <div
+              className="each-comment"
+              key={index}
+              style={index === 0 ? { borderTop: 'none' } : { borderTop: '1px solid #e7e9ec' }}
+            >
+              <div className="header">
+                <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+                <div className="info">
+                  <p className="left-info">{comment.author_comment.name}</p>
+                  <div className="right-info">
+                    <span>{diffUpdate(comment)} ,</span>
+                    <span>{comment.author_comment.role === 'admin' ? 'quản trị viên' : 'người dùng'}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="content">
+                <p>{comment.content}</p>
+                {comment.image && <img src={comment.image} alt="img-content" />}
+                {comment.video && <video src={comment.video} alt="video-content" controls />}
+                {comment.outline && (
+                  <div className="download">
+                    <DownloadOutlined />
+                    <a href={comment.outline}> Nhấn Vào Đây Để Tải Tài Liệu Đính Kèm</a>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={formik.handleSubmit}>
         <div className="write-comment">
@@ -178,45 +243,6 @@ const Item = ({ topic, addComment, careTopics }) => {
           </div>
         </div>
       </form>
-
-      {showComment && topic.comment && !!topic.comment.length && (
-        <div
-          id="id-comment"
-          className="comment"
-          style={showComment ? { borderTop: '1px solid #e7e9ec' } : { borderTop: 'none' }}
-        >
-          {topic.comment.map((comment, index) => (
-            <div
-              className="each-comment"
-              key={index}
-              style={index === 0 ? { borderTop: 'none' } : { borderTop: '1px solid #e7e9ec' }}
-            >
-              <div className="header">
-                <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
-                <div className="info">
-                  <p className="left-info">{comment.author_comment.name}</p>
-                  <div className="right-info">
-                    <span>11 phút trước ,</span>
-                    <span>{comment.author_comment.role === 'admin' ? 'quản trị viên' : 'người dùng'}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="content">
-                <p>{comment.content}</p>
-                {comment.image && <img src={comment.image} alt="img-content" />}
-                {comment.video && <video src={comment.video} alt="video-content" controls />}
-                {comment.outline && (
-                  <div className="download">
-                    <DownloadOutlined />
-                    <a href={comment.outline}> Nhấn Vào Đây Để Tải Tài Liệu Đính Kèm</a>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
     </Wrapper>
   );
 };

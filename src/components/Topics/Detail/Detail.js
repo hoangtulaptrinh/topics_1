@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { FileImageOutlined, VideoCameraOutlined, FileTextOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import LoadingOverlay from 'react-loading-overlay';
 
 import { loadDetailTopics } from '../../../actions';
 import Icon from '../Item/Icon';
@@ -19,18 +20,27 @@ const List = ({ detailTopic, loadDetailTopics }) => {
 
   const { loading, topic: data, err } = detailTopic;
 
-  console.log(data);
+  const scrollToBottom = useCallback(
+    () =>
+      window.scrollTo({
+        top: 0,
+      }),
+    [],
+  );
+
   return (
-    <Wrapper>
-      <Header />
-      <div className="total">
-        <LeftContent />
-        {loading && <h1>Đang Tải Dữ Liệu</h1>}
-        {!loading && data && data.id && <Item topic={data} />}
-        {!loading && err && <h1>{err}</h1>}
-        <RightContent />
-      </div>
-    </Wrapper>
+    <LoadingOverlay active={loading} spinner text="Đang Tải">
+      <Wrapper>
+        <Header />
+        <div className="total">
+          <LeftContent />
+          {loading && <h1>Đang Tải Dữ Liệu</h1>}
+          {!loading && data && data.id && <Item topic={data} isDetail scrollToBottom={scrollToBottom} />}
+          {!loading && err && <h1>{err}</h1>}
+          <RightContent />
+        </div>
+      </Wrapper>
+    </LoadingOverlay>
   );
 };
 

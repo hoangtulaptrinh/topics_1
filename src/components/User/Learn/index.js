@@ -38,10 +38,6 @@ const HomePage = ({ listCourses }) => {
   }, [course, currentUser, idThisCourse]);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
-
     if (!course || !currentUser.course) return;
     if (!!HasThisCourse) return;
 

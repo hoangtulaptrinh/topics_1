@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 import Wrapper from './RightContent.styled';
 
 const List = ({ listUsers }) => {
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
   const history = useHistory();
+  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
 
   const query = new URLSearchParams(window.location.search);
 

@@ -1,13 +1,16 @@
 import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { StarOutlined, UserOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 
 import Wrapper from './LeftContent.styled';
 
 const List = ({ listTopics }) => {
+  const history = useHistory();
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const topTopics = useMemo(() => {
+    console.log(listTopics.listTopics.thread);
     if (!listTopics.listTopics.thread) return [];
     return listTopics.listTopics.thread.sort((a, b) => b.comment.length - a.comment.length).slice(0, 4); // sort big => small and
   }, [listTopics.listTopics.thread]);
@@ -18,7 +21,11 @@ const List = ({ listTopics }) => {
         <p className="title">Những Chủ Đề Được Bàn Luận Sôi Nổi Nhất</p>
 
         {topTopics.map((thread, index) => (
-          <div key={index}>
+          <div
+            className="topic"
+            key={index}
+            onClick={() => history.push(`/topics/detail?idThread=${thread.idThread}&id=${thread.id}`)}
+          >
             <div className="header">
               <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
               <div className="info">

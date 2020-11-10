@@ -15,6 +15,7 @@ import HomePage from '../User/HomePage';
 import ListCourses from '../User/Courses/List';
 import Detail from '../User/Courses/Detail';
 import Learn from '../User/Learn';
+import Info from '../User/Info';
 //users
 
 const ROUTES = [
@@ -68,6 +69,12 @@ const ROUTES = [
         key: 'users_courses',
         exact: false,
         component: Detail,
+      },
+      {
+        path: '/info',
+        key: 'users_info',
+        exact: true,
+        component: Info,
       },
       {
         path: '/admin',

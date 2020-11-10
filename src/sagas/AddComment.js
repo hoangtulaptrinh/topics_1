@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 
-import { loadTopics } from '../actions';
+import { loadDetailTopics, loadTopics } from '../actions';
 import { TOPICS } from '../constants';
 import { addComment } from '../api';
 
@@ -12,6 +12,7 @@ export function* handleAddComment(action) {
   try {
     yield call(addComment, { ...action.data }, idTopics); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     yield put(loadTopics());
+    yield put(loadDetailTopics());
   } catch (error) {
     console.log(error.message);
   }

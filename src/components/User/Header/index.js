@@ -42,6 +42,10 @@ const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
   }, [getAllCategory, getAllCourses, refreshCurrentUser]);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+
     window.location.pathname === '/' && window.addEventListener('scroll', handleScroll);
 
     if (window.location.pathname !== '/') {
@@ -101,7 +105,7 @@ const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
           </div>
           <div className="menu">
             <BookFilled />
-            <SettingFilled />
+            <SettingFilled onClick={() => history.push('/info')} />
             <LogoutOutlined onClick={logOut} />
           </div>
         </div>

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import backGroundImage from '../../assets/img/narutoxhinata.png';
+import backGroundImage from '../../assets/img/NARUTOXHINATA.png';
 
 export default styled.div`
   input {
