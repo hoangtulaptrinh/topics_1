@@ -9,7 +9,7 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 import Users from '../Users/index';
 import Courses from '../Courses/index';
@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
         <Sider collapsed={this.state.collapsed}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })} >
+            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })}>
               Coures
             </Menu.Item>
 
