@@ -25,8 +25,6 @@ const SignInSignUp = ({ signIn, signUp }) => {
       password: '',
       passwordRepeat: '',
       name: '',
-      date_of_birth: '',
-      phone_number: '',
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -42,8 +40,6 @@ const SignInSignUp = ({ signIn, signUp }) => {
         .required('hãy nhập lại mật khẩu của bạn 1 lần nữa')
         .oneOf([Yup.ref('password'), null], 'mật khẩu không trùng với mật khẩu ở trên'),
       name: Yup.string().required('Hãy điền tên của bạn'),
-      date_of_birth: Yup.string().required('Hãy điền ngày sinh của bạn'),
-      phone_number: Yup.string().required('Hãy điền số điện thoại của bạn'),
     }),
     onSubmit: values => signUp(values),
   });
@@ -173,36 +169,6 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     />
                     {formikSignUp.touched.passwordRepeat && formikSignUp.errors.passwordRepeat ? (
                       <div style={{ color: 'red', marginTop: 15 }}>{formikSignUp.errors.passwordRepeat}</div>
-                    ) : null}
-                  </div>
-                  <div className="group">
-                    <label htmlFor="pass" className="label">
-                      Ngày Tháng Năm Sinh
-                    </label>
-                    <input
-                      className="input height"
-                      name="date_of_birth"
-                      onChange={formikSignUp.handleChange}
-                      onBlur={formikSignUp.handleBlur}
-                      value={formikSignUp.values.date_of_birth}
-                    />
-                    {formikSignUp.touched.date_of_birth && formikSignUp.errors.date_of_birth ? (
-                      <div style={{ color: 'red', marginTop: 15 }}>{formikSignUp.errors.date_of_birth}</div>
-                    ) : null}
-                  </div>
-                  <div className="group">
-                    <label htmlFor="pass" className="label">
-                      Số điện thoại
-                    </label>
-                    <input
-                      className="input height"
-                      name="phone_number"
-                      onChange={formikSignUp.handleChange}
-                      onBlur={formikSignUp.handleBlur}
-                      value={formikSignUp.values.phone_number}
-                    />
-                    {formikSignUp.touched.phone_number && formikSignUp.errors.phone_number ? (
-                      <div style={{ color: 'red', marginTop: 15 }}>{formikSignUp.errors.phone_number}</div>
                     ) : null}
                   </div>
                   <div className="group">

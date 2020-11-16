@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SEVER_URL = 'http://localhost:5000';
+const SEVER_URL = 'http://localhost:8080';
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -9,6 +9,8 @@ export const getAllUser = () => axios.get(`${SEVER_URL}/users`);
 export const getDetailUser = () => axios.get(`${SEVER_URL}/users/${currentUser._id}`);
 
 export const updateCurrentUser = data => axios.put(`${SEVER_URL}/users/update_info/${currentUser._id}`, data);
+
+export const updateUser = (id, data) => axios.put(`${SEVER_URL}/users/update_info/${id}`, data);
 
 export const signIn = data => axios.post(`${SEVER_URL}/users/login`, data);
 

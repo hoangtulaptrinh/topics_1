@@ -9,7 +9,7 @@ export default styled.div`
       flex: 7;
 
       video {
-        width: 100%;
+        max-width: 100%;
       }
     }
 

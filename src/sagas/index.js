@@ -11,6 +11,7 @@ import refreshCurrentUser from './RefreshCurrentUser';
 import signIn from './SignIn';
 import signUp from './SignUp';
 import users from './Users';
+import updateCurrentUser from './UpdateCurrentUser';
 
 export default function* rootSaga() {
   yield all([
@@ -25,5 +26,6 @@ export default function* rootSaga() {
     signIn(),
     signUp(),
     users(),
+    updateCurrentUser(),
   ]);
 }
