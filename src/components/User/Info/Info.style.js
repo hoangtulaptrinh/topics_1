@@ -147,6 +147,77 @@ export default styled.div`
         .user-info {
           margin-top: 100px;
         }
+
+        .back-btn {
+          cursor: pointer;
+          display: flex;
+          color: #009090;
+          font-size: 16px;
+          height: 52px;
+          position: relative;
+          justify-content: flex-start;
+          align-items: center;
+          margin-bottom: 40px;
+          padding-left: 20px;
+          padding-right: 20px;
+          margin-right: -20px;
+          margin-left: -20px;
+
+          span {
+            margin: 0 0 2px 5px;
+          }
+        }
+
+        .field {
+          margin-top: 30px;
+
+          .title {
+            margin-bottom: 15px;
+            display: block;
+            font-size: 14px;
+            color: #333333;
+            font-weight: 700;
+            padding-bottom: 6px;
+            line-height: 18px;
+          }
+
+          .input {
+            outline: none;
+            height: 40px;
+            max-width: 575px;
+            padding: 8px 12px;
+            appearance: none;
+            background-color: #ffffff;
+            border: 1px solid #b3b3b3;
+            border-radius: 3px;
+            font-family: inherit;
+            transition: background-color 0.15s cubic-bezier(0.2, 0.2, 0.2, 1),
+              border-color 0.15s cubic-bezier(0.2, 0.2, 0.2, 1);
+            width: 100%;
+          }
+        }
+
+        .has-error {
+          border: 1px solid red !important;
+        }
+
+        .submit-btn {
+          margin-top: 50px;
+          cursor: pointer;
+          padding: 8px 16px;
+          height: 40px;
+          outline: none;
+          border: none;
+          border-radius: 5px;
+          background: #1ec0b0;
+          color: #fff;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .disabled-btn {
+          background: #8edfd7;
+        }
       }
     }
   }

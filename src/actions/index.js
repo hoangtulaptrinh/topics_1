@@ -14,6 +14,11 @@ export const getAllUsersFail = err => ({
   err,
 });
 
+export const updateCurrentUser = data => ({
+  type: USER.UPDATE_CURRENT_USER,
+  data,
+});
+
 export const setAllUsers = data => ({
   type: USER.SET_ALL_USERS,
   data,
