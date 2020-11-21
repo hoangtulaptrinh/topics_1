@@ -1,7 +1,8 @@
 import React, { Fragment, Component } from 'react';
-import { Table, Space, Modal, Input, Button, Form, Popconfirm } from 'antd';
+import { Table, Space, Modal, Input, Button, Form, Popconfirm, Checkbox } from 'antd';
 import { getAllCourses } from '../../actions';
 import { connect } from 'react-redux';
+import { Player } from 'video-react';
 
 const layout = {
   labelCol: {
@@ -23,7 +24,8 @@ class Courses extends Component {
     super(props);
 
     this.state = {
-      indexLesson: null,
+      currentLesson: null,
+      visibleModalAdd: false,
     };
   }
 
@@ -80,9 +82,9 @@ class Courses extends Component {
       dataIndex: 'lesson',
       key: 'lesson',
       render: lesson =>
-        lesson.map((_, index) => (
+        lesson.map((item, index) => (
           <div key={index} style={{ marginTop: 5 }}>
-            <Button type="primary" onClick={() => this.setState({ indexLesson: index })}>
+            <Button type="primary" onClick={() => this.setState({ currentLesson: item })}>
               {`Bai hoc so ${index + 1}`}
             </Button>
           </div>
@@ -100,18 +102,51 @@ class Courses extends Component {
     this.props.getAllCourses();
   }
 
+  showModalAdd = () => this.setState({ visibleModalAdd: true });
+
   render() {
-    const { indexLesson } = this.state;
+    const { currentLesson, visibleModalAdd } = this.state;
     const { listCourses } = this.props;
     console.log('listCousre', listCourses);
 
     return (
       <Fragment>
+        <Button type="primary" onClick={this.showModalAdd} style={{ margin: '10px 0px' }}>
+          {' '}
+          Add New Course{' '}
+        </Button>
         <Table key={listCourses._id} dataSource={listCourses} columns={this.columns} bordered />
+        {/* Modal Lesson */}
         <Modal
           title="Lesson"
-          onCancel={() => this.setState({ indexLesson: null })}
-          visible={indexLesson !== null}
+          onCancel={() => this.setState({ currentLesson: null })}
+          visible={currentLesson !== null}
+          footer={null}
+        >
+          {currentLesson && (
+            <Fragment>
+              <div>{currentLesson.name}</div>
+              <a href={currentLesson.exercise} target="_blank" rel="noreferrer">
+                exercise
+              </a>
+              <div>{currentLesson.question.name}</div>
+              <div>
+                {currentLesson.question.answer.map((item, index) => (
+                  <Fragment key={index}>
+                    <div> {item.content} </div>
+                    <Checkbox checked={item.isTrue === 'true'} />
+                  </Fragment>
+                ))}
+              </div>
+              {currentLesson.video ? <Player src={currentLesson.video} /> : <h1>Bài Học Đang Được Chuẩn Bị</h1>}
+            </Fragment>
+          )}
+        </Modal>
+        {/* Modal Add New Course */}
+        <Modal
+          title="Add new course"
+          onCancel={() => this.setState({ visibleModalAdd: false })}
+          visible={visibleModalAdd}
           footer={null}
         >
           Test
