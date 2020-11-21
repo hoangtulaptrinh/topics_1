@@ -5,7 +5,9 @@ import { TOPICS } from '../constants';
 import { fetchTopics } from '../api';
 
 export function* handleTopicsLoad() {
-  const idTopics = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
+  const query = new URLSearchParams(window.location.search);
+
+  const idTopics = query.get('idThread');
 
   try {
     const data = yield call(fetchTopics, idTopics); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))

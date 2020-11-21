@@ -33,6 +33,10 @@ export default styled.div`
     border: 1px solid #e7e9ec;
     border-radius: 4px;
 
+    .topic {
+      cursor: pointer;
+    }
+
     .course {
       cursor: pointer;
       display: flex;

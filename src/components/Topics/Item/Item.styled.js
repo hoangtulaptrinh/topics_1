@@ -201,15 +201,23 @@ export default styled.div`
 
   .comment {
     overflow: auto;
-    max-height: 720px;
+    max-height: 500px;
     background: #fbfbfc;
-    margin: 30px -15px 0 -15px;
+    margin: 0 -15px;
     padding: 0 15px 0;
     border-radius: 0 0 4px 4px;
+
+    .content {
+      margin-left: 40px;
+    }
 
     .header {
       margin-top: 20px;
     }
+  }
+
+  #id-comment {
+    border-top: 1px solid rgb(231, 233, 236) !important;
   }
 
   #id-comment::-webkit-scrollbar-track {

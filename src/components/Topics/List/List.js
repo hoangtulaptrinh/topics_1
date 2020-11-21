@@ -25,7 +25,11 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
     },
   });
 
-  const idTopic = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
+  const query = new URLSearchParams(window.location.search);
+
+  const idTopic = query.get('idThread');
+
+  // const idTopic = window.location.pathname.split('/')[window.location.pathname.split('/').length - 1];
 
   useEffect(() => {
     fetchTopics();

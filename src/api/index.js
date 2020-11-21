@@ -10,6 +10,8 @@ export const getDetailUser = () => axios.get(`${SEVER_URL}/users/${currentUser._
 
 export const updateCurrentUser = data => axios.put(`${SEVER_URL}/users/update_info/${currentUser._id}`, data);
 
+export const updateUser = (id, data) => axios.put(`${SEVER_URL}/users/update_info/${id}`, data);
+
 export const signIn = data => axios.post(`${SEVER_URL}/users/login`, data);
 
 export const signUp = data => axios.post(`${SEVER_URL}/users/create`, data);
@@ -22,6 +24,17 @@ export const getAllCategory = () => axios.get(`${SEVER_URL}/categorys`);
 
 export const fetchTopics = async id => {
   const response = await fetch(`${SEVER_URL}/topics/show_all_threads_on_topic/${id}`);
+  const data = await response.json();
+
+  if (response.status >= 400) {
+    if (response.status === 404) throw new Error('không tìm thấy');
+    throw new Error('đã xảy ra lỗi');
+  }
+  return data;
+};
+
+export const fetchDetailTopics = async (idThread, id) => {
+  const response = await fetch(`${SEVER_URL}/topics/${idThread}?id=${id}`);
   const data = await response.json();
 
   if (response.status >= 400) {
