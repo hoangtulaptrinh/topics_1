@@ -131,3 +131,62 @@ body::-webkit-scrollbar-thumb {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.icon-chat {
+  cursor: pointer;
+  font-size: 40px;
+  position: fixed;
+  top: 90vh;
+  right: 50px;
+  color: #006fff;
+}
+
+.icon-mess {
+  cursor: pointer;
+}
+.popover-body {
+  padding: 0.5rem 0 0.75rem 0.75rem;
+}
+.content-chat {
+  overflow-y: auto;
+  margin-top: -7px;
+  height: 342px;
+}
+.content-chat > .messenger {
+  margin-top: 10px;
+  border: solid 0.5px #707070;
+  padding: 10px;
+  word-break: break-all;
+}
+.your-messenger {
+  display: flex;
+  flex-direction: column;
+}
+.your-messenger > .title {
+  color: blue;
+}
+.your-messenger > .content {
+  margin-top: 5px;
+}
+.some-body-messenger {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.some-body-messenger > .title {
+  color: violet;
+}
+.input-chat {
+  display: flex;
+  align-items: center;
+  border: solid 0.5px #707070;
+  padding: 10px;
+}
+.input-chat > input {
+  flex: 1;
+  margin-right: 10px;
+}
+.input-chat > svg {
+  cursor: pointer;
+  width: 50px;
+}

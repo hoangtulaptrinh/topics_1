@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
+  width: 650px;
+
   margin-top: 20px;
 
   display: flex;

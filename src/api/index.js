@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SEVER_URL = 'http://localhost:5000';
+const SEVER_URL = 'http://localhost:8080';
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
