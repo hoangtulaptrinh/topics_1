@@ -7,16 +7,16 @@ import { toastSuccess } from '../helper/toastHelper';
 
 export function* handleUpdateUser(action) {
   try {
-    console.log(1111);
     yield call(updateCurrentUser, { ...action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
 
     yield put(refreshCurrentUser());
-    console.log(action);
 
     if (action && action.data && action.data.password) {
       toastSuccess('Đổi Mật Khẩu Thành Công');
       return;
     }
+
+    toastSuccess('Đổi Thông Tin Thành Công');
   } catch (error) {
     console.log(error.message);
   }

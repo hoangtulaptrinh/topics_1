@@ -185,26 +185,28 @@ const HomePage = ({ listCourses }) => {
             footer={false}
             closable={false}
           >
-            <div className="question">
-              <div className="quiz title">
-                <p>Chọn toàn bộ các đáp án bạn thấy đúng.</p>
-                {`Câu hỏi: ${course.lesson[lesson].question.name}`}
-              </div>
-
-              {course.lesson[lesson].question.answer.map((item, index) => (
-                <div className="quiz cursor-pointer" onClick={() => handleQuiz(index)} key={index}>
-                  <input type="checkbox" checked={quiz.includes(index)} />
-                  <div className="content">
-                    <span>{['A', 'B', 'C', 'D'][index]}.</span>
-                    {item.content}
-                  </div>
+            {course.lesson[lesson] && (
+              <div className="question">
+                <div className="quiz title">
+                  <p>Chọn toàn bộ các đáp án bạn thấy đúng.</p>
+                  {`Câu hỏi: ${course.lesson[lesson].question.name}`}
                 </div>
-              ))}
 
-              <Button type="primary" disabled={!quiz.length} onClick={handlequizSubmit}>
-                Nộp Bài
-              </Button>
-            </div>
+                {course.lesson[lesson].question.answer.map((item, index) => (
+                  <div className="quiz cursor-pointer" onClick={() => handleQuiz(index)} key={index}>
+                    <input type="checkbox" checked={quiz.includes(index)} />
+                    <div className="content">
+                      <span>{['A', 'B', 'C', 'D'][index]}.</span>
+                      {item.content}
+                    </div>
+                  </div>
+                ))}
+
+                <Button type="primary" disabled={!quiz.length} onClick={handlequizSubmit}>
+                  Nộp Bài
+                </Button>
+              </div>
+            )}
           </Modal>
         </div>
       )}

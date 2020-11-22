@@ -1,27 +1,23 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import { Collapse } from 'antd';
+import { DatePicker } from 'antd';
 import { connect } from 'react-redux';
 import { useFormik } from 'formik';
-import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import Header from '../Header';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 
-import { toastWarning } from '../../../helper/toastHelper';
 import { updateCurrentUser } from '../../../actions';
 import infoUserImage from '../../../assets/img/INFO.png';
 import Wrapper from './Info.style';
 
-const { Panel } = Collapse;
+const formatDate = 'DD/MM/YYYY';
 
-const HomePage = ({ listCourses, updateCurrentUser }) => {
-  const history = useHistory();
-
+const HomePage = ({ updateCurrentUser }) => {
   const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
 
-  const [page, setPage] = useState('password');
+  const [page, setPage] = useState('all');
 
   const formikPassword = useFormik({
     initialValues: { oldPassword: '', newPassword: '', newPasswordRepeat: '' },
@@ -45,9 +41,28 @@ const HomePage = ({ listCourses, updateCurrentUser }) => {
     onSubmit: values => updateCurrentUser({ password: values.newPassword }),
   });
 
+  const formikInfo = useFormik({
+    initialValues: {
+      name: currentUser.name,
+      date_of_birth: currentUser.date_of_birth,
+      phone_number: currentUser.phone_number,
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Hãy nhập Họ Tên của bạn'),
+      date_of_birth: Yup.string(),
+      phone_number: Yup.string().required('Hãy nhập số điện thoại của bạn'),
+    }),
+    onSubmit: values => updateCurrentUser(values),
+  });
+
   const isDisabledBtnSubmitPasswordForm = useMemo(() => !formikPassword.dirty || !isEmpty(formikPassword.errors), [
     formikPassword.dirty,
     formikPassword.errors,
+  ]);
+
+  const isDisabledBtnSubmitInfoForm = useMemo(() => !formikInfo.dirty || !isEmpty(formikInfo.errors), [
+    formikInfo.dirty,
+    formikInfo.errors,
   ]);
 
   return (
@@ -96,46 +111,47 @@ const HomePage = ({ listCourses, updateCurrentUser }) => {
                   <AiOutlineRight />
                 </div>
               </div>
+              <div className="login-info">
+                <h4>Thông tin đăng nhập</h4>
 
-              <div className="user-info">
-                <h4>Thông tin cá nhân</h4>
+                <div className="user-info">
+                  <h4>Thông tin cá nhân</h4>
 
-                <div className="item">
-                  <div className="left">
-                    <span className="top">Học Viên</span>
-                    <span className="down">{currentUser.name}</span>
+                  <div className="item" onClick={() => setPage('info')}>
+                    <div className="left">
+                      <span className="top">Học Viên</span>
+                      <span className="down">{currentUser.name}</span>
+                    </div>
+                    <AiOutlineRight />
                   </div>
-                  <AiOutlineRight />
-                </div>
 
-                <div className="item" style={{ borderTop: 'none' }}>
-                  <div className="left">
-                    <span className="top">Thống Kê</span>
-                    <span className="down">Chi Tiết</span>
+                  <div className="item" style={{ borderTop: 'none' }}>
+                    <div className="left">
+                      <span className="top">Thống Kê</span>
+                      <span className="down">Chi Tiết</span>
+                    </div>
+                    <AiOutlineRight />
                   </div>
-                  <AiOutlineRight />
                 </div>
               </div>
-            </div>
-          )}
-
-          {page === 'password' && (
-            <div className="right">
-              <div className="header">
-                <img src={infoUserImage} alt="info" />
-                <div className="info">
-                  <p className="title">Đổi mật khẩu</p>
-                  <p className="content">
-                    Đây là mật khẩu sử dụng để đăng nhập. Hãy đặt mật khẩu an toàn bằng cách sử dụng ít nhất 8 ký tự,
-                    bao gồm cả chữ thường và chữ in hoa, chữ số và ký tự đặc biệt.
-                  </p>
+              )}
+              {page === 'password' && (
+                <div className="right">
+                  <div className="header">
+                    <img src={infoUserImage} alt="info" />
+                    <div className="info">
+                      <p className="title">Đổi mật khẩu</p>
+                      <p className="content">
+                        Đây là mật khẩu sử dụng để đăng nhập. Hãy đặt mật khẩu an toàn bằng cách sử dụng ít nhất 8 ký
+                        tự, bao gồm cả chữ thường và chữ in hoa, chữ số và ký tự đặc biệt.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
+              )}
               <div className="back-btn" onClick={() => setPage('all')}>
                 <AiOutlineLeft /> <span>Tài Khoản</span>
               </div>
-
               <form onSubmit={formikPassword.handleSubmit}>
                 <div className="field">
                   <span className="title">Mật khẩu Cũ</span>
@@ -199,6 +215,78 @@ const HomePage = ({ listCourses, updateCurrentUser }) => {
                   type="submit"
                 >
                   Đổi Mật Khẩu
+                </button>
+              </form>
+            </div>
+          )}
+
+          {page === 'info' && (
+            <div className="right">
+              <div className="header">
+                <img src={infoUserImage} alt="info" />
+                <div className="info">
+                  <p className="title">Thông tin cá nhân</p>
+                  <p className="content">
+                    Thông tin cá nhân của bạn là cơ sở để chúng tôi giúp bạn tạo hồ sơ xin việc trong tương lai
+                  </p>
+                </div>
+              </div>
+
+              <div className="back-btn" onClick={() => setPage('all')}>
+                <AiOutlineLeft /> <span>Tài Khoản</span>
+              </div>
+
+              <form onSubmit={formikInfo.handleSubmit}>
+                <div className="field">
+                  <span className="title">Họ và tên</span>
+                  <input
+                    name="name"
+                    className={`${formikInfo.touched.name && formikInfo.errors.name ? 'has-error' : ''} input`}
+                    placeholder="Nhập Họ Tên Của Bạn"
+                    value={formikInfo.values.name}
+                    onChange={formikInfo.handleChange}
+                    onBlur={formikInfo.handleBlur}
+                  />
+                  {formikInfo.touched.name && formikInfo.errors.name ? (
+                    <div style={{ color: 'red' }}>{formikInfo.errors.name}</div>
+                  ) : null}
+                </div>
+
+                <div className="field">
+                  <span className="title">Ngày sinh</span>
+                  <DatePicker
+                    defaultValue={moment(formikInfo.values.date_of_birth, formatDate)}
+                    format={formatDate}
+                    onChange={value => formikInfo.setFieldValue('date_of_birth', moment(value).format(formatDate))}
+                  />
+                  {formikInfo.touched.date_of_birth && formikInfo.errors.date_of_birth ? (
+                    <div style={{ color: 'red' }}>{formikInfo.errors.date_of_birth}</div>
+                  ) : null}
+                </div>
+
+                <div className="field">
+                  <span className="title">Số Điện Thoại</span>
+                  <input
+                    name="phone_number"
+                    className={`${
+                      formikInfo.touched.phone_number && formikInfo.errors.phone_number ? 'has-error' : ''
+                    } input`}
+                    placeholder="Nhập Số Điện Thoại Của Bạn"
+                    value={formikInfo.values.phone_number}
+                    onChange={formikInfo.handleChange}
+                    onBlur={formikInfo.handleBlur}
+                  />
+                  {formikInfo.touched.phone_number && formikInfo.errors.phone_number ? (
+                    <div style={{ color: 'red' }}>{formikInfo.errors.phone_number}</div>
+                  ) : null}
+                </div>
+
+                <button
+                  disabled={isDisabledBtnSubmitInfoForm}
+                  className={`${isDisabledBtnSubmitInfoForm ? 'disabled-btn' : ''} submit-btn`}
+                  type="submit"
+                >
+                  Cập nhật
                 </button>
               </form>
             </div>
