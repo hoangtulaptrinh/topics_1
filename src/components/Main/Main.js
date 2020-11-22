@@ -9,7 +9,9 @@ import socketIOClient from 'socket.io-client';
 import Wrapper from './Main.styled';
 import { getAllUsers } from '../../actions';
 
-const socket = socketIOClient('http://localhost:8080/');
+import Icon from '../Topics/Item/Icon';
+
+const socket = socketIOClient('http://localhost:5000/');
 
 const Main = ({ getAllUsers }) => {
   useEffect(() => {
@@ -80,6 +82,7 @@ const Main = ({ getAllUsers }) => {
             </div>
             <div className="input-chat">
               <Input value={inputValue} onChange={e => setInputValue(e.target.value)} />
+              <Icon addEmoji={item => setInputValue(`${inputValue}${item}`)} />
               <Send size="35" color="blue" onClick={sendMessenger} />
             </div>
           </PopoverBody>

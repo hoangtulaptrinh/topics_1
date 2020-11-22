@@ -144,9 +144,21 @@ body::-webkit-scrollbar-thumb {
 .icon-mess {
   cursor: pointer;
 }
+
+.popover-inner {
+  border: solid 1px black;
+  background: #fff;
+}
+
+.popover-header {
+  border-bottom: solid 1px black;
+}
+
 .popover-body {
+  border-top: solid 1px black;
   padding: 0.5rem 0 0.75rem 0.75rem;
 }
+
 .content-chat {
   overflow-y: auto;
   margin-top: -7px;

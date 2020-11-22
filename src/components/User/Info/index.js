@@ -95,14 +95,6 @@ const HomePage = ({ updateCurrentUser }) => {
               <div className="login-info">
                 <h4>Thông tin đăng nhập</h4>
 
-                <div className="item">
-                  <div className="left">
-                    <span className="top">Email</span>
-                    <span className="down">{currentUser.email}</span>
-                  </div>
-                  <AiOutlineRight />
-                </div>
-
                 <div className="item" style={{ borderTop: 'none' }} onClick={() => setPage('password')}>
                   <div className="left">
                     <span className="top">Mật khẩu</span>

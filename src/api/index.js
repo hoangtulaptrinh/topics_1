@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SEVER_URL = 'http://localhost:8080';
+const SEVER_URL = 'http://localhost:5000';
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -28,7 +28,8 @@ export const fetchTopics = async id => {
 
   if (response.status >= 400) {
     if (response.status === 404) throw new Error('không tìm thấy');
-    throw new Error('đã xảy ra lỗi');
+    // throw new Error('đã xảy ra lỗi');
+    throw new Error('');
   }
   return data;
 };
@@ -39,7 +40,8 @@ export const fetchDetailTopics = async (idThread, id) => {
 
   if (response.status >= 400) {
     if (response.status === 404) throw new Error('không tìm thấy');
-    throw new Error('đã xảy ra lỗi');
+    // throw new Error('đã xảy ra lỗi');
+    throw new Error('');
   }
   return data;
 };

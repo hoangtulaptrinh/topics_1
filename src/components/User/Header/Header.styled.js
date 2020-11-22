@@ -10,7 +10,7 @@ export default styled.div`
     display: flex;
 
     .left {
-      flex: 3.5;
+      flex: 5;
       display: flex;
       img {
         cursor: pointer;
@@ -36,7 +36,7 @@ export default styled.div`
     }
 
     .right {
-      flex: 6.5;
+      flex: 5;
     }
 
     .right {
