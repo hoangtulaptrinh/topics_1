@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { BookFilled, LogoutOutlined, SettingFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
+import { Menu, Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import { getAllCourses, getAllCategory } from '../../../actions';
 import { toastSuccess } from '../../../helper/toastHelper';
@@ -24,10 +26,10 @@ const LIST_NAV_BAR = [
     href: '/topics',
   },
 ];
-const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
+const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory }) => {
   const history = useHistory();
 
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const logOut = () => {
     history.push('/login');
@@ -81,6 +83,91 @@ const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
     headerElement.style.background = '';
   };
 
+  const listCoursesCurrentUser = useMemo(() => {
+    const currentUserCourse = currentUser.course;
+    if (!currentUserCourse.length) return [];
+
+    const currentUserCourseMapToId = currentUserCourse.map(item => item.id);
+
+    return listCourses.filter(item => currentUserCourseMapToId.includes(item._id));
+  }, [currentUser, listCourses]);
+
+  const diffUpdate = useCallback(item => {
+    const diffDayUpdate = moment().diff(moment(item.date_create), 'days');
+    const diffHourUpdate = moment().diff(moment(item.date_create), 'hours');
+    const diffMinuteUpdate = moment().diff(moment(item.date_create), 'minutes');
+    const diffSecondUpdate = moment().diff(moment(item.date_create), 'seconds');
+
+    if (diffDayUpdate) return `${diffDayUpdate} ngày trước`;
+    if (diffHourUpdate) return `${diffHourUpdate} giờ trước`;
+    if (diffMinuteUpdate) return `${diffMinuteUpdate} phút trước`;
+    if (!diffSecondUpdate) return `vừa xong`;
+    return `${diffSecondUpdate} giây trước`;
+  }, []);
+
+  console.log(listCoursesCurrentUser);
+
+  const menu = (
+    <Menu>
+      {listCoursesCurrentUser.length &&
+        listCoursesCurrentUser.map((item, index) => (
+          <Menu.Item key={index} onClick={() => history.push(`/courses/detail/${item._id}`)}>
+            <div style={{ display: 'flex' }}>
+              <img height={120} src={item.image} alt="test-test" />
+              <div style={{ marginLeft: 20 }}>
+                <div style={{ fontWeight: 600 }}>{item.name}</div>
+                <div style={{ fontSize: '.8rem', marginTop: 4, color: '#888' }}>đã mua vào {diffUpdate(item)}</div>
+                <div>tổng cộng {item.lesson.length} bài học</div>
+                <div
+                  style={{
+                    margin: '4px 0 2px 0',
+                    display: 'inline-block',
+                    fontSize: '.8rem',
+                    fontWeight: 600,
+                    color: '#007791',
+                  }}
+                >
+                  {item.lesson.length
+                    ? (Number(currentUser.course.find(course => course.id === item._id).progress) /
+                        Number(item.lesson.length)) *
+                      100
+                    : 0}
+                  %
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    background: '#d6d6d6',
+                    height: 6,
+                    borderRadius: '3px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${
+                        currentUser.course.find(course => course.id === item._id).progress
+                          ? `${(Number(currentUser.course.find(course => course.id === item._id).progress) /
+                              Number(item.lesson.length)) *
+                              100}%`
+                          : '0%'
+                      }
+                  `,
+                      height: '100%',
+                      background: '#05d786',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: '#d6d6d6', marginTop: 10 }} />
+          </Menu.Item>
+        ))}
+    </Menu>
+  );
+
   return (
     <Wrapper>
       <div className="total-header">
@@ -104,7 +191,10 @@ const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
             </div>
           </div>
           <div className="menu">
-            <BookFilled />
+            <Dropdown overlay={menu} arrow>
+              <BookFilled />
+            </Dropdown>
+
             <SettingFilled onClick={() => history.push('/info')} />
             <LogoutOutlined onClick={logOut} />
           </div>
@@ -114,6 +204,6 @@ const Header = ({ refreshCurrentUser, getAllCourses, getAllCategory }) => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ listCourses, reRender }) => ({ listCourses, reRender });
 
 export default connect(mapStateToProps, { refreshCurrentUser, getAllCourses, getAllCategory })(Header);

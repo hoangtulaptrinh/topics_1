@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { DatePicker } from 'antd';
 import { connect } from 'react-redux';
@@ -8,14 +8,14 @@ import Header from '../Header';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 
-import { updateCurrentUser } from '../../../actions';
+import { updateCurrentUser, refreshCurrentUser } from '../../../actions';
 import infoUserImage from '../../../assets/img/INFO.png';
 import Wrapper from './Info.style';
 
 const formatDate = 'DD/MM/YYYY';
 
-const HomePage = ({ updateCurrentUser }) => {
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const [page, setPage] = useState('all');
 
@@ -65,6 +65,10 @@ const HomePage = ({ updateCurrentUser }) => {
     formikInfo.errors,
   ]);
 
+  useEffect(() => {
+    setPage('all');
+  }, [reRender, refreshCurrentUser]);
+
   return (
     <Wrapper>
       <Header />
@@ -104,8 +108,6 @@ const HomePage = ({ updateCurrentUser }) => {
                 </div>
               </div>
               <div className="login-info">
-                <h4>Thông tin đăng nhập</h4>
-
                 <div className="user-info">
                   <h4>Thông tin cá nhân</h4>
 
@@ -126,21 +128,22 @@ const HomePage = ({ updateCurrentUser }) => {
                   </div>
                 </div>
               </div>
-              )}
-              {page === 'password' && (
-                <div className="right">
-                  <div className="header">
-                    <img src={infoUserImage} alt="info" />
-                    <div className="info">
-                      <p className="title">Đổi mật khẩu</p>
-                      <p className="content">
-                        Đây là mật khẩu sử dụng để đăng nhập. Hãy đặt mật khẩu an toàn bằng cách sử dụng ít nhất 8 ký
-                        tự, bao gồm cả chữ thường và chữ in hoa, chữ số và ký tự đặc biệt.
-                      </p>
-                    </div>
-                  </div>
+            </div>
+          )}
+
+          {page === 'password' && (
+            <div className="right">
+              <div className="header">
+                <img src={infoUserImage} alt="info" />
+                <div className="info">
+                  <p className="title">Đổi mật khẩu</p>
+                  <p className="content">
+                    Đây là mật khẩu sử dụng để đăng nhập. Hãy đặt mật khẩu an toàn bằng cách sử dụng ít nhất 8 ký tự,
+                    bao gồm cả chữ thường và chữ in hoa, chữ số và ký tự đặc biệt.
+                  </p>
                 </div>
-              )}
+              </div>
+
               <div className="back-btn" onClick={() => setPage('all')}>
                 <AiOutlineLeft /> <span>Tài Khoản</span>
               </div>
@@ -293,4 +296,4 @@ const mapStatetoProps = ({ reRender, listCourses }) => {
   return { reRender, listCourses };
 };
 
-export default connect(mapStatetoProps, { updateCurrentUser })(HomePage);
+export default connect(mapStatetoProps, { updateCurrentUser, refreshCurrentUser })(HomePage);
