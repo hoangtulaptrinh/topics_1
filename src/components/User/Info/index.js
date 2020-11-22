@@ -103,46 +103,47 @@ const HomePage = ({ updateCurrentUser }) => {
                   <AiOutlineRight />
                 </div>
               </div>
+              <div className="login-info">
+                <h4>Thông tin đăng nhập</h4>
 
-              <div className="user-info">
-                <h4>Thông tin cá nhân</h4>
+                <div className="user-info">
+                  <h4>Thông tin cá nhân</h4>
 
-                <div className="item" onClick={() => setPage('info')}>
-                  <div className="left">
-                    <span className="top">Học Viên</span>
-                    <span className="down">{currentUser.name}</span>
+                  <div className="item" onClick={() => setPage('info')}>
+                    <div className="left">
+                      <span className="top">Học Viên</span>
+                      <span className="down">{currentUser.name}</span>
+                    </div>
+                    <AiOutlineRight />
                   </div>
-                  <AiOutlineRight />
-                </div>
 
-                <div className="item" style={{ borderTop: 'none' }}>
-                  <div className="left">
-                    <span className="top">Thống Kê</span>
-                    <span className="down">Chi Tiết</span>
+                  <div className="item" style={{ borderTop: 'none' }}>
+                    <div className="left">
+                      <span className="top">Thống Kê</span>
+                      <span className="down">Chi Tiết</span>
+                    </div>
+                    <AiOutlineRight />
                   </div>
-                  <AiOutlineRight />
                 </div>
               </div>
-            </div>
-          )}
-
-          {page === 'password' && (
-            <div className="right">
-              <div className="header">
-                <img src={infoUserImage} alt="info" />
-                <div className="info">
-                  <p className="title">Đổi mật khẩu</p>
-                  <p className="content">
-                    Đây là mật khẩu sử dụng để đăng nhập. Hãy đặt mật khẩu an toàn bằng cách sử dụng ít nhất 8 ký tự,
-                    bao gồm cả chữ thường và chữ in hoa, chữ số và ký tự đặc biệt.
-                  </p>
+              )}
+              {page === 'password' && (
+                <div className="right">
+                  <div className="header">
+                    <img src={infoUserImage} alt="info" />
+                    <div className="info">
+                      <p className="title">Đổi mật khẩu</p>
+                      <p className="content">
+                        Đây là mật khẩu sử dụng để đăng nhập. Hãy đặt mật khẩu an toàn bằng cách sử dụng ít nhất 8 ký
+                        tự, bao gồm cả chữ thường và chữ in hoa, chữ số và ký tự đặc biệt.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
+              )}
               <div className="back-btn" onClick={() => setPage('all')}>
                 <AiOutlineLeft /> <span>Tài Khoản</span>
               </div>
-
               <form onSubmit={formikPassword.handleSubmit}>
                 <div className="field">
                   <span className="title">Mật khẩu Cũ</span>

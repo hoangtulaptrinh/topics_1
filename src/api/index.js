@@ -20,6 +20,8 @@ export const buyThisCourseService = data => axios.patch(`${SEVER_URL}/users/buy_
 
 export const getAllCourses = () => axios.get(`${SEVER_URL}/courses`);
 
+export const createNewCourse = data => axios.post(`${SEVER_URL}/courses/create`, data);
+
 export const getAllCategory = () => axios.get(`${SEVER_URL}/categorys`);
 
 export const fetchTopics = async id => {
