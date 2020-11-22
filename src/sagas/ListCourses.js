@@ -1,7 +1,7 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 
 import { COURSES } from '../constants';
-import { getAllCourses, createNewCourse } from '../api';
+import { getAllCourses, createNewCourse, createNewLesson } from '../api';
 import { getAllCourses as getAll, setAllCourses } from '../actions';
 import { toastSuccess } from '../helper/toastHelper';
 
@@ -24,7 +24,18 @@ export function* handleCreateNewCourse(action) {
   }
 }
 
+export function* handleCreateNewLesson(action) {
+  try {
+    yield call(createNewLesson, action.data.id, action.data.data); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
+    yield put(getAll());
+    toastSuccess('Thêm bài học thành công!!!');
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 export default function* watchGetAllCourses() {
   yield takeEvery(COURSES.GET_ALL_COURSES, handleGetAllCourses);
   yield takeEvery(COURSES.CREATE_NEW_COURSE, handleCreateNewCourse);
+  yield takeEvery(COURSES.CREATE_NEW_LESSON, handleCreateNewLesson);
 }
