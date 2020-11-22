@@ -19,6 +19,11 @@ export const updateCurrentUser = data => ({
   data,
 });
 
+export const updateUser = data => ({
+  type: USER.UPDATE_USER,
+  data,
+});
+
 export const setAllUsers = data => ({
   type: USER.SET_ALL_USERS,
   data,
@@ -49,6 +54,11 @@ export const getAllCourses = () => ({
 
 export const setAllCourses = data => ({
   type: COURSES.SET_ALL_COURSES,
+  data,
+});
+
+export const createNewCourse = data => ({
+  type: COURSES.CREATE_NEW_COURSE,
   data,
 });
 
