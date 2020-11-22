@@ -62,6 +62,11 @@ export const createNewCourse = data => ({
   data,
 });
 
+export const createNewLesson = data => ({
+  type: COURSES.CREATE_NEW_LESSON,
+  data,
+});
+
 export const getAllCategory = () => ({
   type: CATEGORY.GET_ALL_CATEGORY,
 });
