@@ -1,7 +1,7 @@
 import { put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 
-import { getAllUsersSuccess, setAllUsers, refreshCurrentUser } from '../actions';
-import { getAllUser, buyThisCourseService } from '../api';
+import { getAllUsers, getAllUsersSuccess, refreshCurrentUser } from '../actions';
+import { getAllUser, buyThisCourseService, updateUser } from '../api';
 import { push } from 'connected-react-router';
 import { toastSuccess, toastWarning } from '../helper/toastHelper';
 
@@ -31,7 +31,21 @@ export function* handleBuyThisCourse(action) {
   }
 }
 
+export function* handleAddCoin(action) {
+  console.log(action, 'action');
+  try {
+    const { id, money } = action.data;
+
+    yield call(updateUser, id, { money }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
+    yield put(getAllUsers());
+    toastSuccess('Cộng tiền thành công');
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 export default function* watchGetAllUsers() {
   yield takeEvery(USER.GET_ALL_USERS, handleGetAllUsers);
   yield takeLatest(USER.BUY_THIS_COURSE, handleBuyThisCourse);
+  yield takeLatest(USER.UPDATE_USER, handleAddCoin);
 }

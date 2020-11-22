@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Table, Space, Modal, Input, Button, Form, Popconfirm } from 'antd';
-import { FaBan } from 'react-icons/fa';
+import { Table, Space, Modal, Input, Button, Form } from 'antd';
+// import { FaBan } from 'react-icons/fa';
 import { DollarOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { getAllUsers } from '../../actions/index';
+import { getAllUsers, updateUser } from '../../actions/index';
 
 const layout = {
   labelCol: {
@@ -21,6 +21,8 @@ const tailLayout = {
 };
 
 class Users extends Component {
+  formRef = React.createRef();
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +30,8 @@ class Users extends Component {
       isAddNew: false,
       visibleModalAddMoney: false,
       coin: '',
+      coinAdd: 0,
+      userId: '',
     };
   }
 
@@ -70,16 +74,6 @@ class Users extends Component {
       render: (_, record) => (
         <Space size="middle">
           <DollarOutlined className="styled-icon" onClick={() => this.showModalAddMoney(record)} />
-          <Popconfirm
-            placement="leftTop"
-            title="Bạn chắc chắn muốn cấm người dùng này ? ?"
-            onConfirm={() => this.handleDelete()}
-            onCancel={this.handleCancelModalDel}
-            okText="Yes"
-            cancelText="No"
-          >
-            {/* <FaBan className="btn-ban" /> */}
-          </Popconfirm>
         </Space>
       ),
     },
@@ -97,6 +91,8 @@ class Users extends Component {
     },
   ];
 
+  onFinish = () => this.handleAddCoin();
+
   showModalDetail = () => {
     this.setState({
       visible: true,
@@ -105,9 +101,11 @@ class Users extends Component {
   };
 
   showModalAddMoney = record => {
+    console.log('record', record);
     this.setState({
       visibleModalAddMoney: true,
       coin: record.money,
+      userId: record._id,
     });
     console.log('da', this.state.coin);
   };
@@ -124,8 +122,22 @@ class Users extends Component {
     });
   };
 
+  handleAddCoin = () => {
+    const fieldValue = this.formRef.current.getFieldsValue();
+    this.setState({
+      coin: Number(fieldValue.current_coin) + Number(fieldValue.coin_add),
+      visibleModalAddMoney: false,
+    });
+    console.log('coin sau khi add', this.state.coin);
+    this.props.updateUser({
+      id: this.state.userId,
+      money: this.state.coin,
+    });
+  };
+
   render() {
-    const { visibleModalAddMoney, coin } = this.state;
+    const { visibleModalAddMoney, coin, coinAdd } = this.state;
+
     return (
       <div className="admin-management">
         <div className="feature-add">
@@ -139,11 +151,11 @@ class Users extends Component {
           visible={visibleModalAddMoney}
           footer={null}
         >
-          <Form {...layout} name="form-add-money" onFinish={this.onFinish}>
-            <Form.Item label="Số coin">
-              <Input value={coin} type="number" disabled />
+          <Form ref={this.formRef} {...layout} name="form-add-money" onFinish={this.onFinish}>
+            <Form.Item label="Số coin" name="current_coin" initialValue={coin}>
+              <Input type="number" disabled />
             </Form.Item>
-            <Form.Item label="Số coin vừa nạp">
+            <Form.Item label="Số coin vừa nạp" name="coin_add" initialValue={coinAdd}>
               <Input type="number" />
             </Form.Item>
             <Form.Item {...tailLayout} style={{ marginBottom: '12px' }}>
@@ -171,6 +183,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchAllUser: data => dispatch(getAllUsers(data)),
+    updateUser: data => dispatch(updateUser(data)),
   };
 };
 
