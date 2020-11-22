@@ -1,21 +1,13 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { PieChartOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+// import { Link } from 'react-router-dom';
 
 import Users from '../Users/index';
 import Courses from '../Courses/index';
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
+// const { SubMenu } = Menu;
 
 class Dashboard extends React.Component {
   state = {

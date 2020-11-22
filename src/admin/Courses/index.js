@@ -1,36 +1,40 @@
-import React, { Fragment, Component, useEffect, useState } from 'react';
-import { Table, Modal, Input, Button, Checkbox } from 'antd';
-import { createNewCourse, getAllCourses } from '../../actions';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Table, Modal, Button, Checkbox } from 'antd';
+import { createNewCourse, createNewLesson, getAllCourses } from '../../actions';
 import { connect } from 'react-redux';
 import { Player } from 'video-react';
 import { FileImageOutlined, FileTextOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import cloneDeep from 'lodash/cloneDeep';
+import Wrapper from './Course.styled';
 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 16,
-    span: 8,
-  },
-};
+// const layout = {
+//   labelCol: {
+//     span: 8,
+//   },
+//   wrapperCol: {
+//     span: 16,
+//   },
+// };
+// const tailLayout = {
+//   wrapperCol: {
+//     offset: 16,
+//     span: 8,
+//   },
+// };
 
-const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
+const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson }) => {
+  const [currentCourse, setCurrentCourse] = useState(null);
   const [currentLesson, setCurrentLesson] = useState(null);
   const [visibleModalAdd, setVisibleModalAdd] = useState(false);
-  const [visibleModalAddLesson, setVisibleModalAddLesson] = useState(true);
+  const [visibleModalAddLesson, setVisibleModalAddLesson] = useState(false);
 
   const columns = [
     {
       align: 'center',
       title: 'Name',
+      width: '200px',
       dataIndex: 'name',
       key: 'name',
     },
@@ -38,6 +42,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
       align: 'center',
       title: 'Introduction',
       dataIndex: 'intro',
+      width: '200px',
       key: 'intro',
     },
     {
@@ -58,7 +63,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
       title: 'Outline',
       dataIndex: 'outline',
       key: 'outline',
-      render: outline => <a href={outline}> tai </a>,
+      render: outline => <a href={outline}> Document </a>,
     },
     {
       align: 'center',
@@ -68,7 +73,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
       render: references =>
         references.map((item, index) => (
           <div key={index}>
-            <a href={item} target="_blank" rel="noreferrer">
+            <a href={item} target="_blank" rel="noopener noreferrer">
               references link {`${index + 1}`}
             </a>
           </div>
@@ -79,25 +84,28 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
       title: 'Lessons',
       dataIndex: 'lesson',
       key: 'lesson',
-      render: lesson => (
-        <div>
-          {lesson.map((item, index) => (
-            <div key={index} style={{ marginTop: 5 }}>
-              <Button type="primary" onClick={() => setCurrentLesson(item)}>
-                {`Lesson ${index + 1}`}
-              </Button>
-            </div>
-          ))}
-          <PlusCircleOutlined />
-        </div>
-      ),
+      // eslint-disable-next-line no-unused-vars
+      render: (lesson, row, _) => {
+        return (
+          <div onClick={() => setCurrentCourse(row._id)}>
+            {lesson.map((item, index) => (
+              <div key={index} style={{ marginTop: 5 }}>
+                <Button type="primary" onClick={() => setCurrentLesson(item)}>
+                  {`Lesson ${index + 1}`}
+                </Button>
+              </div>
+            ))}
+            <PlusCircleOutlined style={{ cursor: 'pointer' }} onClick={() => setVisibleModalAddLesson(true)} />
+          </div>
+        );
+      },
     },
-    {
-      align: 'center',
-      title: 'Hành động',
-      dataIndex: 'action',
-      key: 'action',
-    },
+    // {
+    //   align: 'center',
+    //   title: 'Hành động',
+    //   dataIndex: 'action',
+    //   key: 'action',
+    // },
   ];
 
   useEffect(() => {
@@ -138,6 +146,67 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
     },
   });
 
+  const formikLesson = useFormik({
+    initialValues: {
+      name: '',
+      exercise: '',
+      video: null,
+      question: {
+        name: '',
+        answer: [
+          {
+            content: '',
+            isTrue: 'false',
+          },
+          {
+            content: '',
+            isTrue: 'false',
+          },
+          {
+            content: '',
+            isTrue: 'false',
+          },
+          {
+            content: '',
+            isTrue: 'false',
+          },
+        ],
+      },
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('hãy nhập name'),
+      exercise: Yup.string().required('hãy nhập exercise'),
+    }),
+    onSubmit: values => {
+      const { name, exercise, video, question } = values;
+
+      const formData = new FormData();
+
+      // formData.append('id', id);
+
+      formData.append('name', name);
+      formData.append('exercise', exercise);
+      formData.append('video', video);
+
+      formData.append('question[name]', question.name);
+
+      formData.append('question[answer][0][content]', question.answer[0].content);
+      formData.append('question[answer][0][isTrue]', question.answer[0].isTrue);
+      formData.append('question[answer][1][content]', question.answer[1].content);
+      formData.append('question[answer][1][isTrue]', question.answer[1].isTrue);
+      formData.append('question[answer][2][content]', question.answer[2].content);
+      formData.append('question[answer][2][isTrue]', question.answer[2].isTrue);
+      formData.append('question[answer][3][content]', question.answer[3].content);
+      formData.append('question[answer][3][isTrue]', question.answer[3].isTrue);
+
+      createNewLesson({
+        id: currentCourse,
+        data: formData,
+      });
+      setVisibleModalAddLesson(false);
+    },
+  });
+
   return (
     <Fragment>
       <Button type="primary" onClick={showModalAdd} style={{ margin: '10px 0px' }}>
@@ -149,7 +218,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
         {currentLesson && (
           <Fragment>
             <div>{currentLesson.name}</div>
-            <a href={currentLesson.exercise} target="_blank" rel="noreferrer">
+            <a href={currentLesson.exercise} target="_blank" rel="noopener noreferrer">
               exercise
             </a>
             <div>{currentLesson.question.name}</div>
@@ -168,19 +237,31 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
       {/* Modal Add New Course */}
       <Modal title="Add new course" onCancel={() => setVisibleModalAdd(false)} visible={visibleModalAdd} footer={null}>
         <form onSubmit={formik.handleSubmit}>
-          <input name="name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.name} />
-
-          <input name="intro" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.intro} />
-
-          <input name="cost" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.cost} />
-
-          <textarea
-            name="references"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.references}
-          />
-
+          <div>
+            <label for="name">Course Name:</label>
+            <input name="name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.name} />
+          </div>
+          <br />
+          <div>
+            <label for="intro">Introduction:</label>
+            <input name="intro" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.intro} />
+          </div>
+          <br />
+          <div>
+            <label for="cost">Cost:</label>
+            <input name="cost" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.cost} />
+          </div>
+          <br />
+          <div>
+            <label for="references">References:</label>
+            <textarea
+              name="references"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.references}
+            />
+          </div>
+          <br />
           <div className="wrapper-field-upload">
             <label htmlFor="image-input">
               <FileImageOutlined />
@@ -194,7 +275,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
               onBlur={formik.handleBlur}
             />
           </div>
-
+          <br />
           <div className="wrapper-field-upload">
             <label htmlFor="outline-input">
               <FileTextOutlined />
@@ -207,7 +288,244 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse }) => {
               onBlur={formik.handleBlur}
             />
           </div>
+          <br />
+          <div className="submit-comment">
+            <button className="post" type="submit">
+              Đăng Tải
+            </button>
+            <button className="cancel">Hủy Bỏ</button>
+          </div>
+        </form>
+      </Modal>
 
+      {/* Modal Add New Lesson */}
+      <Modal
+        title="Add new lesson"
+        onCancel={() => setVisibleModalAddLesson(false)}
+        visible={visibleModalAddLesson}
+        footer={null}
+      >
+        <form onSubmit={formikLesson.handleSubmit}>
+          <div>
+            <label for="name"> Lesson Name: </label>
+            <input
+              name="name"
+              onChange={formikLesson.handleChange}
+              onBlur={formikLesson.handleBlur}
+              value={formikLesson.values.name}
+            />
+          </div>
+          <br />
+          <div>
+            <label for="exercise"> Excersise Name: </label>
+            <input
+              name="exercise"
+              onChange={formikLesson.handleChange}
+              onBlur={formikLesson.handleBlur}
+              value={formikLesson.values.exercise}
+            />
+          </div>
+          <br />
+
+          <div className="wrapper-field-upload">
+            <label for="video"> Video Name: </label>
+
+            <input
+              type="file"
+              id="video-input"
+              accept="video/mp4,video/x-m4v,video/*"
+              name="video"
+              onChange={event => formikLesson.setFieldValue('video', event.target.files[0])}
+              onBlur={formikLesson.handleBlur}
+            />
+          </div>
+          <br />
+
+          <div className="wrapper-field-upload">
+            <label for="question-name"> Video Name: </label>
+
+            <input
+              type="text"
+              id="question-name"
+              name="question-name"
+              value={formikLesson.values.question.name}
+              onChange={e =>
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  name: e.target.value,
+                })
+              }
+            />
+          </div>
+          <br />
+
+          <div className="wrapper-field-upload">
+            <label for="question-answer1"> Answer 1: </label>
+
+            <input
+              type="text"
+              id="question-answer1"
+              name="question-answer1"
+              value={formikLesson.values.question.answer[0].content}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[0] = {
+                  ...answerArray[0],
+                  content: e.target.value,
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+            <input
+              type="checkbox"
+              value={formikLesson.values.question.answer[0].isTrue === 'true'}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[0] = {
+                  ...answerArray[0],
+                  isTrue: e.target.value === 'false' ? 'true' : 'false',
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+          </div>
+          <br />
+
+          <div className="wrapper-field-upload">
+            <label for="question-answer2"> Answer 2: </label>
+
+            <input
+              type="text"
+              id="question-answer2"
+              name="question-answer2"
+              value={formikLesson.values.question.answer[1].content}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[1] = {
+                  ...answerArray[1],
+                  content: e.target.value,
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+            <input
+              type="checkbox"
+              value={formikLesson.values.question.answer[1].isTrue === 'true'}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[1] = {
+                  ...answerArray[1],
+                  isTrue: e.target.value === 'false' ? 'true' : 'false',
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+          </div>
+          <br />
+
+          <div className="wrapper-field-upload">
+            <label for="question-answer3"> Answer 3: </label>
+
+            <input
+              type="text"
+              id="question-answer3"
+              name="question-answer3"
+              value={formikLesson.values.question.answer[2].content}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[2] = {
+                  ...answerArray[2],
+                  content: e.target.value,
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+            <input
+              type="checkbox"
+              value={formikLesson.values.question.answer[2].isTrue === 'true'}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[2] = {
+                  ...answerArray[2],
+                  isTrue: e.target.value === 'false' ? 'true' : 'false',
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+          </div>
+          <br />
+
+          <div className="wrapper-field-upload">
+            <label for="question-answer4"> Answer 4: </label>
+
+            <input
+              type="text"
+              id="question-answer4"
+              name="question-answer4"
+              value={formikLesson.values.question.answer[3].content}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[3] = {
+                  ...answerArray[3],
+                  content: e.target.value,
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+            <input
+              type="checkbox"
+              value={formikLesson.values.question.answer[3].isTrue === 'true'}
+              onChange={e => {
+                const answerArray = cloneDeep(formikLesson.values.question.answer);
+
+                answerArray[3] = {
+                  ...answerArray[3],
+                  isTrue: e.target.value === 'false' ? 'true' : 'false',
+                };
+
+                formikLesson.setFieldValue('question', {
+                  ...formikLesson.values.question,
+                  answer: [...answerArray],
+                });
+              }}
+            />
+          </div>
+          <br />
           <div className="submit-comment">
             <button className="post" type="submit">
               Đăng Tải
@@ -230,6 +548,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getAllCourses: data => dispatch(getAllCourses(data)),
     createNewCourse: data => dispatch(createNewCourse(data)),
+    createNewLesson: data => dispatch(createNewLesson(data)),
   };
 };
 
