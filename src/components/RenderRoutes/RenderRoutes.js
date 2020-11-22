@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 //topics
 import ListTopics from '../Topics/List';
@@ -24,6 +24,12 @@ const ROUTES = [
     path: '/topics',
     key: 'TOPICS',
     component: props => {
+      if (!localStorage.getItem('currentUser')) {
+        localStorage.clear();
+        alert('Bạn chưa đăng nhập xin vui lòng đăng nhập');
+        return <Redirect to={'/login'} />;
+      }
+
       return <RenderRoutes {...props} />;
     },
     routes: [
@@ -45,10 +51,12 @@ const ROUTES = [
     path: '/',
     key: 'Users',
     component: props => {
-      // if (!localStorage.getItem("user")) {
-      //   alert("You need to log in to access app routes");
-      //   return <Redirect to={"/"} />;
-      // }
+      if (!localStorage.getItem('currentUser')) {
+        localStorage.clear();
+        alert('Bạn chưa đăng nhập xin vui lòng đăng nhập');
+        return <Redirect to={'/login'} />;
+      }
+
       return <RenderRoutes {...props} />;
     },
     routes: [
@@ -80,14 +88,22 @@ const ROUTES = [
         path: '/admin',
         key: 'ADMIN_ROOT',
         exact: true,
-        component: Dashboard,
+        component: () => {
+          if (!localStorage.getItem('currentUser')) {
+            localStorage.clear();
+            alert('Bạn chưa đăng nhập xin vui lòng đăng nhập');
+            return <Redirect to={'/login'} />;
+          }
+
+          if (JSON.parse(localStorage.getItem('currentUser')).role === 'normal') {
+            localStorage.clear();
+            alert('Bạn không phải là Admin xin vui lòng đăng nhập lại');
+            return <Redirect to={'/login'} />;
+          }
+
+          return <Dashboard />;
+        },
       },
-      // {
-      //   path: '/admin/quanly',
-      //   key: 'APP_PAGE',
-      //   exact: true,
-      //   component: Users,
-      // },
       {
         path: '/learn',
         key: 'users_learn',
@@ -100,6 +116,18 @@ const ROUTES = [
     path: '/app',
     key: 'APP',
     component: props => {
+      if (!localStorage.getItem('currentUser')) {
+        localStorage.clear();
+        alert('Bạn chưa đăng nhập xin vui lòng đăng nhập');
+        return <Redirect to={'/login'} />;
+      }
+
+      if (JSON.parse(localStorage.getItem('currentUser')).role === 'normal') {
+        localStorage.clear();
+        alert('Bạn không phải là Admin xin vui lòng đăng nhập lại');
+        return <Redirect to={'/login'} />;
+      }
+
       return <RenderRoutes {...props} />;
     },
     routes: [
