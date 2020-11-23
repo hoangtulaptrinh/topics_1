@@ -245,4 +245,9 @@ export default styled.div`
   #id-comment::-webkit-scrollbar-thumb {
     background-color: rgba(195, 194, 194, 0.7);
   }
+  .check-icon {
+    svg {
+      color: rgb(5 215 134);
+    }
+  }
 `;

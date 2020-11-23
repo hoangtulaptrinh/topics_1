@@ -12,20 +12,6 @@ import { refreshCurrentUser } from '../../../actions';
 
 import EAT_SLEEP_CODE from '../../../assets/img/EAT_SLEEP_CODE.jpg';
 
-const LIST_NAV_BAR = [
-  {
-    title: 'Trang Chủ',
-    href: '/',
-  },
-  {
-    title: 'Khóa Học',
-    href: '/courses',
-  },
-  {
-    title: 'Forums',
-    href: '/topics',
-  },
-];
 const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory }) => {
   const history = useHistory();
 
@@ -166,13 +152,37 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
     </Menu>
   );
 
+  const hrefTopics = useMemo(() => {
+    if (!listCoursesCurrentUser.length) return '/topics';
+
+    return `/topics?idThread${listCoursesCurrentUser[0]._id}`;
+  }, [listCoursesCurrentUser]);
+
+  const listNavBar = useMemo(
+    () => [
+      {
+        title: 'Trang Chủ',
+        href: '/',
+      },
+      {
+        title: 'Khóa Học',
+        href: '/courses',
+      },
+      {
+        title: 'Forums',
+        href: hrefTopics,
+      },
+    ],
+    [hrefTopics],
+  );
+
   return (
     <Wrapper>
       <div className="total-header">
         <div className="left">
           <img alt="logo" src={EAT_SLEEP_CODE} onClick={() => history.push('/')} />
           <div className="nav-bar">
-            {LIST_NAV_BAR.map((item, index) => (
+            {listNavBar.map((item, index) => (
               <p className="nav-bar__item" key={index} onClick={() => history.push(item.href)}>
                 {item.title}
               </p>

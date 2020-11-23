@@ -9,6 +9,7 @@ import {
   VideoCameraOutlined,
   FileTextOutlined,
   HeartOutlined,
+  CheckOutlined,
 } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -190,7 +191,7 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
                 <div className="upload">
                   <div className="wrapper-field-upload">
                     <label htmlFor="image-input">
-                      <FileImageOutlined />
+                      {formik.values.image ? <CheckOutlined className="check-icon" /> : <FileImageOutlined />}
                     </label>
                     <input
                       type="file"
@@ -204,7 +205,7 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
 
                   <div className="wrapper-field-upload">
                     <label htmlFor="video-input">
-                      <VideoCameraOutlined />
+                      {formik.values.video ? <CheckOutlined className="check-icon" /> : <VideoCameraOutlined />}
                     </label>
                     <input
                       type="file"
@@ -218,7 +219,7 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
 
                   <div className="wrapper-field-upload">
                     <label htmlFor="outline-input">
-                      <FileTextOutlined />
+                      {formik.values.outline ? <CheckOutlined className="check-icon" /> : <FileTextOutlined />}
                     </label>
                     <input
                       type="file"

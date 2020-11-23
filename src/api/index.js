@@ -34,7 +34,7 @@ export const fetchTopics = async id => {
   const data = await response.json();
 
   if (response.status >= 400) {
-    if (response.status === 404) throw new Error('không tìm thấy');
+    // if (response.status === 404) throw new Error('không tìm thấy');
     // throw new Error('đã xảy ra lỗi');
     throw new Error('');
   }
@@ -46,7 +46,7 @@ export const fetchDetailTopics = async (idThread, id) => {
   const data = await response.json();
 
   if (response.status >= 400) {
-    if (response.status === 404) throw new Error('không tìm thấy');
+    // if (response.status === 404) throw new Error('không tìm thấy');
     // throw new Error('đã xảy ra lỗi');
     throw new Error('');
   }
