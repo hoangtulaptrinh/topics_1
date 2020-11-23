@@ -41,7 +41,7 @@ const List = ({ listUsers }) => {
               <div
                 className="is-completed"
                 style={
-                  course.progress === course.lesson.length
+                  course.progress && course.progress === course.lesson.length
                     ? {
                         border: '1px solid #05d786',
                         color: '#05d786',
@@ -49,12 +49,12 @@ const List = ({ listUsers }) => {
                     : {}
                 }
               >
-                {course.progress === course.lesson.length ? <CheckOutlined /> : ''}
+                {course.progress && course.progress === course.lesson.length ? <CheckOutlined /> : ''}
               </div>
               <div
                 className="course-name"
                 style={
-                  course.progress === course.lesson.length
+                  course.progress && course.progress === course.lesson.length
                     ? {
                         color: '#05d786',
                       }
@@ -66,7 +66,7 @@ const List = ({ listUsers }) => {
               <div
                 className="completed-status"
                 style={
-                  course.progress === course.lesson.length
+                  course.progress && course.progress === course.lesson.length
                     ? {
                         border: '1px solid #05d786',
                         color: '#05d786',
