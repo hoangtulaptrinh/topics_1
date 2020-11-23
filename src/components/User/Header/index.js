@@ -105,8 +105,6 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
     return `${diffSecondUpdate} giây trước`;
   }, []);
 
-  console.log(listCoursesCurrentUser);
-
   const menu = (
     <Menu>
       {listCoursesCurrentUser.length &&

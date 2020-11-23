@@ -8,6 +8,13 @@ export default styled.div`
     .left {
       flex: 7;
 
+      .video-custom {
+        height: 500px;
+
+        video {
+        }
+      }
+
       video {
         max-width: 100%;
       }
@@ -28,7 +35,16 @@ export default styled.div`
         }
 
         .play-video-icon {
-          color: #ff6a00;
+          color: #6098ff;
+        }
+
+        .ant-collapse {
+          border: 1px solid #79797996;
+          border-bottom: none;
+
+          .ant-collapse-item {
+            border-bottom: 1px solid #79797996;
+          }
         }
       }
 
