@@ -17,6 +17,7 @@ const formatDate = 'DD/MM/YYYY';
 const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+  const [priview, setPriview] = useState(currentUser.image);
   const [page, setPage] = useState('all');
 
   const formikPassword = useFormik({
@@ -40,9 +41,10 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
     }),
     onSubmit: values => updateCurrentUser({ password: values.newPassword }),
   });
-
+  console.log(currentUser);
   const formikInfo = useFormik({
     initialValues: {
+      image: null,
       name: currentUser.name,
       date_of_birth: currentUser.date_of_birth,
       phone_number: currentUser.phone_number,
@@ -52,7 +54,18 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
       date_of_birth: Yup.string(),
       phone_number: Yup.string().required('Hãy nhập số điện thoại của bạn'),
     }),
-    onSubmit: values => updateCurrentUser(values),
+    onSubmit: values => {
+      const { image, name, date_of_birth, phone_number } = values;
+      console.log(values);
+      const formData = new FormData();
+
+      !!image && formData.append('image', image);
+      !!name && formData.append('name', name);
+      !!date_of_birth && formData.append('date_of_birth', date_of_birth);
+      !!phone_number && formData.append('phone_number', phone_number);
+
+      updateCurrentUser(formData);
+    },
   });
 
   const isDisabledBtnSubmitPasswordForm = useMemo(() => !formikPassword.dirty || !isEmpty(formikPassword.errors), [
@@ -60,10 +73,10 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
     formikPassword.errors,
   ]);
 
-  const isDisabledBtnSubmitInfoForm = useMemo(() => !formikInfo.dirty || !isEmpty(formikInfo.errors), [
-    formikInfo.dirty,
-    formikInfo.errors,
-  ]);
+  // const isDisabledBtnSubmitInfoForm = useMemo(() => !formikInfo.dirty || !isEmpty(formikInfo.errors), [
+  //   formikInfo.dirty,
+  //   formikInfo.errors,
+  // ]);
 
   useEffect(() => {
     setPage('all');
@@ -76,7 +89,7 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
         <div className="total">
           <div className="left">
             <div className="header">
-              <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+              <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="img" />
               <div className="info">
                 <p className="info__name">{currentUser.name}</p>
                 <p className="info__coin">{`${currentUser.money} Coin`}</p>
@@ -233,6 +246,21 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
 
               <form onSubmit={formikInfo.handleSubmit}>
                 <div className="field">
+                  <span className="title">Ảnh Đại Diện</span>
+                  <input
+                    style={{ marginBottom: 10 }}
+                    type="file"
+                    name="image"
+                    onChange={event => {
+                      formikInfo.setFieldValue('image', event.target.files[0]);
+                      setPriview(URL.createObjectURL(event.target.files[0]));
+                    }}
+                    onBlur={formikInfo.handleBlur}
+                  />
+                </div>
+                {!!priview && <img src={priview} alt="img" height={150} />}
+
+                <div className="field">
                   <span className="title">Họ và tên</span>
                   <input
                     name="name"
@@ -277,8 +305,9 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
                 </div>
 
                 <button
-                  disabled={isDisabledBtnSubmitInfoForm}
-                  className={`${isDisabledBtnSubmitInfoForm ? 'disabled-btn' : ''} submit-btn`}
+                  // disabled={isDisabledBtnSubmitInfoForm}
+                  // className={`${isDisabledBtnSubmitInfoForm ? 'disabled-btn' : ''} submit-btn`}
+                  className="submit-btn"
                   type="submit"
                 >
                   Cập nhật

@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, delay, put, takeEvery } from 'redux-saga/effects';
 
 import { updateCurrentUser, updateProcessCourse } from '../api';
 import { refreshCurrentUser, reRender } from '../actions';
@@ -7,9 +7,10 @@ import { toastSuccess } from '../helper/toastHelper';
 
 export function* handleUpdateUser(action) {
   try {
-    yield call(updateCurrentUser, { ...action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
+    yield call(updateCurrentUser, action.data); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
 
     yield put(refreshCurrentUser());
+    yield delay(200);
     yield put(reRender());
 
     if (action && action.data && action.data.password) {

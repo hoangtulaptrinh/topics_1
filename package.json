@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "antd": "^4.7.3",
+    "antd-img-crop": "^3.13.2",
     "axios": "^0.20.0",
     "connected-react-router": "^6.5.0",
     "formik": "^2.2.5",

@@ -12,6 +12,7 @@ export default styled.div`
   }
 
   .progress-course {
+    overflow-y: auto;
     margin-top: 20px;
     padding: 15px;
     background: #fff;
@@ -72,5 +73,29 @@ export default styled.div`
         margin: 5px;
       }
     }
+  }
+
+  .progress-course::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: rgb(98, 100, 100);
+  }
+  .progress-course::-webkit-scrollbar {
+    width: 7px;
+    background-color: rgba(45, 47, 52, 0.7);
+  }
+  .progress-course::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgba(80, 81, 83, 0.7);
+  }
+  .progress-course::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  .progress-course::-webkit-scrollbar {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  .progress-course::-webkit-scrollbar-thumb {
+    background-color: rgba(195, 194, 194, 0.7);
   }
 `;

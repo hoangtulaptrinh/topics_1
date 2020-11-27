@@ -71,7 +71,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
 
   const listCoursesCurrentUser = useMemo(() => {
     const currentUserCourse = currentUser.course;
-    if (!currentUserCourse.length) return [];
+    if (!currentUserCourse || (!!currentUserCourse && !currentUserCourse.length)) return [];
 
     const currentUserCourseMapToId = currentUserCourse.map(item => item.id);
 
@@ -92,7 +92,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
   }, []);
 
   const menu = (
-    <Menu>
+    <Menu className="scroll">
       {listCoursesCurrentUser.length &&
         listCoursesCurrentUser.map((item, index) => (
           <Menu.Item key={index} onClick={() => history.push(`/courses/detail/${item._id}`)}>

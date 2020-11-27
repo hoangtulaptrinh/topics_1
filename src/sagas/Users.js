@@ -1,6 +1,6 @@
-import { put, call, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, call, takeEvery, takeLatest, delay } from 'redux-saga/effects';
 
-import { getAllUsers, getAllUsersSuccess, refreshCurrentUser } from '../actions';
+import { getAllUsers, getAllUsersSuccess, refreshCurrentUser, reRender } from '../actions';
 import { getAllUser, buyThisCourseService, updateUser } from '../api';
 import { push } from 'connected-react-router';
 import { toastSuccess, toastWarning } from '../helper/toastHelper';
@@ -23,6 +23,9 @@ export function* handleBuyThisCourse(action) {
     };
     yield call(buyThisCourseService, data); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     yield put(refreshCurrentUser());
+    yield put(reRender());
+
+    yield delay(200);
     toastSuccess('Mua khóa học thành công');
     yield put(push(`/learn/${action.data}`));
   } catch (error) {

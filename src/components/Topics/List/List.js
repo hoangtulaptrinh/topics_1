@@ -126,7 +126,8 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
   );
 };
 
-const mapStateToProps = ({ listTopics }) => ({
+const mapStateToProps = ({ reRender, listTopics }) => ({
+  reRender,
   listTopics,
 });
 

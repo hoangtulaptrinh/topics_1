@@ -66,7 +66,13 @@ const HomePage = ({ listCourses, updateProcessCourse }) => {
   );
 
   const processOnThisCourse = useMemo(() => {
-    if (!course || !currentUser.course || (currentUser.course && !currentUser.course.length)) return 0;
+    if (
+      !course ||
+      !currentUser.course ||
+      (currentUser.course && !currentUser.course.length) ||
+      !currentUser.course.find(item => item.id === idThisCourse)
+    )
+      return 0;
 
     return currentUser.course.find(item => item.id === idThisCourse).progress;
   }, [course, currentUser.course, idThisCourse]);
