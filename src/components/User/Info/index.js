@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import Header from '../Header';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
+import Chart from 'react-apexcharts';
 
 import { updateCurrentUser, refreshCurrentUser } from '../../../actions';
 import infoUserImage from '../../../assets/img/INFO.png';
@@ -14,7 +15,7 @@ import Wrapper from './Info.style';
 
 const formatDate = 'DD/MM/YYYY';
 
-const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
+const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser }) => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const [priview, setPriview] = useState(currentUser.image);
@@ -41,7 +42,7 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
     }),
     onSubmit: values => updateCurrentUser({ password: values.newPassword }),
   });
-  console.log(currentUser);
+
   const formikInfo = useFormik({
     initialValues: {
       image: null,
@@ -56,7 +57,7 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
     }),
     onSubmit: values => {
       const { image, name, date_of_birth, phone_number } = values;
-      console.log(values);
+
       const formData = new FormData();
 
       !!image && formData.append('image', image);
@@ -82,6 +83,15 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
     setPage('all');
   }, [reRender, refreshCurrentUser]);
 
+  const listCoursesCurrentUser = useMemo(() => {
+    const currentUserCourse = currentUser.course;
+    if (!currentUserCourse || (!!currentUserCourse && !currentUserCourse.length)) return [];
+
+    const currentUserCourseMapToId = currentUserCourse.map(item => item.id);
+
+    return listCourses.filter(item => currentUserCourseMapToId.includes(item._id));
+  }, [currentUser.course, listCourses]);
+
   return (
     <Wrapper>
       <Header />
@@ -89,7 +99,14 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
         <div className="total">
           <div className="left">
             <div className="header">
-              <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="img" />
+              <img
+                src={
+                  currentUser.image
+                    ? currentUser.image
+                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                }
+                alt="avatar"
+              />
               <div className="info">
                 <p className="info__name">{currentUser.name}</p>
                 <p className="info__coin">{`${currentUser.money} Coin`}</p>
@@ -132,7 +149,7 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
                     <AiOutlineRight />
                   </div>
 
-                  <div className="item" style={{ borderTop: 'none' }}>
+                  <div className="item" style={{ borderTop: 'none' }} onClick={() => setPage('statistical')}>
                     <div className="left">
                       <span className="top">Thống Kê</span>
                       <span className="down">Chi Tiết</span>
@@ -313,6 +330,126 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
                   Cập nhật
                 </button>
               </form>
+            </div>
+          )}
+
+          {page === 'statistical' && (
+            <div className="right">
+              <div className="header">
+                <img src={infoUserImage} alt="info" />
+                <div className="info">
+                  <p className="title">Thống kê cá nhân</p>
+                  <p className="content">Thống kê các chỉ số của bạn</p>
+                </div>
+              </div>
+
+              <div className="back-btn" onClick={() => setPage('all')}>
+                <AiOutlineLeft /> <span>Thống Kê</span>
+              </div>
+
+              <div>Quản Lý Coin</div>
+              <Chart
+                options={{
+                  chart: {
+                    id: 'basic-bar',
+                  },
+                  xaxis: {
+                    categories: ['tổng số coin đã nạp', 'tổng số coin đã tiêu', 'số coin còn lại'],
+                  },
+                }}
+                series={[
+                  {
+                    name: 'số coin',
+                    data: [
+                      listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b) +
+                        Number(currentUser.money),
+                      listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b),
+                      Number(currentUser.money),
+                    ],
+                  },
+                ]}
+                type="bar"
+                width="500"
+              />
+
+              <div>Quản Lý Khóa Học</div>
+              <Chart
+                options={{
+                  chart: {
+                    width: 500,
+                    type: 'pie',
+                  },
+                  labels: ['Tổng Số Khóa Học Đã Mua', 'Tổng Số Khóa Học Chưa Mua'],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          position: 'bottom',
+                        },
+                      },
+                    },
+                  ],
+                }}
+                series={[listCourses.length, listCoursesCurrentUser.length]}
+                type="pie"
+                width={500}
+              />
+
+              <div>Quản Lý Khóa Học Đã Mua</div>
+              <Chart
+                options={{
+                  chart: {
+                    width: 500,
+                    type: 'pie',
+                  },
+                  labels: [
+                    'Tổng Số Khóa Học Đã Hoàn Thành',
+                    'Tổng Số Khóa Học Đang Trong Quá Trình Hoàn Thành',
+                    'Tổng Số Khóa Học Chưa Bắt Đầu',
+                  ],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          position: 'bottom',
+                        },
+                      },
+                    },
+                  ],
+                }}
+                series={[
+                  listCoursesCurrentUser.length
+                    ? listCoursesCurrentUser.filter(
+                        item =>
+                          Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                          item.lesson.length,
+                      ).length
+                    : 0,
+                  listCoursesCurrentUser.length
+                    ? listCoursesCurrentUser.filter(
+                        item =>
+                          Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                          Number(currentUser.course.find(course => course.id === item._id).progress) <
+                            item.lesson.length,
+                      ).length
+                    : 0,
+                  listCoursesCurrentUser.length
+                    ? listCoursesCurrentUser.filter(
+                        item => Number(currentUser.course.find(course => course.id === item._id).progress) === 0,
+                      ).length
+                    : 0,
+                ]}
+                type="pie"
+                width={500}
+              />
             </div>
           )}
         </div>

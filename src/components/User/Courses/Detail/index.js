@@ -43,8 +43,6 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
     history.push(`/learn/${course._id}`);
   }, [HasThisCourse, course, currentUser.course, history]);
 
-  console.log(modalBuy, course, currentUser);
-
   return (
     <Wrapper>
       <Header />

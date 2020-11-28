@@ -192,7 +192,14 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
 
         <div className="right">
           <div className="header">
-            <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+            <img
+              src={
+                currentUser.image
+                  ? currentUser.image
+                  : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+              }
+              alt="avatar"
+            />
             <div className="info">
               <p className="info__name">{currentUser.name}</p>
               <p className="info__coin">{`${currentUser.money} Coin`}</p>

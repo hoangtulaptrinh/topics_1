@@ -24,7 +24,8 @@ export default styled.div`
     font-weight: 500;
 
     img {
-      max-height: 36px;
+      height: 40px;
+      width: 43px;
       border-radius: 50%;
     }
 
@@ -149,6 +150,12 @@ export default styled.div`
           cursor: pointer;
         }
       }
+    }
+  }
+
+  .check-icon {
+    svg {
+      color: rgb(5 215 134);
     }
   }
 `;

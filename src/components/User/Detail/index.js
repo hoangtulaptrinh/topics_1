@@ -33,8 +33,6 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
     return false;
   }, [course, currentUser, idThisCourse]);
 
-  console.log(modalBuy, course, currentUser);
-
   return (
     <Wrapper>
       <Header />

@@ -6,7 +6,6 @@ import { USER } from '../constants';
 import { signUp } from '../api';
 
 export function* handleSignUp(action) {
-  console.log(action);
   try {
     yield call(signUp, { ...action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     toastSuccess('đăng ký thành công');

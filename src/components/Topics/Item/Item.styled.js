@@ -25,7 +25,8 @@ export default styled.div`
     font-weight: 500;
 
     img {
-      max-height: 36px;
+      height: 40px;
+      width: 43px;
       border-radius: 50%;
     }
 
@@ -245,6 +246,7 @@ export default styled.div`
   #id-comment::-webkit-scrollbar-thumb {
     background-color: rgba(195, 194, 194, 0.7);
   }
+
   .check-icon {
     svg {
       color: rgb(5 215 134);
