@@ -62,6 +62,16 @@ export const createNewCourse = data => ({
   data,
 });
 
+export const updateCourse = data => ({
+  type: COURSES.UPDATE_COURSES,
+  data,
+});
+
+export const updateLesson = data => ({
+  type: COURSES.UPDATE_LESSON,
+  data,
+});
+
 export const createNewLesson = data => ({
   type: COURSES.CREATE_NEW_LESSON,
   data,
@@ -73,6 +83,16 @@ export const getAllCategory = () => ({
 
 export const setAllCategory = data => ({
   type: CATEGORY.SET_ALL_CATEGORY,
+  data,
+});
+
+export const createCategory = data => ({
+  type: CATEGORY.CREATE_CATEGORY,
+  data,
+});
+
+export const updateCategory = data => ({
+  type: CATEGORY.UPDATE_CATEGORY,
   data,
 });
 

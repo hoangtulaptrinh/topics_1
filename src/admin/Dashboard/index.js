@@ -1,10 +1,11 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { PieChartOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { PieChartOutlined, MenuUnfoldOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 // import { Link } from 'react-router-dom';
 
 import Users from '../Users/index';
 import Courses from '../Courses/index';
+import Category from '../Category/index';
 
 const { Header, Content, Sider } = Layout;
 // const { SubMenu } = Menu;
@@ -34,13 +35,17 @@ class Dashboard extends React.Component {
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsed={this.state.collapsed}>
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })}>
-              Coures
+          <Menu theme="dark" mode="inline" selectedKeys={test}>
+            <Menu.Item key="courses" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })}>
+              Course
             </Menu.Item>
 
-            <Menu.Item key="2" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'users' })}>
-              Users
+            <Menu.Item key="users" icon={<UserOutlined />} onClick={() => this.setState({ test: 'users' })}>
+              User
+            </Menu.Item>
+
+            <Menu.Item key="category" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'category' })}>
+              Category
             </Menu.Item>
           </Menu>
         </Sider>
@@ -54,6 +59,7 @@ class Dashboard extends React.Component {
           <Content style={{ margin: '0 16px' }}>
             {test === 'users' && <Users />}
             {test === 'courses' && <Courses />}
+            {test === 'category' && <Category moveToCourse={() => this.setState({ test: 'courses' })} />}
           </Content>
         </Layout>
       </Layout>

@@ -22,9 +22,17 @@ export const getAllCourses = () => axios.get(`${SEVER_URL}/courses`);
 
 export const createNewCourse = data => axios.post(`${SEVER_URL}/courses/create`, data);
 
+export const updateCourseAPI = (id, data) => axios.patch(`${SEVER_URL}/courses/update_course/${id}`, data);
+
 export const createNewLesson = (id, data) => axios.post(`${SEVER_URL}/courses/create_lesson/${id}`, data);
 
 export const getAllCategory = () => axios.get(`${SEVER_URL}/categorys`);
+
+export const createCategoryAPI = data => axios.post(`${SEVER_URL}/categorys/create`, data);
+
+export const updateCateoryAPI = (id, data) => axios.put(`${SEVER_URL}/categorys/update/${id}`, data);
+
+export const updateLessonAPI = (id, data) => axios.patch(`${SEVER_URL}/courses/update_lesson/${id}`, data);
 
 export const fetchTopics = async id => {
   const response = await fetch(`${SEVER_URL}/topics/show_all_threads_on_topic/${id}`);
