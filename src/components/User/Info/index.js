@@ -15,11 +15,7 @@ import Wrapper from './Info.style';
 
 const formatDate = 'DD/MM/YYYY';
 
-<<<<<<< HEAD
-const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
-=======
 const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser }) => {
->>>>>>> master
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const [priview, setPriview] = useState(currentUser.image);
