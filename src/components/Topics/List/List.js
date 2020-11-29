@@ -18,10 +18,12 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
   const formik = useFormik({
     initialValues: { content: '', image: null, video: null, outline: null },
     validationSchema: Yup.object({
-      content: Yup.string().required('hãy nhập comment'),
+      content: Yup.string().required('hãy nhập nội dung bài viết'),
     }),
     onSubmit: values => {
       addThread({ ...values, id_author: currentUser._id });
+
+      formik.resetForm();
     },
   });
 
@@ -64,6 +66,11 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
                       onBlur={formik.handleBlur}
                       value={formik.values.content}
                     />
+
+                    {formik.touched.content && formik.errors.content ? (
+                      <div style={{ color: 'red' }}>{formik.errors.content}</div>
+                    ) : null}
+
                     <div className="upload">
                       <div className="wrapper-field-upload">
                         <label htmlFor="image-input">
@@ -106,7 +113,10 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
                         />
                       </div>
 
-                      <Icon addEmoji={item => formik.setFieldValue('content', `${formik.values.content}${item}`)} />
+                      <Icon
+                        addEmoji={item => formik.setFieldValue('content', `${formik.values.content}${item}`)}
+                        idPopoverLegacy="list"
+                      />
                     </div>
 
                     <div className="submit-comment">
@@ -122,7 +132,10 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
           </form>
 
           {loading && <h1>Đang Tải Dữ Liệu</h1>}
-          {!loading && data && data.thread && data.thread.map((topic, index) => <Item topic={topic} key={index} />)}
+          {!loading &&
+            data &&
+            data.thread &&
+            data.thread.map((topic, index) => <Item topic={topic} key={index} indexTopic={index} />)}
           {!loading && err && <h1>{err}</h1>}
         </div>
         <RightContent />

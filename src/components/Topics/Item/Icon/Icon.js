@@ -8,17 +8,17 @@ import './Icon.css';
 const EMOJI =
   '😀😃😄😁😆😂🤣😊😇🙂🙃😉😌😍🥰😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🤩🥳😏😒😞😫😩🥺😢😭😤😠😡🤬🤯🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🐙🦕🦎🐍🐢🐌🐝🌑🌘🌘🌗🌗⚽🏀🏈⚾🥎🎾🏐🏉🥏🎱🏓🏸🏒🏑🥍🏏🥅⛳';
 
-const Icon = ({ addEmoji }) => {
+const Icon = ({ addEmoji, idPopoverLegacy }) => {
   return (
     <div className="IconPopover">
-      <div id="PopoverLegacy1">
+      <div id={idPopoverLegacy}>
         <FaRegSmileWink />
       </div>
       <UncontrolledPopover
         className="All-Popover"
         trigger="legacy"
         placement="top"
-        target="PopoverLegacy1"
+        target={idPopoverLegacy}
         hideArrow={true}
       >
         <PopoverBody id="scroll-body-icon" className="PopoverBody">
