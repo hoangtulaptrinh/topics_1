@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { FileImageOutlined, VideoCameraOutlined, FileTextOutlined } from '@ant-design/icons';
+import { FileImageOutlined, VideoCameraOutlined, FileTextOutlined, CheckOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -18,10 +18,12 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
   const formik = useFormik({
     initialValues: { content: '', image: null, video: null, outline: null },
     validationSchema: Yup.object({
-      content: Yup.string().required('hãy nhập comment'),
+      content: Yup.string().required('hãy nhập nội dung bài viết'),
     }),
     onSubmit: values => {
       addThread({ ...values, id_author: currentUser._id });
+
+      formik.resetForm();
     },
   });
 
@@ -37,8 +39,6 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
 
   const { loading, listTopics: data, err } = listTopics;
 
-  console.log(formik.values);
-
   return (
     <Wrapper>
       <Header />
@@ -50,7 +50,14 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
               <span className="title">Tạo chủ đề thảo luận</span>
 
               <div className="header">
-                <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+                <img
+                  src={
+                    currentUser.image
+                      ? currentUser.image
+                      : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                  }
+                  alt="avatar"
+                />
                 <div className="info">
                   <div className="right-info">
                     <textarea
@@ -59,10 +66,15 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
                       onBlur={formik.handleBlur}
                       value={formik.values.content}
                     />
+
+                    {formik.touched.content && formik.errors.content ? (
+                      <div style={{ color: 'red' }}>{formik.errors.content}</div>
+                    ) : null}
+
                     <div className="upload">
                       <div className="wrapper-field-upload">
                         <label htmlFor="image-input">
-                          <FileImageOutlined />
+                          {formik.values.image ? <CheckOutlined className="check-icon" /> : <FileImageOutlined />}
                         </label>
                         <input
                           type="file"
@@ -76,7 +88,7 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
 
                       <div className="wrapper-field-upload">
                         <label htmlFor="video-input">
-                          <VideoCameraOutlined />
+                          {formik.values.video ? <CheckOutlined className="check-icon" /> : <VideoCameraOutlined />}
                         </label>
                         <input
                           type="file"
@@ -90,7 +102,7 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
 
                       <div className="wrapper-field-upload">
                         <label htmlFor="outline-input">
-                          <FileTextOutlined />
+                          {formik.values.outline ? <CheckOutlined className="check-icon" /> : <FileTextOutlined />}
                         </label>
                         <input
                           type="file"
@@ -101,7 +113,10 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
                         />
                       </div>
 
-                      <Icon addEmoji={item => formik.setFieldValue('content', `${formik.values.content}${item}`)} />
+                      <Icon
+                        addEmoji={item => formik.setFieldValue('content', `${formik.values.content}${item}`)}
+                        idPopoverLegacy="list"
+                      />
                     </div>
 
                     <div className="submit-comment">
@@ -117,7 +132,10 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
           </form>
 
           {loading && <h1>Đang Tải Dữ Liệu</h1>}
-          {!loading && data && data.thread && data.thread.map((topic, index) => <Item topic={topic} key={index} />)}
+          {!loading &&
+            data &&
+            data.thread &&
+            data.thread.map((topic, index) => <Item topic={topic} key={index} indexTopic={index} />)}
           {!loading && err && <h1>{err}</h1>}
         </div>
         <RightContent />
@@ -126,7 +144,8 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
   );
 };
 
-const mapStateToProps = ({ listTopics }) => ({
+const mapStateToProps = ({ reRender, listTopics }) => ({
+  reRender,
   listTopics,
 });
 

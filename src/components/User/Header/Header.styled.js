@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export default styled.div`
   .total-header {
+    z-index: 1;
     position: fixed;
     top: 30px;
     left: 50px;

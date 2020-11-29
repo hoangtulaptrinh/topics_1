@@ -83,7 +83,14 @@ const List = ({ listUsers }) => {
           listUserBuyThisCourse.map((user, index) => (
             <div key={index}>
               <div className="header">
-                <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+                <img
+                  src={
+                    currentUser.image
+                      ? currentUser.image
+                      : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                  }
+                  alt="avatar"
+                />
                 <div className="info">
                   <p className="left-info">{user.name}</p>
                   <div className="right-info">

@@ -24,6 +24,11 @@ export const updateUser = data => ({
   data,
 });
 
+export const updateProcessCourse = data => ({
+  type: USER.UPDATE_PROCESS_COURSE,
+  data,
+});
+
 export const setAllUsers = data => ({
   type: USER.SET_ALL_USERS,
   data,

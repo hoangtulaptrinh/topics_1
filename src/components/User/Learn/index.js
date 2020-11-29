@@ -9,6 +9,7 @@ import { Player } from 'video-react';
 import { useHistory } from 'react-router-dom';
 import { FaRegCheckSquare } from 'react-icons/fa';
 
+import { updateProcessCourse } from '../../../actions';
 import { toastSuccess, toastWarning, toastError } from '../../../helper/toastHelper';
 import Header from '../Header';
 import moment from 'moment';
@@ -16,8 +17,9 @@ import Wrapper from './Learn.styled';
 
 const { Panel } = Collapse;
 
-const HomePage = ({ listCourses }) => {
+const HomePage = ({ listCourses, updateProcessCourse }) => {
   const [lesson, setLesson] = useState(0);
+  const [videoLesson, setVideoLesson] = useState(0);
   const [isShowModal, setIsShowModal] = useState(false);
   const [quiz, setQuiz] = useState([]);
 
@@ -32,7 +34,7 @@ const HomePage = ({ listCourses }) => {
     return listCourses.find(course => course._id === idThisCourse);
   }, [idThisCourse, listCourses]);
 
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const HasThisCourse = useMemo(() => {
     if (!course || !currentUser.course) return null;
@@ -51,8 +53,6 @@ const HomePage = ({ listCourses }) => {
 
   const diffDayUpdate = useCallback(dayUpdate => moment().diff(moment(dayUpdate), 'days'), []);
 
-  console.log(currentUser);
-
   const handleQuiz = useCallback(
     index => {
       let cloneQuiz = [...quiz];
@@ -64,6 +64,18 @@ const HomePage = ({ listCourses }) => {
     },
     [quiz],
   );
+
+  const processOnThisCourse = useMemo(() => {
+    if (
+      !course ||
+      !currentUser.course ||
+      (currentUser.course && !currentUser.course.length) ||
+      !currentUser.course.find(item => item.id === idThisCourse)
+    )
+      return 0;
+
+    return currentUser.course.find(item => item.id === idThisCourse).progress;
+  }, [course, currentUser.course, idThisCourse]);
 
   const handlequizSubmit = useCallback(() => {
     const listQuiz = course.lesson[lesson].question.answer;
@@ -95,7 +107,16 @@ const HomePage = ({ listCourses }) => {
     toastSuccess('Đúng Rồi Bạn Ơi');
     setIsShowModal(false);
     setQuiz([]);
-  }, [course, lesson, quiz]);
+
+    if (lesson === processOnThisCourse) {
+      updateProcessCourse({
+        course: {
+          id: idThisCourse,
+          progress: processOnThisCourse + 1,
+        },
+      });
+    }
+  }, [course, idThisCourse, lesson, processOnThisCourse, quiz, updateProcessCourse]);
 
   return (
     <Wrapper>
@@ -103,11 +124,15 @@ const HomePage = ({ listCourses }) => {
       {!!course && (
         <div className="total-learn">
           <div className="left">
-            {course.lesson[lesson] ? <Player src={course.lesson[lesson].video} /> : <h1>Bài Học Đang Được Chuẩn Bị</h1>}
+            {course.lesson[lesson] ? (
+              <Player className="video-custom" src={course.lesson[videoLesson].video} />
+            ) : (
+              <h1>Bài Học Đang Được Chuẩn Bị</h1>
+            )}
           </div>
           <div className="right">
             <Collapse className="learn-collapse">
-              <Panel header="Bài Giảng Và Tài Liệu Liên Quan" key="1" showArrow={false}>
+              <Panel style={{ fontWeight: 500 }} header="Bài Giảng Và Tài Liệu Liên Quan" key="1" showArrow={false}>
                 <p>
                   Bài Giảng
                   <a href={course.outline}>
@@ -124,18 +149,32 @@ const HomePage = ({ listCourses }) => {
                   ))}
                 </p>
               </Panel>
-              <Panel header="Danh Sách Bài Học" key="2" showArrow={false}>
+              <Panel style={{ fontWeight: 500 }} header="Danh Sách Bài Học" key="2" showArrow={false}>
                 <Collapse className="learn-collapse">
                   {course.lesson.map((item, index) => (
                     <Panel
+                      style={
+                        index < processOnThisCourse
+                          ? { background: 'rgb(16 255 0 / 33%)', fontWeight: 'bold' }
+                          : index === processOnThisCourse
+                          ? { background: '#fbff0040', fontWeight: 'bold' }
+                          : { background: '#ff000038', fontWeight: 'bold' }
+                      }
                       header={`${index + 1}. ${item.name}`}
                       showArrow={false}
                       extra={
                         <div className="play-video-icon" onClick={e => e.stopPropagation()}>
-                          {lesson !== index && (
+                          {videoLesson !== index && (
                             <AiOutlinePlayCircle
                               onClick={() => {
-                                setLesson(index);
+                                if (index > processOnThisCourse) {
+                                  toastWarning(
+                                    'Bạn Chưa Hoàn Thành Bài Tập Trắc Nghiệm Kiểm Tra Kiến thức Của Bài Tập Trước',
+                                  );
+                                  return;
+                                }
+
+                                setVideoLesson(index);
                                 setQuiz([]);
                               }}
                             />
@@ -145,7 +184,7 @@ const HomePage = ({ listCourses }) => {
                       key={index}
                     >
                       <div className="lesson-content">
-                        <div style={{ marginBottom: 10 }}>
+                        <div style={{ marginBottom: 10, fontWeight: 500, color: '#888383' }}>
                           {!diffDayUpdate(item.date_create) && <span>Mới Cập nhật hôm nay</span>}
                           {!!diffDayUpdate(item.date_create) && (
                             <span>Cập nhật {diffDayUpdate(item.date_create)} ngày trước</span>
@@ -154,9 +193,19 @@ const HomePage = ({ listCourses }) => {
 
                         <p>
                           Bài Tập Thực Hành
-                          <a target="_blank" rel="noopener noreferrer" href={item.exercise}>
-                            <IoMdCodeWorking style={{ marginTop: 5 }} />
-                          </a>
+                          <IoMdCodeWorking
+                            style={{ cursor: 'pointer', color: '#7a00ff' }}
+                            onClick={() => {
+                              if (index > processOnThisCourse) {
+                                toastWarning(
+                                  'Bạn Chưa Hoàn Thành Bài Tập Trắc Nghiệm Kiểm Tra Kiến thức Của Bài Tập Trước',
+                                );
+                                return;
+                              }
+
+                              window.location.href = item.exercise;
+                            }}
+                          />
                         </p>
 
                         <p>
@@ -164,7 +213,17 @@ const HomePage = ({ listCourses }) => {
                           <FaRegCheckSquare
                             style={{ cursor: 'pointer' }}
                             color="#009090"
-                            onClick={() => setIsShowModal(true)}
+                            onClick={() => {
+                              if (index > processOnThisCourse) {
+                                toastWarning(
+                                  'Bạn Chưa Hoàn Thành Bài Tập Trắc Nghiệm Kiểm Tra Kiến thức Của Bài Tập Trước',
+                                );
+                                return;
+                              }
+
+                              setLesson(index);
+                              setIsShowModal(true);
+                            }}
                           />
                         </p>
                       </div>
@@ -172,7 +231,11 @@ const HomePage = ({ listCourses }) => {
                   ))}
                 </Collapse>
               </Panel>
-              <div onClick={() => history.push(`/topics?idThread=${course._id}`)} className="go-to-forum">
+              <div
+                style={{ fontWeight: 500 }}
+                onClick={() => history.push(`/topics?idThread=${course._id}`)}
+                className="go-to-forum"
+              >
                 Đến Forum Thảo Luận Về Bài Học
               </div>
             </Collapse>
@@ -218,4 +281,4 @@ const mapStatetoProps = ({ reRender, listCourses }) => {
   return { reRender, listCourses };
 };
 
-export default connect(mapStatetoProps, {})(HomePage);
+export default connect(mapStatetoProps, { updateProcessCourse })(HomePage);

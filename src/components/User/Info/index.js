@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import Header from '../Header';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
+import Chart from 'react-apexcharts';
 
 import { updateCurrentUser, refreshCurrentUser } from '../../../actions';
 import infoUserImage from '../../../assets/img/INFO.png';
@@ -14,9 +15,14 @@ import Wrapper from './Info.style';
 
 const formatDate = 'DD/MM/YYYY';
 
+<<<<<<< HEAD
 const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
+=======
+const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser }) => {
+>>>>>>> master
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+  const [priview, setPriview] = useState(currentUser.image);
   const [page, setPage] = useState('all');
 
   const formikPassword = useFormik({
@@ -43,6 +49,7 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
 
   const formikInfo = useFormik({
     initialValues: {
+      image: null,
       name: currentUser.name,
       date_of_birth: currentUser.date_of_birth,
       phone_number: currentUser.phone_number,
@@ -52,7 +59,18 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
       date_of_birth: Yup.string(),
       phone_number: Yup.string().required('Hãy nhập số điện thoại của bạn'),
     }),
-    onSubmit: values => updateCurrentUser(values),
+    onSubmit: values => {
+      const { image, name, date_of_birth, phone_number } = values;
+
+      const formData = new FormData();
+
+      !!image && formData.append('image', image);
+      !!name && formData.append('name', name);
+      !!date_of_birth && formData.append('date_of_birth', date_of_birth);
+      !!phone_number && formData.append('phone_number', phone_number);
+
+      updateCurrentUser(formData);
+    },
   });
 
   const isDisabledBtnSubmitPasswordForm = useMemo(() => !formikPassword.dirty || !isEmpty(formikPassword.errors), [
@@ -60,10 +78,23 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
     formikPassword.errors,
   ]);
 
-  const isDisabledBtnSubmitInfoForm = useMemo(() => !formikInfo.dirty || !isEmpty(formikInfo.errors), [
-    formikInfo.dirty,
-    formikInfo.errors,
-  ]);
+  // const isDisabledBtnSubmitInfoForm = useMemo(() => !formikInfo.dirty || !isEmpty(formikInfo.errors), [
+  //   formikInfo.dirty,
+  //   formikInfo.errors,
+  // ]);
+
+  useEffect(() => {
+    setPage('all');
+  }, [reRender, refreshCurrentUser]);
+
+  const listCoursesCurrentUser = useMemo(() => {
+    const currentUserCourse = currentUser.course;
+    if (!currentUserCourse || (!!currentUserCourse && !currentUserCourse.length)) return [];
+
+    const currentUserCourseMapToId = currentUserCourse.map(item => item.id);
+
+    return listCourses.filter(item => currentUserCourseMapToId.includes(item._id));
+  }, [currentUser.course, listCourses]);
 
   useEffect(() => {
     setPage('all');
@@ -76,7 +107,14 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
         <div className="total">
           <div className="left">
             <div className="header">
-              <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+              <img
+                src={
+                  currentUser.image
+                    ? currentUser.image
+                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                }
+                alt="avatar"
+              />
               <div className="info">
                 <p className="info__name">{currentUser.name}</p>
                 <p className="info__coin">{`${currentUser.money} Coin`}</p>
@@ -119,7 +157,7 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
                     <AiOutlineRight />
                   </div>
 
-                  <div className="item" style={{ borderTop: 'none' }}>
+                  <div className="item" style={{ borderTop: 'none' }} onClick={() => setPage('statistical')}>
                     <div className="left">
                       <span className="top">Thống Kê</span>
                       <span className="down">Chi Tiết</span>
@@ -233,6 +271,21 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
 
               <form onSubmit={formikInfo.handleSubmit}>
                 <div className="field">
+                  <span className="title">Ảnh Đại Diện</span>
+                  <input
+                    style={{ marginBottom: 10 }}
+                    type="file"
+                    name="image"
+                    onChange={event => {
+                      formikInfo.setFieldValue('image', event.target.files[0]);
+                      setPriview(URL.createObjectURL(event.target.files[0]));
+                    }}
+                    onBlur={formikInfo.handleBlur}
+                  />
+                </div>
+                {!!priview && <img src={priview} alt="img" height={150} />}
+
+                <div className="field">
                   <span className="title">Họ và tên</span>
                   <input
                     name="name"
@@ -277,13 +330,134 @@ const HomePage = ({ reRender, updateCurrentUser, refreshCurrentUser }) => {
                 </div>
 
                 <button
-                  disabled={isDisabledBtnSubmitInfoForm}
-                  className={`${isDisabledBtnSubmitInfoForm ? 'disabled-btn' : ''} submit-btn`}
+                  // disabled={isDisabledBtnSubmitInfoForm}
+                  // className={`${isDisabledBtnSubmitInfoForm ? 'disabled-btn' : ''} submit-btn`}
+                  className="submit-btn"
                   type="submit"
                 >
                   Cập nhật
                 </button>
               </form>
+            </div>
+          )}
+
+          {page === 'statistical' && (
+            <div className="right">
+              <div className="header">
+                <img src={infoUserImage} alt="info" />
+                <div className="info">
+                  <p className="title">Thống kê cá nhân</p>
+                  <p className="content">Thống kê các chỉ số của bạn</p>
+                </div>
+              </div>
+
+              <div className="back-btn" onClick={() => setPage('all')}>
+                <AiOutlineLeft /> <span>Thống Kê</span>
+              </div>
+
+              <div>Quản Lý Coin</div>
+              <Chart
+                options={{
+                  chart: {
+                    id: 'basic-bar',
+                  },
+                  xaxis: {
+                    categories: ['tổng số coin đã nạp', 'tổng số coin đã tiêu', 'số coin còn lại'],
+                  },
+                }}
+                series={[
+                  {
+                    name: 'số coin',
+                    data: [
+                      listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b) +
+                        Number(currentUser.money),
+                      listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b),
+                      Number(currentUser.money),
+                    ],
+                  },
+                ]}
+                type="bar"
+                width="500"
+              />
+
+              <div>Quản Lý Khóa Học</div>
+              <Chart
+                options={{
+                  chart: {
+                    width: 500,
+                    type: 'pie',
+                  },
+                  labels: ['Tổng Số Khóa Học Đã Mua', 'Tổng Số Khóa Học Chưa Mua'],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          position: 'bottom',
+                        },
+                      },
+                    },
+                  ],
+                }}
+                series={[listCourses.length, listCoursesCurrentUser.length]}
+                type="pie"
+                width={500}
+              />
+
+              <div>Quản Lý Khóa Học Đã Mua</div>
+              <Chart
+                options={{
+                  chart: {
+                    width: 500,
+                    type: 'pie',
+                  },
+                  labels: [
+                    'Tổng Số Khóa Học Đã Hoàn Thành',
+                    'Tổng Số Khóa Học Đang Trong Quá Trình Hoàn Thành',
+                    'Tổng Số Khóa Học Chưa Bắt Đầu',
+                  ],
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          position: 'bottom',
+                        },
+                      },
+                    },
+                  ],
+                }}
+                series={[
+                  listCoursesCurrentUser.length
+                    ? listCoursesCurrentUser.filter(
+                        item =>
+                          Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                          item.lesson.length,
+                      ).length
+                    : 0,
+                  listCoursesCurrentUser.length
+                    ? listCoursesCurrentUser.filter(
+                        item =>
+                          Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                          Number(currentUser.course.find(course => course.id === item._id).progress) <
+                            item.lesson.length,
+                      ).length
+                    : 0,
+                  listCoursesCurrentUser.length
+                    ? listCoursesCurrentUser.filter(
+                        item => Number(currentUser.course.find(course => course.id === item._id).progress) === 0,
+                      ).length
+                    : 0,
+                ]}
+                type="pie"
+                width={500}
+              />
             </div>
           )}
         </div>

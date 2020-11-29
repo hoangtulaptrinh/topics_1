@@ -21,6 +21,7 @@ export default styled.div`
           img {
             width: 64px;
             height: 64px;
+            border-radius: 50%;
           }
 
           .info {
@@ -145,7 +146,7 @@ export default styled.div`
         }
 
         .user-info {
-          margin-top: 100px;
+          margin-top: 40px;
         }
 
         .back-btn {
@@ -166,6 +167,10 @@ export default styled.div`
           span {
             margin: 0 0 2px 5px;
           }
+        }
+
+        form {
+          margin-bottom: 50px;
         }
 
         .field {

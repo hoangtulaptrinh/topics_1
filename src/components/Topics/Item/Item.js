@@ -9,16 +9,19 @@ import {
   VideoCameraOutlined,
   FileTextOutlined,
   HeartOutlined,
+  CheckOutlined,
 } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 import Wrapper from './Item.styled';
 import Icon from './Icon';
 import { addComment, careTopics } from '../../../actions';
 
-const Item = ({ topic, addComment, careTopics, isDetail }) => {
+const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailTopics }) => {
+  const history = useHistory();
   const [showComment, setShowComment] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -26,14 +29,16 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
   const formik = useFormik({
     initialValues: { content: '', image: null, video: null, outline: null },
     validationSchema: Yup.object({
-      content: Yup.string().required('hãy nhập comment'),
+      content: Yup.string().required('hãy nhập nội dung comment'),
     }),
-    onSubmit: async values => {
+    onSubmit: values => {
       addComment({
         ...values,
         id_author_comment: currentUser._id,
         id_thread: topic.id,
       });
+
+      formik.resetForm();
     },
   });
 
@@ -80,8 +85,24 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
   return (
     <Wrapper>
       <div className="header">
-        <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
-        <div className="info">
+        <img
+          src={
+            currentUser.image
+              ? currentUser.image
+              : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+          }
+          alt="avatar"
+        />
+        <div
+          className="info"
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            if (!isDetail) {
+              history.push(`/topics/detail?idThread=${topic.idThread}&id=${topic.id}`);
+              loadDetailTopics();
+            }
+          }}
+        >
           <p className="left-info">
             {topic.author.name}
             <span>đã đăng một chủ đề thảo luận</span>
@@ -149,7 +170,14 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
               style={index === 0 ? { borderTop: 'none' } : { borderTop: '1px solid #e7e9ec' }}
             >
               <div className="header">
-                <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+                <img
+                  src={
+                    currentUser.image
+                      ? currentUser.image
+                      : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                  }
+                  alt="avatar"
+                />
                 <div className="info">
                   <p className="left-info">{comment.author_comment.name}</p>
                   <div className="right-info">
@@ -158,7 +186,6 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
                   </div>
                 </div>
               </div>
-
               <div className="content">
                 <p>{comment.content}</p>
                 {comment.image && <img src={comment.image} alt="img-content" />}
@@ -178,7 +205,14 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="write-comment">
           <div className="header">
-            <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+            <img
+              src={
+                currentUser.image
+                  ? currentUser.image
+                  : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+              }
+              alt="avatar"
+            />
             <div className="info">
               <div className="right-info">
                 <textarea
@@ -187,14 +221,17 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
                   onBlur={formik.handleBlur}
                   value={formik.values.content}
                 />
+                {formik.touched.content && formik.errors.content ? (
+                  <div style={{ color: 'red' }}>{formik.errors.content}</div>
+                ) : null}
                 <div className="upload">
                   <div className="wrapper-field-upload">
-                    <label htmlFor="image-input">
-                      <FileImageOutlined />
+                    <label htmlFor={`image-input-${indexTopic}`}>
+                      {formik.values.image ? <CheckOutlined className="check-icon" /> : <FileImageOutlined />}
                     </label>
                     <input
                       type="file"
-                      id="image-input"
+                      id={`image-input-${indexTopic}`}
                       accept="image/*"
                       name="image"
                       onChange={event => formik.setFieldValue('image', event.target.files[0])}
@@ -203,12 +240,12 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
                   </div>
 
                   <div className="wrapper-field-upload">
-                    <label htmlFor="video-input">
-                      <VideoCameraOutlined />
+                    <label htmlFor={`video-input-${indexTopic}`}>
+                      {formik.values.video ? <CheckOutlined className="check-icon" /> : <VideoCameraOutlined />}
                     </label>
                     <input
                       type="file"
-                      id="video-input"
+                      id={`video-input-${indexTopic}`}
                       accept="video/mp4,video/x-m4v,video/*"
                       name="video"
                       onChange={event => formik.setFieldValue('video', event.target.files[0])}
@@ -217,19 +254,22 @@ const Item = ({ topic, addComment, careTopics, isDetail }) => {
                   </div>
 
                   <div className="wrapper-field-upload">
-                    <label htmlFor="outline-input">
-                      <FileTextOutlined />
+                    <label htmlFor={`outline-input-${indexTopic}`}>
+                      {formik.values.outline ? <CheckOutlined className="check-icon" /> : <FileTextOutlined />}
                     </label>
                     <input
                       type="file"
-                      id="outline-input"
+                      id={`outline-input-${indexTopic}`}
                       name="outline"
                       onChange={event => formik.setFieldValue('outline', event.target.files[0])}
                       onBlur={formik.handleBlur}
                     />
                   </div>
 
-                  <Icon addEmoji={item => formik.setFieldValue('content', `${formik.values.content}${item}`)} />
+                  <Icon
+                    addEmoji={item => formik.setFieldValue('content', `${formik.values.content}${item}`)}
+                    idPopoverLegacy={`indexTopic-${indexTopic}`}
+                  />
                 </div>
 
                 <div className="submit-comment">
@@ -254,6 +294,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addComment: data => dispatch(addComment(data)),
     careTopics: data => dispatch(careTopics(data)),
+    loadDetailTopics: () => dispatch(careTopics()),
   };
 };
 

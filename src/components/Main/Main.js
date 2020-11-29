@@ -41,7 +41,6 @@ const Main = ({ getAllUsers }) => {
 
   useEffect(() => {
     socket.on('Sever-send-data', data => {
-      console.log(data);
       setListMessenger([...listMessenger, data]);
     });
 

@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import { StarOutlined, UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
+import { loadDetailTopics } from '../../../actions';
 import Wrapper from './LeftContent.styled';
 
-const List = ({ listTopics }) => {
+const List = ({ listTopics, loadDetailTopics }) => {
   const history = useHistory();
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const topTopics = useMemo(() => {
-    console.log(listTopics.listTopics.thread);
     if (!listTopics.listTopics.thread) return [];
+
     return listTopics.listTopics.thread.sort((a, b) => b.comment.length - a.comment.length).slice(0, 4); // sort big => small and
   }, [listTopics.listTopics.thread]);
 
@@ -23,11 +24,21 @@ const List = ({ listTopics }) => {
         {topTopics.map((thread, index) => (
           <div
             className="topic"
+            onClick={() => {
+              history.push(`/topics/detail?idThread=${thread.idThread}&id=${thread.id}`);
+              loadDetailTopics();
+            }}
             key={index}
-            onClick={() => history.push(`/topics/detail?idThread=${thread.idThread}&id=${thread.id}`)}
           >
             <div className="header">
-              <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+              <img
+                src={
+                  currentUser.image
+                    ? currentUser.image
+                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                }
+                alt="avatar"
+              />
               <div className="info">
                 <p className="left-info">
                   {thread.author.name}
@@ -56,9 +67,23 @@ const List = ({ listTopics }) => {
         <p className="title">Những Chủ Đề Mà Bạn Quan Tâm</p>
 
         {currentUser.care.map((thread, index) => (
-          <div key={index}>
+          <div
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              history.push(`/topics/detail?idThread=${thread.idThread}&id=${thread.id}`);
+              loadDetailTopics();
+            }}
+            key={index}
+          >
             <div className="header">
-              <img src="https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg" alt="avatar" />
+              <img
+                src={
+                  currentUser.image
+                    ? currentUser.image
+                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
+                }
+                alt="avatar"
+              />
               <div className="info">
                 <p className="left-info">
                   {thread.author.name}
@@ -88,6 +113,4 @@ const List = ({ listTopics }) => {
 
 const mapStateToProps = ({ listTopics, reRender }) => ({ listTopics, reRender });
 
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps, { loadDetailTopics })(List);
