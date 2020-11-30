@@ -113,6 +113,7 @@ const HomePage = ({ listCourses, updateProcessCourse }) => {
         course: {
           id: idThisCourse,
           progress: processOnThisCourse + 1,
+          date_finish: moment().format(),
         },
       });
     }

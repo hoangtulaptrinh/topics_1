@@ -226,8 +226,8 @@ export default styled.div`
 
         .certificate {
           background: #f1f1f1;
-          max-width: 1500px;
-          width: 100%;
+          margin-bottom: 10px;
+          width: 800px;
           padding: 30px;
           border: 15px solid #0a0a23;
           border-radius: 3px;

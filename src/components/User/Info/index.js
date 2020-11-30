@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { connect } from 'react-redux';
-import { DatePicker } from 'antd';
+import { Collapse, DatePicker } from 'antd';
 import { useFormik } from 'formik';
 import { ImFire } from 'react-icons/im';
 import * as Yup from 'yup';
@@ -16,6 +16,8 @@ import Wrapper from './Info.style';
 
 import DUONG from '../../../assets/img/DUONG.png';
 import DAT from '../../../assets/img/DAT.png';
+
+const { Panel } = Collapse;
 
 const formatDate = 'DD/MM/YYYY';
 
@@ -168,7 +170,26 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                   <div className="item" style={{ borderTop: 'none' }} onClick={() => setPage('certifies')}>
                     <div className="left">
                       <span className="top">Chứng chỉ</span>
-                      <span className="down">Đã Sở Hữu 4 chứng chỉ</span>
+                      <span className="down">
+                        {listCoursesCurrentUser.length &&
+                        !!listCoursesCurrentUser.filter(
+                          item =>
+                            Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                            Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                              item.lesson.length,
+                        ).length
+                          ? `Đã Sở Hữu
+                        ${
+                          listCoursesCurrentUser.filter(
+                            item =>
+                              Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                              Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                                item.lesson.length,
+                          ).length
+                        }
+                        chứng chỉ`
+                          : 'Chưa Sở Hữu Chứng Chỉ Nào'}
+                      </span>
                     </div>
                     <AiOutlineRight />
                   </div>
@@ -445,8 +466,9 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                   listCoursesCurrentUser.length
                     ? listCoursesCurrentUser.filter(
                         item =>
+                          Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
                           Number(currentUser.course.find(course => course.id === item._id).progress) ===
-                          item.lesson.length,
+                            item.lesson.length,
                       ).length
                     : 0,
                   listCoursesCurrentUser.length
@@ -470,7 +492,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
           )}
 
           {page === 'certifies' && (
-            <div className="right">
+            <div className="right" style={{ paddingBottom: 10 }}>
               <div className="header">
                 <img src={infoUserImage} alt="info" />
                 <div className="info">
@@ -483,37 +505,96 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                 <AiOutlineLeft /> <span>Tài Khoản</span>
               </div>
 
-              <div className="certificate">
-                <div className="certification-header">
-                  <div className="left">
-                    BeyondTheLimits <ImFire style={{ marginLeft: 7 }} />
-                  </div>
-                  <div className="right">Cấp Ngày 29 Tháng 11 Năm 2020</div>
-                </div>
+              <p style={{ fontSize: 18, fontWeight: 500 }}>
+                {listCoursesCurrentUser.length &&
+                !!listCoursesCurrentUser.filter(
+                  item =>
+                    Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                    Number(currentUser.course.find(course => course.id === item._id).progress) === item.lesson.length,
+                ).length
+                  ? `Bạn Đã Sở Hữu
+                        ${
+                          listCoursesCurrentUser.filter(
+                            item =>
+                              Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                              Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                                item.lesson.length,
+                          ).length
+                        }
+                        chứng chỉ`
+                  : 'Bạn Chưa Sở Hữu Chứng Chỉ Nào'}
+              </p>
 
-                <div className="certification-information">
-                  <h3>Chứng Chỉ Này Được Cấp Cho</h3>
-                  <h1>{currentUser.name}</h1>
-                  <h3>Đã Hoàn Thành Khóa Học Dưới Đây Ở BeyondTheLimits</h3>
-                  <h1>Responsive Web Design</h1>
-                  <h4>Chứng Chỉ Lập Trình Viên ,Đại Diện Cho Khoảng 50 Giờ Học Tập</h4>
-                </div>
+              <Collapse accordion>
+                {listCoursesCurrentUser.length &&
+                  !!listCoursesCurrentUser.filter(
+                    item =>
+                      Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                      Number(currentUser.course.find(course => course.id === item._id).progress) === item.lesson.length,
+                  ).length &&
+                  listCoursesCurrentUser
+                    .filter(
+                      item =>
+                        Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                        Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                          item.lesson.length,
+                    )
+                    .map((course, index) => (
+                      <Panel
+                        header={
+                          <span style={{ fontSize: 14, fontWeight: 500 }}>
+                            Chứng Chỉ Đã Hoàn Thành Khóa Học <span style={{ fontWeight: 'bold' }}>{course.name}</span>
+                          </span>
+                        }
+                        key={index}
+                      >
+                        <div className="certificate">
+                          <div className="certification-header">
+                            <div className="left">
+                              BeyondTheLimits <ImFire style={{ marginLeft: 7 }} />
+                            </div>
+                            <div className="right">
+                              Cấp Ngày
+                              <span style={{ margin: '0 5px' }}>
+                                {moment(currentUser.course.find(x => x.id === course._id).date_finish).format('D')}
+                              </span>
+                              Tháng
+                              <span style={{ margin: '0 5px' }}>
+                                {moment(currentUser.course[0].date_finish).format('M')}
+                              </span>
+                              Năm
+                              <span style={{ margin: '0 5px' }}>
+                                {moment(currentUser.course[0].date_finish).format('YYYY')}
+                              </span>
+                            </div>
+                          </div>
 
-                <div className="certification-signature">
-                  <div>
-                    <img src={DUONG} width={200} height={120} alt="signature-duong" />
+                          <div className="certification-information">
+                            <h3>Chứng Chỉ Này Được Cấp Cho</h3>
+                            <h1>{currentUser.name}</h1>
+                            <h3>Đã Hoàn Thành Khóa Học Dưới Đây Ở BeyondTheLimits</h3>
+                            <h1>{course.name}</h1>
+                            <h4>Chứng Chỉ Lập Trình Viên ,Đại Diện Cho Khoảng 50 Giờ Học Tập</h4>
+                          </div>
 
-                    <p>Đỗ Tùng Dương</p>
-                    <p>Giám Đốc Điều Hành</p>
-                  </div>
-                  <div>
-                    <img src={DAT} width={200} height={120} alt="signature-duong" />
+                          <div className="certification-signature">
+                            <div>
+                              <img src={DUONG} width={200} height={120} alt="signature-duong" />
 
-                    <p>Nguyễn Tiến Đạt</p>
-                    <p>Giám Đốc Vận Hành</p>
-                  </div>
-                </div>
-              </div>
+                              <p>Đỗ Tùng Dương</p>
+                              <p>Giám Đốc Điều Hành</p>
+                            </div>
+                            <div>
+                              <img src={DAT} width={200} height={120} alt="signature-duong" />
+
+                              <p>Nguyễn Tiến Đạt</p>
+                              <p>Giám Đốc Vận Hành</p>
+                            </div>
+                          </div>
+                        </div>
+                      </Panel>
+                    ))}
+              </Collapse>
             </div>
           )}
         </div>

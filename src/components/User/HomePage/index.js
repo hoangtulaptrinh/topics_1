@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -10,8 +10,35 @@ import NUMBER_USERS from '../../../assets/img/NUMBER_USERS.png';
 import NUMBER_COURSES from '../../../assets/img/NUMBER_COURSES.png';
 import WHERE_TO_LEARNS from '../../../assets/img/WHERE_TO_LEARNS.png';
 
-const HomePage = ({ listCourses }) => {
+const HomePage = ({ listUsers, listCourses }) => {
   const history = useHistory();
+
+  const topCourses = useMemo(() => {
+    if (!listUsers.listUsers.length || !listCourses.length) return [];
+
+    let arr = [];
+
+    const listAfterMap = listUsers.listUsers
+      .map(user => user.course)
+      .filter(course => !!course)
+      .map(item => item.map(x => x.id));
+
+    listAfterMap.forEach(y => {
+      arr = [...[...arr, ...y]];
+    });
+
+    return listCourses.map(z => {
+      let count = 0;
+
+      for (var i = 0; i < arr.length; ++i) {
+        if (arr[i] === z._id) count++;
+      }
+      return {
+        ...z,
+        count,
+      };
+    });
+  }, [listUsers, listCourses]);
 
   return (
     <Wrapper>
@@ -51,8 +78,7 @@ const HomePage = ({ listCourses }) => {
 
           {!!listCourses.length && (
             <div className="courses">
-              {/* fix me later */}
-              {listCourses.slice(0, 4).map((course, index) => (
+              {topCourses.slice(0, 4).map((course, index) => (
                 <CourseItem course={course} key={index} />
               ))}
             </div>
@@ -63,8 +89,6 @@ const HomePage = ({ listCourses }) => {
   );
 };
 
-const mapStatetoProps = ({ listCourses }) => {
-  return { listCourses };
-};
+const mapStateToProps = ({ listUsers, listCourses }) => ({ listUsers, listCourses });
 
-export default connect(mapStatetoProps, {})(HomePage);
+export default connect(mapStateToProps, {})(HomePage);

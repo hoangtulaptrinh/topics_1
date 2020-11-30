@@ -5,15 +5,42 @@ import CourseItem from '../Item';
 import Header from '../../Header';
 import Wrapper from './List.styled';
 
-const HomePage = ({ listCategorys, listCourses }) => {
+const HomePage = ({ listUsers, listCategorys, listCourses }) => {
   const [categorySelect, setCategorySelect] = useState(null);
 
+  const topCourses = useMemo(() => {
+    if (!listUsers.listUsers.length || !listCourses.length) return [];
+
+    let arr = [];
+
+    const listAfterMap = listUsers.listUsers
+      .map(user => user.course)
+      .filter(course => !!course)
+      .map(item => item.map(x => x.id));
+
+    listAfterMap.forEach(y => {
+      arr = [...[...arr, ...y]];
+    });
+
+    return listCourses.map(z => {
+      let count = 0;
+
+      for (var i = 0; i < arr.length; ++i) {
+        if (arr[i] === z._id) count++;
+      }
+      return {
+        ...z,
+        count,
+      };
+    });
+  }, [listUsers, listCourses]);
+
   const showListCourses = useMemo(() => {
-    if (!categorySelect) return listCourses;
-    return listCourses.filter(course =>
+    if (!categorySelect) return topCourses;
+    return topCourses.filter(course =>
       listCategorys.find(item => item._id === categorySelect).courses.includes(course._id),
     );
-  }, [categorySelect, listCategorys, listCourses]);
+  }, [categorySelect, listCategorys, topCourses]);
 
   return (
     <Wrapper>
@@ -50,8 +77,8 @@ const HomePage = ({ listCategorys, listCourses }) => {
   );
 };
 
-const mapStatetoProps = ({ listCategorys, listCourses }) => {
-  return { listCategorys, listCourses };
+const mapStatetoProps = ({ listUsers, listCategorys, listCourses }) => {
+  return { listUsers, listCategorys, listCourses };
 };
 
 export default connect(mapStatetoProps, {})(HomePage);

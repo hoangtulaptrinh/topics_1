@@ -7,6 +7,7 @@ export default styled.div`
     border: 1px solid #e7e9ec;
     cursor: pointer;
     width: 100%;
+    height: 200px;
   }
 
   .course {
