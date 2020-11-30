@@ -334,7 +334,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
 
   return (
     <Fragment>
-      <Button type="primary" onClick={showModalAdd} style={{ margin: '10px 0px' }}>
+      <Button type="primary" onClick={showModalAdd} style={{ margin: '10px 0px', height: '5%' }}>
         Thêm mới khóa học
       </Button>
       <Table key={listCourses._id} dataSource={listCourses} columns={columns} bordered />

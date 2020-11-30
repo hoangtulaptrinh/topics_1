@@ -76,6 +76,9 @@ class Dashboard extends React.Component {
               className: 'trigger',
               onClick: this.toggle,
             })}
+            <div className="content-header-admin">
+              <h1> Danh sachs nguoi dung</h1>
+            </div>
           </Header>
           <Content className="content-layout">
             {test === 'users' && <Users />}

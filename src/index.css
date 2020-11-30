@@ -90,6 +90,8 @@ body::-webkit-scrollbar-thumb {
 
 .site-layout .site-layout-background {
   background: #fff;
+  display: flex;
+  align-items: center;
 }
 /* 
 
@@ -135,6 +137,10 @@ body::-webkit-scrollbar-thumb {
 .content-layout {
   padding:  30px 24px;
   background-color: #F0F2F5;
+}
+
+.content-header-admin {
+  width: 100%;
 }
 
 .quiz-modal .ant-modal-body {

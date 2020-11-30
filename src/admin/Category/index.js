@@ -165,7 +165,7 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
           });
           setVisibleModalAdd(true);
         }}
-        style={{ margin: '10px 0px' }}
+        style={{ margin: '10px 0px', height: '5%' }}
       >
         Thêm mới danh mục
       </Button>
