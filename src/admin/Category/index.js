@@ -2,7 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { Button, Input, Space, Table, Form, Modal, Checkbox } from 'antd';
 import { BsPencil } from 'react-icons/bs';
-import { MdDelete } from 'react-icons/md';
+// import { MdDelete } from 'react-icons/md';
 import moment from 'moment';
 import { createCategory, getAllCategory, updateCategory } from '../../actions/index';
 

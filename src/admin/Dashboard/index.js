@@ -35,16 +35,15 @@ class Dashboard extends React.Component {
         <Sider collapsed={this.state.collapsed}>
           <div className="logo" />
           <Menu theme="dark" mode="inline" selectedKeys={test}>
+            <Menu.Item key="category" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'category' })}>
+              Quản lý danh mục
+            </Menu.Item>
             <Menu.Item key="courses" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })}>
-              Course
+              Quản lý khóa học
             </Menu.Item>
 
             <Menu.Item key="users" icon={<UserOutlined />} onClick={() => this.setState({ test: 'users' })}>
-              User
-            </Menu.Item>
-
-            <Menu.Item key="category" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'category' })}>
-              Category
+              Quản lý người dùng
             </Menu.Item>
           </Menu>
         </Sider>
