@@ -9,8 +9,6 @@ import { createCategory, getAllCategory, updateCategory } from '../../actions/in
 import { connect } from 'react-redux';
 
 const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, updateCategory, createCategory }) => {
-  console.log(moveToCourse, 'test props');
-
   const [visibleModalEdit, setVisibleModalEdit] = useState(false);
   const [visibleModalAdd, setVisibleModalAdd] = useState(false);
   const [idCategory, setIdCategory] = useState(null);
@@ -33,8 +31,6 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
       courses: currentCategory.courses,
     });
   }, [idCategory, listCategory]);
-
-  console.log('test category', category);
 
   const layout = {
     labelCol: {
@@ -67,7 +63,7 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
   const columns = [
     {
       align: 'center',
-      title: 'STT',
+      title: 'Số thứ tự',
       dataIndex: 'id',
       key: 'id',
       render: (_, record) => <div>{listCategory.findIndex(item => item._id === record._id) + 1}</div>,
@@ -171,12 +167,17 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
         }}
         style={{ margin: '10px 0px' }}
       >
-        Add New Category
+        Thêm mới danh mục
       </Button>
       <Table columns={columns} dataSource={listCategory} bordered />
 
       {/* Modal Add Category */}
-      <Modal title="Add Category" onCancel={() => setVisibleModalAdd(false)} visible={visibleModalAdd} footer={null}>
+      <Modal
+        title="Thêm mới danh mục"
+        onCancel={() => setVisibleModalAdd(false)}
+        visible={visibleModalAdd}
+        footer={null}
+      >
         <Form {...layout}>
           <Form.Item label="Tên danh mục">
             <Input
@@ -191,11 +192,11 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
             />
           </Form.Item>
           <Form.Item {...tailLayout} style={{ marginBottom: '12px' }}>
-            <Button type="primary" onClick={() => setVisibleModalAdd(false)} style={{ width: '64px' }}>
-              Hủy
-            </Button>
-            <Button type="primary" style={{ marginLeft: 12, width: '64px' }} onClick={handleAddCategory}>
+            <Button type="primary" style={{ marginRight: 12, width: '64px' }} onClick={handleAddCategory}>
               Lưu
+            </Button>
+            <Button type="primary" onClick={() => setVisibleModalAdd(false)} style={{ width: '64px' }} danger>
+              Hủy
             </Button>
           </Form.Item>
         </Form>
@@ -259,7 +260,6 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
 };
 
 const mapStateToProps = state => {
-  console.log(state, 'test');
   return {
     listCategory: state.listCategorys,
     listCourses: state.listCourses,

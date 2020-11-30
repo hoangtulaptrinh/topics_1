@@ -38,41 +38,41 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
   const columns = [
     {
       align: 'center',
-      title: 'Name',
+      title: 'Tên khóa học',
       width: '200px',
       dataIndex: 'name',
       key: 'name',
     },
     {
       align: 'center',
-      title: 'Introduction',
+      title: 'Giới thiệu',
       dataIndex: 'intro',
       width: '200px',
       key: 'intro',
     },
     {
       align: 'center',
-      title: 'Cost',
+      title: 'Giá',
       dataIndex: 'cost',
       key: 'cost',
     },
     {
       align: 'center',
-      title: 'Image',
+      title: 'Hỉnh ảnh',
       dataIndex: 'image',
       key: 'image',
       render: image => <img width={50} height={50} src={image} alt="test" />,
     },
     {
       align: 'center',
-      title: 'Outline',
+      title: 'Tài liệu',
       dataIndex: 'outline',
       key: 'outline',
       render: outline => <a href={outline}> Document </a>,
     },
     {
       align: 'center',
-      title: 'References',
+      title: 'Link tham khảo',
       dataIndex: 'references',
       key: 'references',
       render: references =>
@@ -86,7 +86,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
     },
     {
       align: 'center',
-      title: 'Lessons',
+      title: 'Các bài học',
       dataIndex: 'lesson',
       key: 'lesson',
       // eslint-disable-next-line no-unused-vars
@@ -135,7 +135,6 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
 
   const showModalAdd = () => setVisibleModalAdd(true);
   const showModalEditCourse = record => {
-    console.log('record course', record);
     formikEditCourse.setFieldValue('id', record._id);
     formikEditCourse.setFieldValue('name', record.name);
     formikEditCourse.setFieldValue('intro', record.intro);
@@ -333,23 +332,22 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
     },
   });
 
-  console.log(currentLesson, 'test adadada');
   return (
     <Fragment>
       <Button type="primary" onClick={showModalAdd} style={{ margin: '10px 0px' }}>
-        Add New Course
+        Thêm mới khóa học
       </Button>
       <Table key={listCourses._id} dataSource={listCourses} columns={columns} bordered />
       {/* Modal Edit Lesson */}
       <Modal
-        title="Edit lesson"
+        title="Sửa bài học"
         onCancel={() => setVisibleModalEditLesson(false)}
         visible={visibleModalEditLesson}
         footer={null}
       >
         <form onSubmit={formikEditLesson.handleSubmit}>
           <div>
-            <label for="name"> Lesson Name: </label>
+            <label for="name"> Tên bài học: </label>
             <Input
               name="name"
               onChange={formikEditLesson.handleChange}
@@ -370,7 +368,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
 
           <div className="wrapper-field-upload">
-            <label for="video-1"> Video Name: </label>
+            <label for="video-1"> Video: </label>
 
             <input
               type="file"
@@ -387,7 +385,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
 
           <div className="wrapper-field-upload">
-            <label for="question-name-1"> Question Name: </label>
+            <label for="question-name-1"> Câu hỏi: </label>
 
             <Input
               type="text"
@@ -408,7 +406,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer1-1"> Answer 1: </label>
+            <label for="question-answer1-1"> Đáp án 1: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -453,7 +451,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer2-1"> Answer 2: </label>
+            <label for="question-answer2-1"> Đáp án 2: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -498,7 +496,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer3-1"> Answer 3: </label>
+            <label for="question-answer3-1"> Đáp án 3: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -543,7 +541,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer4-1"> Answer 4: </label>
+            <label for="question-answer4-1"> Đáp án 4: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -585,7 +583,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
           <div className="submit-comment">
             <Button className="post" type="primary" htmlType="submit" style={{ marginRight: 10 }}>
-              Đăng Tải
+              Lưu
             </Button>
             <Button className="cancel" onClick={() => setVisibleModalEditLesson(false)}>
               Hủy Bỏ
@@ -594,25 +592,30 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
         </form>
       </Modal>
       {/* Modal Add New Course */}
-      <Modal title="Add new course" onCancel={() => setVisibleModalAdd(false)} visible={visibleModalAdd} footer={null}>
+      <Modal
+        title="Thêm mới khóa học"
+        onCancel={() => setVisibleModalAdd(false)}
+        visible={visibleModalAdd}
+        footer={null}
+      >
         <form onSubmit={formik.handleSubmit}>
           <div>
-            <label for="name">Course Name:</label>
+            <label for="name">Tên khóa học:</label>
             <Input name="name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.name} />
           </div>
           <br />
           <div>
-            <label for="intro">Introduction:</label>
+            <label for="intro">Giới thiệu:</label>
             <Input name="intro" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.intro} />
           </div>
           <br />
           <div>
-            <label for="cost">Cost:</label>
+            <label for="cost">Giá:</label>
             <Input name="cost" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.cost} />
           </div>
           <br />
           <div>
-            <label for="references">References:</label>
+            <label for="references">Link tham khảo:</label>
             <TextArea
               name="references"
               onChange={formik.handleChange}
@@ -623,7 +626,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
           <div className="wrapper-field-upload">
             <label htmlFor="image-input" style={{ marginRight: 10 }}>
-              Image:
+              Hình ảnh:
             </label>
             <input
               type="file"
@@ -637,7 +640,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
           <div className="wrapper-field-upload">
             <label htmlFor="outline-input" style={{ marginRight: 10 }}>
-              Outline:
+              Tài liệu:
             </label>
             <input
               type="file"
@@ -652,7 +655,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             <Button className="post" type="primary" htmlType="submit" style={{ marginRight: 10 }}>
               Đăng Tải
             </Button>
-            <Button className="cancel" onClick={() => setVisibleModalAdd(false)}>
+            <Button className="cancel" onClick={() => setVisibleModalAdd(false)} type="primary" danger>
               Hủy Bỏ
             </Button>
           </div>
@@ -661,14 +664,14 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
 
       {/* Modal Edit  Course */}
       <Modal
-        title="Edit course"
+        title="Sửa khóa học"
         onCancel={() => setVisibleModalEditCourse(false)}
         visible={visibleModalEditCourse}
         footer={null}
       >
         <form onSubmit={formikEditCourse.handleSubmit}>
           <div>
-            <label for="name">Course Name:</label>
+            <label for="name">Tên khóa học:</label>
             <Input
               name="name"
               onChange={formikEditCourse.handleChange}
@@ -678,7 +681,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           </div>
           <br />
           <div>
-            <label for="intro">Introduction:</label>
+            <label for="intro">Giới thiệu:</label>
             <Input
               name="intro"
               onChange={formikEditCourse.handleChange}
@@ -688,7 +691,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           </div>
           <br />
           <div>
-            <label for="cost">Cost:</label>
+            <label for="cost">Giá:</label>
             <Input
               name="cost"
               onChange={formikEditCourse.handleChange}
@@ -698,7 +701,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           </div>
           <br />
           <div>
-            <label for="references">References:</label>
+            <label for="references">Link tham khảo:</label>
             <TextArea
               name="references"
               onChange={formikEditCourse.handleChange}
@@ -709,7 +712,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
           <div className="wrapper-field-upload">
             <label htmlFor="image-input-1" style={{ marginRight: 10 }}>
-              Image:
+              Hình ảnh:
             </label>
             <input
               type="file"
@@ -723,7 +726,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
           <div className="wrapper-field-upload">
             <label htmlFor="outline-input-1" style={{ marginRight: 10 }}>
-              Outline:
+              Tài liệu:
             </label>
             <input
               type="file"
@@ -738,7 +741,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             <Button className="post" type="primary" htmlType="submit" style={{ marginRight: 10 }}>
               Lưu
             </Button>
-            <Button className="cancel" onClick={() => setVisibleModalEditCourse(false)}>
+            <Button className="cancel" onClick={() => setVisibleModalEditCourse(false)} type="primary" danger>
               Hủy Bỏ
             </Button>
           </div>
@@ -747,14 +750,14 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
 
       {/* Modal Add New Lesson */}
       <Modal
-        title="Add new lesson"
+        title="Thêm mới bài học"
         onCancel={() => setVisibleModalAddLesson(false)}
         visible={visibleModalAddLesson}
         footer={null}
       >
         <form onSubmit={formikLesson.handleSubmit}>
           <div>
-            <label for="name"> Lesson Name: </label>
+            <label for="name"> Tên bài học: </label>
             <Input
               name="name"
               onChange={formikLesson.handleChange}
@@ -764,7 +767,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           </div>
           <br />
           <div>
-            <label for="exercise"> Excersise Name: </label>
+            <label for="exercise"> Bài tập: </label>
             <Input
               name="exercise"
               onChange={formikLesson.handleChange}
@@ -775,7 +778,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
 
           <div className="wrapper-field-upload">
-            <label for="video"> Video Name: </label>
+            <label for="video"> Video: </label>
 
             <input
               type="file"
@@ -789,7 +792,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <br />
 
           <div className="wrapper-field-upload">
-            <label for="question-name"> Question Name: </label>
+            <label for="question-name"> Câu hỏi: </label>
 
             <Input
               type="text"
@@ -810,7 +813,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer1"> Answer 1: </label>
+            <label for="question-answer1"> Đáp án 1: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -856,7 +859,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer2"> Answer 2: </label>
+            <label for="question-answer2"> Đáp án 2: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -902,7 +905,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer3"> Answer 3: </label>
+            <label for="question-answer3"> Đáp án 3: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -948,7 +951,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
             className="wrapper-field-upload"
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}
           >
-            <label for="question-answer4"> Answer 4: </label>
+            <label for="question-answer4"> Đáp án 4: </label>
 
             <Input
               style={{ width: '70%' }}
@@ -990,10 +993,16 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           </div>
           <br />
           <div className="submit-comment">
-            <Button className="post" type="primary" htmlType="submit" style={{ marginRight: 10 }}>
+            <Button className="post" type="primary" htmlType="submit">
               Đăng Tải
             </Button>
-            <Button className="cancel" onClick={() => setVisibleModalAddLesson(false)}>
+            <Button
+              className="cancel"
+              style={{ marginLeft: 10 }}
+              onClick={() => setVisibleModalAddLesson(false)}
+              type="primary"
+              danger
+            >
               Hủy Bỏ
             </Button>
           </div>

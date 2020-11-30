@@ -101,13 +101,11 @@ class Users extends Component {
   };
 
   showModalAddMoney = record => {
-    console.log('record', record);
     this.setState({
       visibleModalAddMoney: true,
       coin: record.money,
       userId: record._id,
     });
-    console.log('da', this.state.coin);
   };
 
   handleCancel = () => {
@@ -145,7 +143,7 @@ class Users extends Component {
         </div>
         <Table dataSource={this.props.listUser.listUsers} columns={this.columns} bordered />
         <Modal
-          title="Add Money"
+          title="Thêm coin"
           onOK={this.onOkModalAddMoney}
           onCancel={this.handleCanCelModalAddMoney}
           visible={visibleModalAddMoney}
@@ -159,11 +157,11 @@ class Users extends Component {
               <Input type="number" />
             </Form.Item>
             <Form.Item {...tailLayout} style={{ marginBottom: '12px' }}>
-              <Button type="primary" onClick={this.handleCanCelModalAddMoney} style={{ width: '64px' }}>
-                Hủy
-              </Button>
-              <Button type="primary" style={{ marginLeft: 12, width: '64px' }} htmlType="submit">
+              <Button type="primary" style={{ marginRight: 12, width: '64px' }} htmlType="submit">
                 Thêm
+              </Button>
+              <Button type="primary" onClick={this.handleCanCelModalAddMoney} style={{ width: '64px' }} danger>
+                Hủy
               </Button>
             </Form.Item>
           </Form>
