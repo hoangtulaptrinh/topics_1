@@ -67,16 +67,42 @@ body::-webkit-scrollbar-thumb {
 
 /*  */
 .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 12px;
+  height: 44px;
+  background: #001529;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  width: 40%;
+  /* overflow: hidden; */
+}
+
+.logo-image {
+  width: 100%;
+}
+
+.logo-title-admin {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  width: 100%;
+  color: #61DAFB;
 }
 
 .site-layout .site-layout-background {
-  background: #001529;
+  background: #fff;
+  display: flex;
+  align-items: center;
 }
-[data-theme='dark'] .site-layout .site-layout-background {
-  background: #141414;
+/* 
+
+.ant-table-cell {
+  border: 1px solid grey;
+} */
+
+/* Border table. Tìm mãi mới ra */
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > thead > tr > th, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > thead > tr > th, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tbody > tr > td, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > tbody > tr > td, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > tbody > tr > td, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tfoot > tr > th, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > tfoot > tr > th, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > tfoot > tr > th, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tfoot > tr > td, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > tfoot > tr > td, .ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > tfoot > tr > td {
+  /* border-right: 1px solid #F0F0B4; */
+  border: 0.3px solid #e9e9e9;
 }
 
 .trigger {
@@ -85,7 +111,7 @@ body::-webkit-scrollbar-thumb {
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
-  color: rgb(196, 196, 196);
+  color: rgb(117, 117, 117);
 }
 
 .trigger:hover {
@@ -106,6 +132,15 @@ body::-webkit-scrollbar-thumb {
 
 .btn-ban:hover {
   color: #1890ff;
+}
+
+.content-layout {
+  padding:  30px 24px;
+  background-color: #F0F2F5;
+}
+
+.content-header-admin {
+  width: 100%;
 }
 
 .quiz-modal .ant-modal-body {

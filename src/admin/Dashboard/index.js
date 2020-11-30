@@ -11,40 +11,62 @@ const { Header, Content, Sider } = Layout;
 // const { SubMenu } = Menu;
 
 class Dashboard extends React.Component {
-  state = {
-    collapsed: false,
-    test: 'courses',
-    currentUser: '5f7849e4fee9ad29f4f70709',
-  };
-
+  constructor() {
+    super();
+    this.state = {
+      collapsed: false,
+      test: 'courses',
+      currentUser: '5f7849e4fee9ad29f4f70709',
+      admin: 'ADMIN',
+    };
+  }
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
 
   toggle = () => {
+    const { collapsed } = this.state;
     this.setState({
-      collapsed: !this.state.collapsed,
+      collapsed: !collapsed,
+      admin: collapsed === false ? '' : 'ADMIN',
     });
   };
 
   render() {
-    const { test } = this.state;
+    const { test, admin } = this.state;
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsed={this.state.collapsed}>
-          <div className="logo" />
+          <div className="logo">
+            <img src={`/React-logo.png`} alt="logo" className="logo-image" />
+            <h1 className="logo-title-admin"> {admin} </h1>
+          </div>
           <Menu theme="dark" mode="inline" selectedKeys={test}>
-            <Menu.Item key="courses" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'courses' })}>
-              Course
+            <Menu.Item
+              className="menu-left"
+              key="category"
+              icon={<PieChartOutlined />}
+              onClick={() => this.setState({ test: 'category' })}
+            >
+              Quản lý danh mục
+            </Menu.Item>
+            <Menu.Item
+              className="menu-left"
+              key="courses"
+              icon={<PieChartOutlined />}
+              onClick={() => this.setState({ test: 'courses' })}
+            >
+              Quản lý khóa học
             </Menu.Item>
 
-            <Menu.Item key="users" icon={<UserOutlined />} onClick={() => this.setState({ test: 'users' })}>
-              User
-            </Menu.Item>
-
-            <Menu.Item key="category" icon={<PieChartOutlined />} onClick={() => this.setState({ test: 'category' })}>
-              Category
+            <Menu.Item
+              className="menu-left"
+              key="users"
+              icon={<UserOutlined />}
+              onClick={() => this.setState({ test: 'users' })}
+            >
+              Quản lý người dùng
             </Menu.Item>
           </Menu>
         </Sider>
@@ -54,8 +76,11 @@ class Dashboard extends React.Component {
               className: 'trigger',
               onClick: this.toggle,
             })}
+            <div className="content-header-admin">
+              <h1> Danh sachs nguoi dung</h1>
+            </div>
           </Header>
-          <Content style={{ margin: '0 16px' }}>
+          <Content className="content-layout">
             {test === 'users' && <Users />}
             {test === 'courses' && <Courses />}
             {test === 'category' && <Category moveToCourse={() => this.setState({ test: 'courses' })} />}
