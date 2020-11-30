@@ -146,7 +146,7 @@ export default styled.div`
         }
 
         .user-info {
-          margin-top: 40px;
+          margin-top: 30px;
         }
 
         .back-btn {
@@ -222,6 +222,62 @@ export default styled.div`
 
         .disabled-btn {
           background: #8edfd7;
+        }
+
+        .certificate {
+          background: #f1f1f1;
+          max-width: 1500px;
+          width: 100%;
+          padding: 30px;
+          border: 15px solid #0a0a23;
+          border-radius: 3px;
+
+          .certification-header {
+            display: flex;
+            width: 100%;
+            height: 140px;
+            background: #0a0a23;
+            position: relative;
+
+            .left {
+              flex: 5;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              line-height: 140px;
+              font-size: 20px;
+              color: #fff;
+            }
+
+            .right {
+              flex: 7;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              line-height: 140px;
+              font-size: 20px;
+              color: #fff;
+            }
+          }
+
+          .certification-information {
+            margin-top: 30px;
+            font-weight: 400;
+            height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .certification-signature {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+            p {
+              text-align: center;
+            }
+          }
         }
       }
     }
