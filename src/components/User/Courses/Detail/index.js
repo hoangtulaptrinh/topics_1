@@ -80,7 +80,6 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
               <div className="video__left">Danh sách bài học</div>
               <div className="video__right">
                 <span>{course.lesson.length} bài học</span>
-                <span>50:00</span>
               </div>
             </div>
 
@@ -93,7 +92,6 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
                     {!!diffDayUpdate(lesson.date_create) && (
                       <span>Cập nhật {diffDayUpdate(lesson.date_create)} ngày trước</span>
                     )}
-                    <span>50:00</span>
                   </div>
                 </div>
               ))}
@@ -112,10 +110,6 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
                 <div className="info">
                   <BookFilled />
                   <span className="content">Tổng số {course.lesson.length} bài học</span>
-                </div>
-                <div className="info">
-                  <AiFillClockCircle />
-                  <span className="content">Cần 50 giờ để học</span>
                 </div>
                 <div className="info">
                   <FaLaptopCode />
