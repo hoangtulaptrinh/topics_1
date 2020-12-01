@@ -40,13 +40,13 @@ export default styled.div`
         background: #f5f4f2;
 
         .video__left {
-          width: 300px;
+          width: 400px;
           display: flex;
           justify-content: center;
         }
 
         .video__right {
-          width: 300px;
+          width: 400px;
           display: flex;
           justify-content: center;
         }
