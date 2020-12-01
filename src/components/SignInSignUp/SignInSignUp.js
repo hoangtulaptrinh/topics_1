@@ -69,7 +69,7 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     <input
                       id="email"
                       name="email"
-                      placeholder="Your email"
+                      placeholder="Nhập email của bạn"
                       className="input height"
                       onChange={formikSignIn.handleChange}
                       onBlur={formikSignIn.handleBlur}
@@ -86,7 +86,7 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     <input
                       type="password"
                       name="password"
-                      placeholder="Your email"
+                      placeholder="Nhập mật khẩu của bạn"
                       className="input height"
                       data-type="password"
                       onChange={formikSignIn.handleChange}
@@ -113,6 +113,7 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     <input
                       id="user"
                       type="text"
+                      placeholder="Nhập tên của bạn"
                       className="input height"
                       name="name"
                       onChange={formikSignUp.handleChange}
@@ -129,6 +130,7 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     </label>
                     <input
                       type="text"
+                      placeholder="Nhập email của bạn"
                       className="input height"
                       name="email"
                       onChange={formikSignUp.handleChange}
@@ -145,6 +147,7 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     </label>
                     <input
                       type="password"
+                      placeholder="Nhập mật khẩu của bạn"
                       className="input height"
                       data-type="password"
                       name="password"
@@ -162,6 +165,7 @@ const SignInSignUp = ({ signIn, signUp }) => {
                     </label>
                     <input
                       type="password"
+                      placeholder="Nhập lại mật khẩu của bạn"
                       className="input height"
                       data-type="password"
                       name="passwordRepeat"

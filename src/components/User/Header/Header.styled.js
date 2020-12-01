@@ -20,6 +20,7 @@ export default styled.div`
       .nav-bar {
         margin-left: 30px;
         flex: 1;
+        max-width: 400px;
         display: flex;
         justify-content: space-between;
 
