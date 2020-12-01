@@ -97,7 +97,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
         listCoursesCurrentUser.map((item, index) => (
           <Menu.Item key={index} onClick={() => history.push(`/courses/detail/${item._id}`)}>
             <div style={{ display: 'flex' }}>
-              <img height={120} src={item.image} alt="test-test" />
+              <img height={120} width={220} src={item.image} alt="test-test" />
               <div style={{ marginLeft: 20 }}>
                 <div style={{ fontWeight: 600 }}>{item.name}</div>
                 <div style={{ fontSize: '.8rem', marginTop: 4, color: '#888' }}>đã mua vào {diffUpdate(item)}</div>
