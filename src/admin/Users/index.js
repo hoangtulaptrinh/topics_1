@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Table, Space, Modal, Input, Button, Form } from 'antd';
 // import { FaBan } from 'react-icons/fa';
 import { DollarOutlined } from '@ant-design/icons';
@@ -109,16 +109,20 @@ function Users({ fetchAllUser, updateUser, listUser }) {
 
   const handleAddCoin = () => {
     const fieldValue = form.getFieldsValue();
-    setCoin(Number(fieldValue.current_coin) + Number(fieldValue.coin_add));
-    console.log("coin sau khi add", coin);
+    let coinValue = Number(fieldValue.current_coin) + Number(fieldValue.coin_add);
     setVisibleModalAddMoney(false);
     updateUser({
       id: userId,
-      money: coin,
+      money: coinValue,
     });
   };
 
-  const showModalAddUser = () => {};
+  useEffect(() => {
+    updateUser();
+  }, [updateUser, coin]);
+
+  const showModalAddUser = () => { };
+
   return (
     <div className="admin-management">
       <div className="feature-add">

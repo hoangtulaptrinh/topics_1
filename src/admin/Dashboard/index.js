@@ -81,9 +81,9 @@ class Dashboard extends React.Component {
             </div>
           </Header>
           <Content className="content-layout">
+            {test === 'category' && <Category moveToCourse={() => this.setState({ test: 'courses' })} />}
             {test === 'users' && <Users />}
             {test === 'courses' && <Courses />}
-            {test === 'category' && <Category moveToCourse={() => this.setState({ test: 'courses' })} />}
           </Content>
         </Layout>
       </Layout>
