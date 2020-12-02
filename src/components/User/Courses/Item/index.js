@@ -8,7 +8,7 @@ import Wrapper from './Item.styled';
 const Item = ({ course }) => {
   const history = useHistory();
 
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const HasThisCourse = useMemo(() => {
     if (!course || !currentUser.course) return null;

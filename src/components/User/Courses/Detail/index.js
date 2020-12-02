@@ -27,7 +27,7 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
 
   const diffDayUpdate = useCallback(dayUpdate => moment().diff(moment(dayUpdate), 'days'), []);
 
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const HasThisCourse = useMemo(() => {
     if (!course || !currentUser.course) return false;

@@ -175,16 +175,15 @@ body::-webkit-scrollbar-thumb {
 }
 
 .popover-inner {
-  border: solid 1px black;
+  border: solid 1px #70707054;
   background: #fff;
 }
 
 .popover-header {
-  border-bottom: solid 1px black;
+  border-bottom: solid 1px #70707054;
 }
 
 .popover-body {
-  border-top: solid 1px black;
   padding: 0.5rem 0 0.75rem 0.75rem;
 }
 
@@ -195,11 +194,12 @@ body::-webkit-scrollbar-thumb {
 }
 .content-chat > .messenger {
   margin-top: 10px;
-  border: solid 0.5px #707070;
-  padding: 10px;
+  border: solid 0.5px #70707054;
+  padding: 5px;
   word-break: break-all;
 }
 .your-messenger {
+  max-width: 270px;
   display: flex;
   flex-direction: column;
 }
@@ -220,7 +220,7 @@ body::-webkit-scrollbar-thumb {
 .input-chat {
   display: flex;
   align-items: center;
-  border: solid 0.5px #707070;
+  border: solid 0.5px #70707054;
   padding: 10px;
 }
 .input-chat > input {
@@ -253,5 +253,29 @@ body::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.7);
 }
 #scroll-modal::-webkit-scrollbar-thumb {
+  background-color: rgba(195, 194, 194, 0.7);
+}
+
+#test-scrollbar-style::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: rgb(98, 100, 100);
+}
+#test-scrollbar-style::-webkit-scrollbar {
+  width: 7px;
+  background-color: rgba(45, 47, 52, 0.7);
+}
+#test-scrollbar-style::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: rgba(80, 81, 83, 0.7);
+}
+#test-scrollbar-style::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+#test-scrollbar-style::-webkit-scrollbar {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+#test-scrollbar-style::-webkit-scrollbar-thumb {
   background-color: rgba(195, 194, 194, 0.7);
 }

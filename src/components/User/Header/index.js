@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { getAllCourses, getAllCategory } from '../../../actions';
-import { toastSuccess } from '../../../helper/toastHelper';
 import Wrapper from './Header.styled';
 import { refreshCurrentUser } from '../../../actions';
 
@@ -20,7 +19,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
   const logOut = () => {
     history.push('/login');
     localStorage.clear();
-    toastSuccess('Đăng Xuất Thành Công');
+    window.location.reload();
   };
 
   useEffect(() => {
