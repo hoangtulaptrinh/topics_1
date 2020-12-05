@@ -40,13 +40,15 @@ export default styled.div`
         background: #f5f4f2;
 
         .video__left {
-          margin-left: 10px;
+          width: 400px;
+          display: flex;
+          justify-content: center;
         }
 
         .video__right {
-          width: 300px;
+          width: 400px;
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
         }
       }
       .video.title {
@@ -54,14 +56,14 @@ export default styled.div`
         background: #f4f4f4;
 
         .video__left {
-          margin-left: 0;
+          display: flex;
+          justify-content: center;
           font-weight: 500;
         }
 
         .video__right {
-          span:first-child {
-            padding-left: 50px;
-          }
+          display: flex;
+          justify-content: center;
         }
       }
     }
