@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { getAllCourses, getAllCategory } from '../../../actions';
-import { toastSuccess } from '../../../helper/toastHelper';
 import Wrapper from './Header.styled';
 import { refreshCurrentUser } from '../../../actions';
 
@@ -20,7 +19,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
   const logOut = () => {
     history.push('/login');
     localStorage.clear();
-    toastSuccess('Đăng Xuất Thành Công');
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -97,7 +96,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
         listCoursesCurrentUser.map((item, index) => (
           <Menu.Item key={index} onClick={() => history.push(`/courses/detail/${item._id}`)}>
             <div style={{ display: 'flex' }}>
-              <img height={120} src={item.image} alt="test-test" />
+              <img height={120} width={220} src={item.image} alt="test-test" />
               <div style={{ marginLeft: 20 }}>
                 <div style={{ fontWeight: 600 }}>{item.name}</div>
                 <div style={{ fontSize: '.8rem', marginTop: 4, color: '#888' }}>đã mua vào {diffUpdate(item)}</div>

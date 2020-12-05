@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { FileImageOutlined, VideoCameraOutlined, FileTextOutlined, CheckOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
@@ -13,7 +13,7 @@ import Wrapper from './List.styled';
 import Header from '../../User/Header';
 
 const List = ({ listTopics, fetchTopics, addThread }) => {
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const formik = useFormik({
     initialValues: { content: '', image: null, video: null, outline: null },
