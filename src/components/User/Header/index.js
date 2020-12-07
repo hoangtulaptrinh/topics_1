@@ -1,18 +1,22 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { BookFilled, LogoutOutlined, SettingFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { Menu, Dropdown } from 'antd';
+import { Popover, Menu, Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import { getAllCourses, getAllCategory } from '../../../actions';
-import Wrapper from './Header.styled';
 import { refreshCurrentUser } from '../../../actions';
+import AuthorDeveloper from '../../AuthorDeveloper/AuthorDeveloper';
+import Wrapper from './Header.styled';
 
 import EAT_SLEEP_CODE from '../../../assets/img/EAT_SLEEP_CODE.jpg';
 
 const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory }) => {
   const history = useHistory();
+
+  const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -190,6 +194,16 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
         </div>
 
         <div className="right">
+          <Popover
+            overlayClassName="custom-author"
+            content={<AuthorDeveloper />}
+            trigger="click"
+            visible={visible1}
+            onVisibleChange={() => setVisible1(!visible1)}
+          >
+            <p className="nav-bar__item1">Người Sáng Lập</p>
+          </Popover>
+
           <div className="header">
             <img
               src={
@@ -201,7 +215,47 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
             />
             <div className="info">
               <p className="info__name">{currentUser.name}</p>
-              <p className="info__coin">{`${currentUser.money} Coin`}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <p className="info__coin">{`${currentUser.money} Coin`}</p>
+                <Popover
+                  content={
+                    <div>
+                      <p style={{ fontWeight: 'bold' }}>Chuyển Khoản Ngân Hàng: </p>
+
+                      <p style={{ fontWeight: 'bold' }}>Ngân hàng Á Châu Bank </p>
+                      <p>SỐ TK: 12287397</p>
+                      <p>TÊN TK: ĐỖ TÙNG DƯƠNG</p>
+                      <p>CHI NHÁNH: Mễ Trì – Hà Nội</p>
+
+                      <p style={{ fontWeight: 'bold' }}>Ngân hàng BIDV </p>
+                      <p>SỐ TK: 12510000586328</p>
+                      <p>TÊN TK: ĐỖ TÙNG DƯƠNG</p>
+                      <p>CHI NHÁNH: Từ Liêm – Hà Nội</p>
+
+                      <p style={{ fontWeight: 'bold' }}>Ngân hàng Tiên Phong Bank </p>
+                      <p>SỐ TK: 62620992601</p>
+                      <p>TÊN TK: ĐỖ TÙNG DƯƠNG</p>
+                      <p>CHI NHÁNH: Cầu Giấy – Hà Nội</p>
+
+                      <p style={{ fontWeight: 'bold' }}>Chuyển Khoản MoMo - AirPay - ViettelPay: </p>
+                      <p>0969374623</p>
+
+                      <p style={{ fontWeight: 'bold' }}>
+                        Lời nhắn <span style={{ fontWeight: 'normal' }}>: email đăng ký + SĐT</span>
+                      </p>
+
+                      <p style={{ fontWeight: 'bold' }}>Mọi thắc mắc xin liên hệ: </p>
+                      <p>Mr.Dat 0326035536</p>
+                    </div>
+                  }
+                  title={<span style={{ fontWeight: 'bold' }}>Thông Tin Thanh Toán</span>}
+                  trigger="click"
+                  visible={visible}
+                  onVisibleChange={() => setVisible(!visible)}
+                >
+                  <span style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}>Nạp coin</span>
+                </Popover>
+              </div>
             </div>
           </div>
           <div className="menu">

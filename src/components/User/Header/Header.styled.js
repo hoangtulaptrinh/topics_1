@@ -93,4 +93,16 @@ export default styled.div`
       }
     }
   }
+
+  .nav-bar__item1 {
+    margin-right: 100px !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+  }
 `;

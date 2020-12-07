@@ -1,0 +1,116 @@
+#item-card {
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+  width: 300px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 50px;
+  .item-border {
+    flex: 1;
+    display: block;
+    box-sizing: border-box;
+    background: #060c21;
+    padding: 10px;
+    .img-container {
+      display: block;
+      position: relative;
+      height: 300px;
+      width: 200px;
+      overflow: hidden;
+      z-index: 2;
+      img {
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        -ms-transform: translate(-50%, 0%);
+        -webkit-transform: translate(-50%, 0%);
+        transform: translate(-50%, 0%);
+        height: 100%;
+        width: auto;
+        max-width: inherit;
+        opacity: 0.5;
+        -webkit-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.5s;
+      }
+    }
+    .text-container {
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+      color: #fff;
+      text-align: center;
+      opacity: 0;
+      height: 0;
+      width: 100%;
+      h3 {
+        font-size: 20px;
+        line-height: normal;
+        letter-spacing: 1px;
+      }
+      h4 {
+        font-size: 14px;
+        line-height: normal;
+        font-weight: normal;
+      }
+    }
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: #fff;
+      z-index: -1;
+      background: -o-linear-gradient(215deg, #ff005e, #010615, #fbff00);
+      background: -moz-linear-gradient(235deg, #ff005e, #010615, #fbff00);
+      background: -webkit-linear-gradient(235deg, #ff005e, #010615, #fbff00);
+      background: linear-gradient(235deg, #ff005e, #010615, #fbff00);
+    }
+    &:after {
+      -webkit-filter: blur(40px);
+      filter: blur(40px);
+    }
+  }
+  &:hover {
+    .item-border {
+      .img-container {
+        img {
+          opacity: 1;
+        }
+      }
+      .text-container {
+        opacity: 1;
+        height: 130px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 450px) {
+  #item-card {
+    .item-border {
+      .img-container {
+        img {
+          opacity: 1;
+        }
+      }
+      .text-container {
+        opacity: 1;
+        height: 130px;
+      }
+    }
+  }
+}

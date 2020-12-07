@@ -279,3 +279,15 @@ body::-webkit-scrollbar-thumb {
 #test-scrollbar-style::-webkit-scrollbar-thumb {
   background-color: rgba(195, 194, 194, 0.7);
 }
+
+.custom-author {
+  top: 120px !important;
+}
+
+.custom-author .ant-popover-inner {
+  background: transparent !important;
+}
+
+.custom-author .ant-popover-arrow {
+  display: none;
+}
