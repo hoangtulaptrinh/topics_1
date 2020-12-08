@@ -1,10 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Table, Space, Modal, Input, Button, Form } from 'antd';
 // import { FaBan } from 'react-icons/fa';
 import { DollarOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { getAllUsers, updateUser } from '../../actions/index';
-import { useForm } from 'antd/lib/form/Form';
+// import { useForm } from 'antd/lib/form/Form';
 
 const layout = {
   labelCol: {

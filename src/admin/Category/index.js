@@ -165,7 +165,7 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
           });
           setVisibleModalAdd(true);
         }}
-        style={{ margin: '10px 0px', height: '5%' }}
+        style={{ margin: '10px 0px', height: '8%' }}
       >
         Thêm mới danh mục
       </Button>
@@ -203,7 +203,12 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
       </Modal>
 
       {/* Modal Edit Category */}
-      <Modal title="Edit Category" onCancel={() => setVisibleModalEdit(false)} visible={visibleModalEdit} footer={null}>
+      <Modal
+        title="Chỉnh sửa danh mục"
+        onCancel={() => setVisibleModalEdit(false)}
+        visible={visibleModalEdit}
+        footer={null}
+      >
         <Form {...layout}>
           <Form.Item label="Tên danh mục">
             <Input
@@ -246,11 +251,11 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
             </div>
           </Form.Item>
           <Form.Item {...tailLayout} style={{ marginBottom: '12px' }}>
-            <Button type="primary" onClick={() => setVisibleModalEdit(false)} style={{ width: '64px' }}>
-              Hủy
-            </Button>
-            <Button type="primary" style={{ marginLeft: 12, width: '64px' }} onClick={handleSaveCategory}>
+            <Button type="primary" style={{ marginRight: 12, width: '64px' }} onClick={handleSaveCategory}>
               Lưu
+            </Button>
+            <Button type="primary" onClick={() => setVisibleModalEdit(false)} style={{ width: '64px' }} danger>
+              Hủy
             </Button>
           </Form.Item>
         </Form>
