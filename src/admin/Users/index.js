@@ -1,10 +1,10 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Table, Space, Modal, Input, Button, Form } from 'antd';
 // import { FaBan } from 'react-icons/fa';
 import { DollarOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { getAllUsers, updateUser } from '../../actions/index';
-import { useForm } from 'antd/lib/form/Form';
+// import { useForm } from 'antd/lib/form/Form';
 
 const layout = {
   labelCol: {
@@ -23,13 +23,15 @@ const tailLayout = {
 };
 
 function Users({ fetchAllUser, updateUser, listUser }) {
-
-  const [visible, setVisible] = useState(false);
-  const [isAddNew, setIsAddNew] = useState(false);
+  // const [visible, setVisible] = useState(false);
+  // const [isAddNew, setIsAddNew] = useState(false);
   const [visibleModalAddMoney, setVisibleModalAddMoney] = useState(false);
   const [coin, setCoin] = useState('');
   const [coinAdd, setCoinAdd] = useState(0);
   const [userId, setUserId] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  // const typingTimeoutRef = useRef(null);
+
 
   // constructor(props) {
   //   super(props);
@@ -117,20 +119,22 @@ function Users({ fetchAllUser, updateUser, listUser }) {
     });
   };
 
-  useEffect(() => {
-    updateUser();
-  }, [updateUser, coin]);
+  const handleSearchTermChange = e => {
+    e.preventDefault();
+    const value = e.target.value;
+    setSearchTerm(value);
+  };
 
-  const showModalAddUser = () => { };
+  const handleSearch = () => {
+
+  };
 
   return (
     <div className="admin-management">
-      <div className="feature-add">
-        <Button type="primary" onClick={showModalAddUser} style={{ margin: '10px 0px', height: '5%' }}>
-          Thêm mới người dùng
-        </Button>
+      <div className="search-user">
+        <Input allowClear placeholder="Tìm kiếm theo tên ..." onChange={handleSearchTermChange} value={searchTerm} onPressEnter={handleSearch} />
       </div>
-      <Table dataSource={listUser.listUsers} columns={columns} bordered />
+      <Table dataSource={listUser} columns={columns} bordered />
       <Modal
         title="Thêm coin"
         // onOK={onOkModalAddMoney}
@@ -162,7 +166,7 @@ function Users({ fetchAllUser, updateUser, listUser }) {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    listUser: state.listUsers,
+    listUser: state.listUsers.listUsers,
   };
 };
 

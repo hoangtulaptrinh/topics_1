@@ -9,6 +9,7 @@ import {
   VideoCameraOutlined,
   FileTextOutlined,
   HeartOutlined,
+  HeartFilled,
   CheckOutlined,
 } from '@ant-design/icons';
 import { useFormik } from 'formik';
@@ -144,7 +145,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
           style={currentUser.care.findIndex(item => item.id === topic.id) !== -1 ? { color: '#e36436' } : {}}
           onClick={() => handlecareTopics(topic)}
         >
-          <HeartOutlined />
+          {currentUser.care.findIndex(item => item.id === topic.id) !== -1 ? <HeartFilled /> : <HeartOutlined />}
           Quan Tâm
         </div>
         <div

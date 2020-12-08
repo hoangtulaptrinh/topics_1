@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { FaFacebookMessenger } from 'react-icons/fa';
-import { Popover, PopoverHeader, PopoverBody, Input } from 'reactstrap';
+import { Input } from 'antd';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { Send } from 'react-feather';
 import ROUTES, { RenderRoutes } from '../RenderRoutes/RenderRoutes';
 import socketIOClient from 'socket.io-client';
@@ -36,8 +37,7 @@ const Main = ({ getAllUsers }) => {
     document.addEventListener('keydown', sendMessage);
 
     return () => document.removeEventListener('keydown', sendMessage);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sendMessage]);
 
   useEffect(() => {
     socket.on('Sever-send-data', data => {
@@ -63,25 +63,30 @@ const Main = ({ getAllUsers }) => {
     <Wrapper>
       <>
         <RenderRoutes routes={ROUTES} />
-        <FaFacebookMessenger id="Popover1" className="icon-chat" />
-        <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={() => setPopoverOpen(!popoverOpen)}>
-          <PopoverHeader>Chat Box</PopoverHeader>
+        <FaFacebookMessenger id="popover-chat-real-time" className="icon-chat" />
+        <Popover
+          placement="top-end"
+          isOpen={popoverOpen}
+          target="popover-chat-real-time"
+          toggle={() => setPopoverOpen(!popoverOpen)}
+        >
           <PopoverBody>
-            <div id="test-scrollbar-style" className="content-chat">
+            <div id="test-scrollbar-style" style={{ paddingRight: 12 }} className="content-chat">
               {!!listMessenger.length &&
                 listMessenger.map((item, index) => (
                   <div
+                    style={index === listMessenger.length - 1 ? { marginBottom: 10 } : {}}
                     className={`messenger ${item.target === 'you' ? 'your-messenger' : 'some-body-messenger'}`}
                     key={index}
                   >
-                    <span className="title">{item.target === 'you' ? 'You' : 'Some Body'}</span>
+                    <span className="title">{item.target === 'you' ? 'Bạn' : 'Học Viên Khác'}</span>
                     <span className="content">{item.messenger}</span>
                   </div>
                 ))}
             </div>
-            <div className="input-chat">
+            <div className="input-chat" style={{ marginRight: 19 }}>
               <Input value={inputValue} onChange={e => setInputValue(e.target.value)} />
-              <Icon addEmoji={item => setInputValue(`${inputValue}${item}`)} />
+              <Icon addEmoji={item => setInputValue(`${inputValue}${item}`)} idPopoverLegacy="icon-chat-real-time" />
               <Send size="35" color="blue" onClick={sendMessenger} />
             </div>
           </PopoverBody>

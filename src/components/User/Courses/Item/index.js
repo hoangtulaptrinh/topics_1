@@ -8,7 +8,7 @@ import Wrapper from './Item.styled';
 const Item = ({ course }) => {
   const history = useHistory();
 
-  const currentUser = useMemo(() => JSON.parse(localStorage.getItem('currentUser')), []);
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   const HasThisCourse = useMemo(() => {
     if (!course || !currentUser.course) return null;
@@ -30,13 +30,20 @@ const Item = ({ course }) => {
       <div className="course">
         <p className="course__name">{course.name}</p>
         <p className="course__intro">{course.intro}</p>
+
+        {HasThisCourse ? (
+          <p style={{ fontWeight: 500, color: 'rgb(5, 215, 134)' }}>Bạn Đã Sở Hữu Khóa Học Này</p>
+        ) : (
+          <p style={{ fontWeight: 500, color: 'rgb(136, 131, 131)' }}>Bạn Chưa Sở Hữu Khóa Học Này</p>
+        )}
+
         <div className="course__more-info">
           <div className="item">
             {course.lesson.length}
             <GiBookmark />
           </div>
           <div className="item">
-            4500
+            {course.count}
             <IoIosPeople />
           </div>
           <div className="item cost">
