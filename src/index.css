@@ -365,3 +365,13 @@ body::-webkit-scrollbar-thumb {
 .custom-author .ant-popover-arrow {
   display: none;
 }
+
+.total-statistical {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.total-statistical > div {
+  margin-top: 50px;
+  width: 50%;
+}

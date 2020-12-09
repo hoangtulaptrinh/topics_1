@@ -384,7 +384,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                 <AiOutlineLeft /> <span>Tài Khoản</span>
               </div>
 
-              <div>Quản Lý Coin</div>
+              <div style={{ fontWeight: 'bold' }}>Quản Lý Coin</div>
               <Chart
                 options={{
                   chart: {
@@ -409,7 +409,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                 width="500"
               />
 
-              <div>Quản Lý Khóa Học</div>
+              <div style={{ fontWeight: 'bold' }}>Quản Lý Khóa Học</div>
               <Chart
                 options={{
                   chart: {
@@ -436,7 +436,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                 width={500}
               />
 
-              <div>Quản Lý Khóa Học Đã Mua</div>
+              <div style={{ fontWeight: 'bold' }}>Quản Lý Khóa Học Đã Mua</div>
               <Chart
                 options={{
                   chart: {
