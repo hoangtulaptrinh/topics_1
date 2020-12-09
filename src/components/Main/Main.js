@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { FaFacebookMessenger } from 'react-icons/fa';
 import { Input } from 'antd';
-import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverBody } from 'reactstrap';
 import { Send } from 'react-feather';
 import ROUTES, { RenderRoutes } from '../RenderRoutes/RenderRoutes';
 import socketIOClient from 'socket.io-client';

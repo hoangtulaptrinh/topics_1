@@ -353,3 +353,15 @@ body::-webkit-scrollbar-thumb {
   width: 30%;
   margin-bottom: 14px;
 }
+
+.custom-author {
+  top: 120px !important;
+}
+
+.custom-author .ant-popover-inner {
+  background: transparent !important;
+}
+
+.custom-author .ant-popover-arrow {
+  display: none;
+}
