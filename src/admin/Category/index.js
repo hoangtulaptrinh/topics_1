@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button, Input, Space, Table, Form, Modal, Checkbox } from 'antd';
 import { BsPencil } from 'react-icons/bs';
@@ -16,7 +16,7 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
     name: '',
     courses: [],
   });
-
+  const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
     fetchAllCategory();
   }, [fetchAllCategory]);
@@ -154,6 +154,18 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
     setVisibleModalEdit(false);
   };
 
+  const handleSearchTermChange = e => {
+    e.preventDefault();
+    const value = e.target.value;
+    setSearchTerm(value);
+  };
+
+  const dataSourceCategory = useMemo(() => {
+    if (!listCategory.length) return [];
+
+    return listCategory.filter(course => course.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [listCategory, searchTerm]);
+
   return (
     <Fragment>
       <Button
@@ -165,11 +177,14 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
           });
           setVisibleModalAdd(true);
         }}
-        style={{ margin: '10px 0px', height: '5%' }}
+        style={{ margin: '10px 0px' }}
       >
         Thêm mới danh mục
       </Button>
-      <Table columns={columns} dataSource={listCategory} bordered />
+      <div className="search-user">
+        <Input allowClear placeholder="Tìm kiếm theo tên ..." onChange={handleSearchTermChange} value={searchTerm} />
+      </div>
+      <Table columns={columns} dataSource={dataSourceCategory} bordered />
 
       {/* Modal Add Category */}
       <Modal

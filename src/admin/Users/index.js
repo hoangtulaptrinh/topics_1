@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Table, Space, Modal, Input, Button, Form } from 'antd';
 // import { FaBan } from 'react-icons/fa';
 import { DollarOutlined } from '@ant-design/icons';
@@ -22,7 +22,7 @@ const tailLayout = {
   },
 };
 
-function Users({ fetchAllUser, updateUser, listUser }) {
+function Users({ updateUser, listUser }) {
   // const [visible, setVisible] = useState(false);
   // const [isAddNew, setIsAddNew] = useState(false);
   const [visibleModalAddMoney, setVisibleModalAddMoney] = useState(false);
@@ -31,7 +31,6 @@ function Users({ fetchAllUser, updateUser, listUser }) {
   const [userId, setUserId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   // const typingTimeoutRef = useRef(null);
-
 
   // constructor(props) {
   //   super(props);
@@ -101,6 +100,9 @@ function Users({ fetchAllUser, updateUser, listUser }) {
 
   const showModalAddMoney = record => {
     setVisibleModalAddMoney(true);
+    form.setFieldsValue({
+      current_coin: record.money,
+    });
     setCoin(record.money);
     setUserId(record._id);
   };
@@ -117,6 +119,9 @@ function Users({ fetchAllUser, updateUser, listUser }) {
       id: userId,
       money: coinValue,
     });
+    form.setFieldsValue({
+      coin_add: 0,
+    });
   };
 
   const handleSearchTermChange = e => {
@@ -125,16 +130,18 @@ function Users({ fetchAllUser, updateUser, listUser }) {
     setSearchTerm(value);
   };
 
-  const handleSearch = () => {
+  const dataSourceUser = useMemo(() => {
+    if (!listUser.length) return [];
 
-  };
+    return listUser.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [listUser, searchTerm]);
 
   return (
     <div className="admin-management">
       <div className="search-user">
-        <Input allowClear placeholder="Tìm kiếm theo tên ..." onChange={handleSearchTermChange} value={searchTerm} onPressEnter={handleSearch} />
+        <Input allowClear placeholder="Tìm kiếm theo tên ..." onChange={handleSearchTermChange} value={searchTerm} />
       </div>
-      <Table dataSource={listUser} columns={columns} bordered />
+      <Table dataSource={dataSourceUser} columns={columns} bordered />
       <Modal
         title="Thêm coin"
         // onOK={onOkModalAddMoney}

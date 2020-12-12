@@ -385,109 +385,121 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
               </div>
 
               <div style={{ fontWeight: 'bold' }}>Quản Lý Coin</div>
-              <Chart
-                options={{
-                  chart: {
-                    id: 'basic-bar',
-                  },
-                  xaxis: {
-                    categories: ['tổng số coin đã nạp', 'tổng số coin đã tiêu', 'số coin còn lại'],
-                  },
-                }}
-                series={[
-                  {
-                    name: 'số coin',
-                    data: [
-                      listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b) +
+              {listCoursesCurrentUser.length ? (
+                <Chart
+                  options={{
+                    chart: {
+                      id: 'basic-bar',
+                    },
+                    xaxis: {
+                      categories: ['tổng số coin đã nạp', 'tổng số coin đã tiêu', 'số coin còn lại'],
+                    },
+                  }}
+                  series={[
+                    {
+                      name: 'số coin',
+                      data: [
+                        listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b) +
+                          Number(currentUser.money),
+                        listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b),
                         Number(currentUser.money),
-                      listCoursesCurrentUser.map(item => Number(item.cost)).reduce((a, b) => a + b),
-                      Number(currentUser.money),
-                    ],
-                  },
-                ]}
-                type="bar"
-                width="500"
-              />
+                      ],
+                    },
+                  ]}
+                  type="bar"
+                  width="500"
+                />
+              ) : (
+                'Bạn chưa phát sinh giao dịch nào nên chưa có thông tin thống kê'
+              )}
 
               <div style={{ fontWeight: 'bold' }}>Quản Lý Khóa Học</div>
-              <Chart
-                options={{
-                  chart: {
-                    width: 500,
-                    type: 'pie',
-                  },
-                  labels: ['Tổng Số Khóa Học Đã Mua', 'Tổng Số Khóa Học Chưa Mua'],
-                  responsive: [
-                    {
-                      breakpoint: 480,
-                      options: {
-                        chart: {
-                          width: 200,
-                        },
-                        legend: {
-                          position: 'bottom',
+              {listCoursesCurrentUser.length ? (
+                <Chart
+                  options={{
+                    chart: {
+                      width: 500,
+                      type: 'pie',
+                    },
+                    labels: ['Tổng Số Khóa Học Trong Website', 'Tổng Số Khóa Học Chưa Mua'],
+                    responsive: [
+                      {
+                        breakpoint: 480,
+                        options: {
+                          chart: {
+                            width: 200,
+                          },
+                          legend: {
+                            position: 'bottom',
+                          },
                         },
                       },
-                    },
-                  ],
-                }}
-                series={[listCourses.length, listCoursesCurrentUser.length]}
-                type="pie"
-                width={500}
-              />
+                    ],
+                  }}
+                  series={[listCourses.length, listCoursesCurrentUser.length]}
+                  type="pie"
+                  width={500}
+                />
+              ) : (
+                'Bạn Chưa Sở Hữu Khóa Học Nào nên chưa có thông tin thống kê'
+              )}
 
               <div style={{ fontWeight: 'bold' }}>Quản Lý Khóa Học Đã Mua</div>
-              <Chart
-                options={{
-                  chart: {
-                    width: 500,
-                    type: 'pie',
-                  },
-                  labels: [
-                    'Tổng Số Khóa Học Đã Hoàn Thành',
-                    'Tổng Số Khóa Học Đang Trong Quá Trình Hoàn Thành',
-                    'Tổng Số Khóa Học Chưa Bắt Đầu',
-                  ],
-                  responsive: [
-                    {
-                      breakpoint: 480,
-                      options: {
-                        chart: {
-                          width: 200,
-                        },
-                        legend: {
-                          position: 'bottom',
+              {listCoursesCurrentUser.length ? (
+                <Chart
+                  options={{
+                    chart: {
+                      width: 500,
+                      type: 'pie',
+                    },
+                    labels: [
+                      'Tổng Số Khóa Học Đã Hoàn Thành',
+                      'Tổng Số Khóa Học Đang Trong Quá Trình Hoàn Thành',
+                      'Tổng Số Khóa Học Chưa Bắt Đầu',
+                    ],
+                    responsive: [
+                      {
+                        breakpoint: 480,
+                        options: {
+                          chart: {
+                            width: 200,
+                          },
+                          legend: {
+                            position: 'bottom',
+                          },
                         },
                       },
-                    },
-                  ],
-                }}
-                series={[
-                  listCoursesCurrentUser.length
-                    ? listCoursesCurrentUser.filter(
-                        item =>
-                          Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
-                          Number(currentUser.course.find(course => course.id === item._id).progress) ===
-                            item.lesson.length,
-                      ).length
-                    : 0,
-                  listCoursesCurrentUser.length
-                    ? listCoursesCurrentUser.filter(
-                        item =>
-                          Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
-                          Number(currentUser.course.find(course => course.id === item._id).progress) <
-                            item.lesson.length,
-                      ).length
-                    : 0,
-                  listCoursesCurrentUser.length
-                    ? listCoursesCurrentUser.filter(
-                        item => Number(currentUser.course.find(course => course.id === item._id).progress) === 0,
-                      ).length
-                    : 0,
-                ]}
-                type="pie"
-                width={500}
-              />
+                    ],
+                  }}
+                  series={[
+                    listCoursesCurrentUser.length
+                      ? listCoursesCurrentUser.filter(
+                          item =>
+                            Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                            Number(currentUser.course.find(course => course.id === item._id).progress) ===
+                              item.lesson.length,
+                        ).length
+                      : 0,
+                    listCoursesCurrentUser.length
+                      ? listCoursesCurrentUser.filter(
+                          item =>
+                            Number(currentUser.course.find(course => course.id === item._id).progress) !== 0 &&
+                            Number(currentUser.course.find(course => course.id === item._id).progress) <
+                              item.lesson.length,
+                        ).length
+                      : 0,
+                    listCoursesCurrentUser.length
+                      ? listCoursesCurrentUser.filter(
+                          item => Number(currentUser.course.find(course => course.id === item._id).progress) === 0,
+                        ).length
+                      : 0,
+                  ]}
+                  type="pie"
+                  width={500}
+                />
+              ) : (
+                'Bạn Chưa Sở Hữu Khóa Học Nào nên chưa có thông tin thống kê'
+              )}
             </div>
           )}
 

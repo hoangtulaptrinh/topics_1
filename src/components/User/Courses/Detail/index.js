@@ -119,9 +119,12 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
             </div>
           </div>
           <Modal
-            title="Basic Modal"
+            title="Xác Nhận Mua Khóa Học"
             visible={modalBuy}
-            onOk={() => buyThisCourse(idThisCourse)}
+            onOk={() => {
+              buyThisCourse(idThisCourse);
+              setModalBuy(false);
+            }}
             okText="Mua Luôn"
             onCancel={() => setModalBuy(false)}
             cancelText="Suy Nghĩ Tí"
@@ -133,13 +136,21 @@ const HomePage = ({ buyThisCourse, listCourses }) => {
               <span style={{ margin: '0 5px', color: '#ff0000' }}>{course.cost}</span>
               coin
             </p>
-            <p>
-              Sau Khi Mua Bạn Sẽ Còn Lại
-              <span style={{ margin: '0 5px', color: '#ff0000' }}>
-                {Number(currentUser.money) - Number(course.cost)}
-              </span>
-              coin
-            </p>
+            {Number(currentUser.money) - Number(course.cost) >= 0 ? (
+              <p>
+                Sau Khi Mua Bạn Sẽ Còn Lại
+                <span style={{ margin: '0 5px', color: '#ff0000' }}>
+                  {Number(currentUser.money) - Number(course.cost)}
+                </span>
+                coin
+              </p>
+            ) : (
+              <p>
+                Sau Khi Mua Bạn Sẽ Vẫn Còn Lại
+                <span style={{ margin: '0 5px', color: '#ff0000' }}>{Number(currentUser.money)}</span>
+                coin vì không đủ coin 😁
+              </p>
+            )}
           </Modal>
         </div>
       )}

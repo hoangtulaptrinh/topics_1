@@ -187,7 +187,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
                   </div>
                 </div>
               </div>
-              <div className="content">
+              <div className="content" style={{ marginLeft: 53 }}>
                 <p>{comment.content}</p>
                 {comment.image && <img src={comment.image} alt="img-content" />}
                 {comment.video && <video src={comment.video} alt="video-content" controls />}

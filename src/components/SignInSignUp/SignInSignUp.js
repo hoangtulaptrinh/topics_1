@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Wrapper from './SignInSignUp.styled';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-// import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { signIn, signUp } from '../../actions';
 

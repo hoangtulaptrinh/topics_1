@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { Table, Modal, Button, Checkbox, Space, Input } from 'antd';
 import { createNewCourse, createNewLesson, getAllCourses, updateCourse, updateLesson } from '../../actions';
 import { connect } from 'react-redux';
-import { Player } from 'video-react';
-import { FileImageOutlined, FileTextOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import cloneDeep from 'lodash/cloneDeep';
@@ -34,7 +33,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
   const [visibleModalAddLesson, setVisibleModalAddLesson] = useState(false);
   const [visibleModalEditCourse, setVisibleModalEditCourse] = useState(false);
   const [visibleModalEditLesson, setVisibleModalEditLesson] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState('');
   const columns = [
     {
       align: 'center',
@@ -332,12 +331,27 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
     },
   });
 
+  const handleSearchTermChange = e => {
+    e.preventDefault();
+    const value = e.target.value;
+    setSearchTerm(value);
+  };
+
+  const dataSourceCourse = useMemo(() => {
+    if (!listCourses.length) return [];
+
+    return listCourses.filter(course => course.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [listCourses, searchTerm]);
+
   return (
     <Fragment>
-      <Button type="primary" onClick={showModalAdd} style={{ margin: '10px 0px', height: '5%' }}>
+      <Button type="primary" onClick={showModalAdd} style={{ margin: '10px 0px' }}>
         Thêm mới khóa học
       </Button>
-      <Table key={listCourses._id} dataSource={listCourses} columns={columns} bordered />
+      <div className="search-user">
+        <Input allowClear placeholder="Tìm kiếm theo tên ..." onChange={handleSearchTermChange} value={searchTerm} />
+      </div>
+      <Table key={listCourses._id} dataSource={dataSourceCourse} columns={columns} bordered />
       {/* Modal Edit Lesson */}
       <Modal
         title="Sửa bài học"
