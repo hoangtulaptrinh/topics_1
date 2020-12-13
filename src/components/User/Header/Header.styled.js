@@ -44,7 +44,6 @@ export default styled.div`
     .right {
       display: flex;
       justify-content: flex-end;
-      padding-right: 100px;
       .header {
         display: flex;
         align-items: center;
@@ -80,7 +79,7 @@ export default styled.div`
         }
       }
       .menu {
-        width: 120px;
+        width: 150px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -95,7 +94,6 @@ export default styled.div`
   }
 
   .nav-bar__item1 {
-    margin-right: 100px !important;
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { BookFilled, LogoutOutlined, SettingFilled } from '@ant-design/icons';
+import { BookFilled, LogoutOutlined, SettingFilled, StarOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { Popover, Menu, Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
@@ -56,12 +56,15 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
 
   const handleScroll = () => {
     const headerElement = document.querySelector('.total-header');
+    const rightElement = document.querySelector('.query-right');
     if (window.location.pathname === '/' && window.scrollY > 150) {
       headerElement.style.top = 0;
       headerElement.style.left = 0;
       headerElement.style.right = 0;
       headerElement.style.paddingLeft = '50px';
       headerElement.style.background = '#000000';
+
+      rightElement.style.paddingRight = '50px';
       return;
     }
 
@@ -70,6 +73,8 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
     headerElement.style.right = '';
     headerElement.style.paddingLeft = '';
     headerElement.style.background = '';
+
+    rightElement.style.paddingRight = '100px';
   };
 
   const listCoursesCurrentUser = useMemo(() => {
@@ -93,6 +98,10 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
     if (!diffSecondUpdate) return `vừa xong`;
     return `${diffSecondUpdate} giây trước`;
   }, []);
+
+  const isHomePage = useMemo(() => window.location.pathname === '/', []);
+
+  const isAdmin = useMemo(() => currentUser && currentUser.role === 'admin', [currentUser]);
 
   const menu = (
     <Menu className="scroll">
@@ -194,7 +203,12 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
           </div>
         </div>
 
-        <div className="right">
+        <div
+          className="right query-right"
+          style={{
+            paddingRight: isHomePage ? '100px' : '50px',
+          }}
+        >
           <Popover
             overlayClassName="custom-author"
             content={<AuthorDeveloper />}
@@ -202,7 +216,14 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
             visible={visible1}
             onVisibleChange={() => setVisible1(!visible1)}
           >
-            <p className="nav-bar__item1">Người Sáng Lập</p>
+            <p
+              className="nav-bar__item1"
+              style={{
+                marginRight: isAdmin ? '0' : '25px',
+              }}
+            >
+              Người Sáng Lập
+            </p>
           </Popover>
 
           <div className="header">
@@ -259,12 +280,18 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
               </div>
             </div>
           </div>
-          <div className="menu">
+          <div
+            className="menu"
+            style={{
+              width: isAdmin ? '150px' : '120px',
+            }}
+          >
             <Dropdown overlay={menu} arrow>
               <BookFilled />
             </Dropdown>
 
             <SettingFilled onClick={() => history.push('/info')} />
+            {isAdmin && <StarOutlined onClick={() => history.push('/admin')} />}
             <LogoutOutlined onClick={logOut} />
           </div>
         </div>

@@ -11,7 +11,13 @@ export function* handleSignIn(action) {
   try {
     const response = yield call(signIn, { ...action.data }); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     localStorage.currentUser = JSON.stringify(response.data.user);
+    console.log(response.data.user);
     toastSuccess('đăng nhập thành công');
+    if (response.data.user.role === 'admin') {
+      yield put(push('/admin'));
+      return;
+    }
+
     yield put(push('/'));
   } catch (error) {
     toastError('đăng nhập thất bại');

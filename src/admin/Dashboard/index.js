@@ -8,6 +8,7 @@ import {
   HeartOutlined,
   StarOutlined,
   LineChartOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 import Users from '../Users/index';
 import Courses from '../Courses/index';
@@ -49,6 +50,7 @@ class Dashboard extends React.Component {
     const currentUserDetail = JSON.parse(localStorage.getItem('currentUser'));
 
     const { test, admin, titleHeader } = this.state;
+    const { history } = this.props;
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
@@ -105,7 +107,14 @@ class Dashboard extends React.Component {
               <div>
                 <span className="name-admin"> Hi, {currentUserDetail.name}</span>
                 <img src={currentUserDetail.image} alt="avatar-admin" className="avt-admin" />
-                <LogoutOutlined style={{ fontSize: '25px', cursor: 'pointer' }} onClick={this.logOut} />
+                <HomeOutlined
+                  style={{ margin: '0 5px 0 10px', fontSize: '30px', cursor: 'pointer' }}
+                  onClick={() => history.push('/')}
+                />
+                <LogoutOutlined
+                  style={{ margin: '0 5px 0 10px', fontSize: '30px', cursor: 'pointer' }}
+                  onClick={this.logOut}
+                />
               </div>
             </div>
           </Header>
