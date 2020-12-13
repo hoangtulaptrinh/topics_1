@@ -11,6 +11,7 @@ import AuthorDeveloper from '../../AuthorDeveloper/AuthorDeveloper';
 import Wrapper from './Header.styled';
 
 import EAT_SLEEP_CODE from '../../../assets/img/EAT_SLEEP_CODE.jpg';
+import CUTE from '../../../assets/img/CUTE.jpg';
 
 const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory }) => {
   const history = useHistory();
@@ -227,14 +228,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
           </Popover>
 
           <div className="header">
-            <img
-              src={
-                currentUser.image
-                  ? currentUser.image
-                  : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-              }
-              alt="avatar"
-            />
+            <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
             <div className="info">
               <p className="info__name">{currentUser.name}</p>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>

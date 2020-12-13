@@ -23,35 +23,14 @@ const tailLayout = {
 };
 
 function Users({ updateUser, listUser }) {
-  // const [visible, setVisible] = useState(false);
-  // const [isAddNew, setIsAddNew] = useState(false);
   const [visibleModalAddMoney, setVisibleModalAddMoney] = useState(false);
   const [coin, setCoin] = useState('');
   const [coinAdd, setCoinAdd] = useState(0);
   const [userId, setUserId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  // const typingTimeoutRef = useRef(null);
-
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     visible: false,
-  //     isAddNew: false,
-  //     visibleModalAddMoney: false,
-  //     coin: '',
-  //     coinAdd: 0,
-  //     userId: '',
-  //   };
-  // }
 
   const [form] = Form.useForm();
   const columns = [
-    // {
-    //   align: "center",
-    //   title: "STT",
-    //   dataIndex: "stt",
-    //   key: "stt",
-    // },
     {
       align: 'center',
       title: 'Tên đăng nhập',
@@ -91,13 +70,6 @@ function Users({ updateUser, listUser }) {
 
   const onFinish = () => handleAddCoin();
 
-  // const showModalDetail = () => {
-  //   this.setState({
-  //     visible: true,
-  //     isAddNew: false,
-  //   });
-  // };
-
   const showModalAddMoney = record => {
     setVisibleModalAddMoney(true);
     form.setFieldsValue({
@@ -133,7 +105,12 @@ function Users({ updateUser, listUser }) {
   const dataSourceUser = useMemo(() => {
     if (!listUser.length) return [];
 
-    return listUser.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    return listUser
+      .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .map(item => ({
+        ...item,
+        key: item._id,
+      }));
   }, [listUser, searchTerm]);
 
   return (
@@ -171,7 +148,6 @@ function Users({ updateUser, listUser }) {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     listUser: state.listUsers.listUsers,
   };

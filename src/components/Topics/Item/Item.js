@@ -21,6 +21,8 @@ import Wrapper from './Item.styled';
 import Icon from './Icon';
 import { addComment, careTopics } from '../../../actions';
 
+import CUTE from '../../../assets/img/CUTE.jpg';
+
 const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailTopics }) => {
   const history = useHistory();
   const [showComment, setShowComment] = useState(false);
@@ -86,14 +88,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
   return (
     <Wrapper>
       <div className="header">
-        <img
-          src={
-            currentUser.image
-              ? currentUser.image
-              : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-          }
-          alt="avatar"
-        />
+        <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
         <div
           className="info"
           style={{ cursor: 'pointer' }}
@@ -171,14 +166,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
               style={index === 0 ? { borderTop: 'none' } : { borderTop: '1px solid #e7e9ec' }}
             >
               <div className="header">
-                <img
-                  src={
-                    currentUser.image
-                      ? currentUser.image
-                      : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-                  }
-                  alt="avatar"
-                />
+                <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
                 <div className="info">
                   <p className="left-info">{comment.author_comment.name}</p>
                   <div className="right-info">
@@ -206,14 +194,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
       <form onSubmit={formik.handleSubmit}>
         <div className="write-comment">
           <div className="header">
-            <img
-              src={
-                currentUser.image
-                  ? currentUser.image
-                  : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-              }
-              alt="avatar"
-            />
+            <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
             <div className="info">
               <div className="right-info">
                 <textarea

@@ -16,6 +16,7 @@ import Wrapper from './Info.style';
 
 import DUONG from '../../../assets/img/DUONG.png';
 import DAT from '../../../assets/img/DAT.png';
+import CUTE from '../../../assets/img/CUTE.jpg';
 
 const { Panel } = Collapse;
 
@@ -109,14 +110,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
         <div className="total">
           <div className="left">
             <div className="header">
-              <img
-                src={
-                  currentUser.image
-                    ? currentUser.image
-                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-                }
-                alt="avatar"
-              />
+              <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
               <div className="info">
                 <p className="info__name">{currentUser.name}</p>
                 <p className="info__coin">{`${currentUser.money} Coin`}</p>

@@ -163,7 +163,12 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
   const dataSourceCategory = useMemo(() => {
     if (!listCategory.length) return [];
 
-    return listCategory.filter(course => course.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    return listCategory
+      .filter(course => course.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .map(item => ({
+        ...item,
+        key: item._id,
+      }));
   }, [listCategory, searchTerm]);
 
   return (

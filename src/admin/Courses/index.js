@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
-import { Table, Modal, Button, Checkbox, Space, Input } from 'antd';
+import { Table, Modal, Button, Checkbox, Space, Input, Tooltip } from 'antd';
 import { createNewCourse, createNewLesson, getAllCourses, updateCourse, updateLesson } from '../../actions';
 import { connect } from 'react-redux';
 import { PlusCircleOutlined } from '@ant-design/icons';
@@ -48,6 +48,13 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
       dataIndex: 'intro',
       width: '200px',
       key: 'intro',
+      render: intro => {
+        return (
+          <Tooltip title={intro}>
+            <span>{intro.length > 10 ? `${intro.slice(0, 10)}...` : intro}</span>
+          </Tooltip>
+        );
+      },
     },
     {
       align: 'center',
@@ -340,7 +347,12 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
   const dataSourceCourse = useMemo(() => {
     if (!listCourses.length) return [];
 
-    return listCourses.filter(course => course.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    return listCourses
+      .filter(course => course.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .map(item => ({
+        ...item,
+        key: item._id,
+      }));
   }, [listCourses, searchTerm]);
 
   return (
@@ -351,7 +363,7 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
       <div className="search-user">
         <Input allowClear placeholder="Tìm kiếm theo tên ..." onChange={handleSearchTermChange} value={searchTerm} />
       </div>
-      <Table key={listCourses._id} dataSource={dataSourceCourse} columns={columns} bordered />
+      <Table dataSource={dataSourceCourse} columns={columns} bordered />
       {/* Modal Edit Lesson */}
       <Modal
         title="Sửa bài học"

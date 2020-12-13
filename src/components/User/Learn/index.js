@@ -259,9 +259,9 @@ const HomePage = ({ listCourses, updateProcessCourse }) => {
                 {course.lesson[lesson].question.answer.map((item, index) => (
                   <div className="quiz cursor-pointer" onClick={() => handleQuiz(index)} key={index}>
                     <input type="checkbox" checked={quiz.includes(index)} />
-                    <div className="content">
+                    <div className="content" style={{ display: 'flex', alignItems: 'center' }}>
                       <span>{['A', 'B', 'C', 'D'][index]}.</span>
-                      {item.content}
+                      <div style={{ wordBreak: 'break-all' }}>{item.content}</div>
                     </div>
                   </div>
                 ))}

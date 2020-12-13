@@ -23,9 +23,11 @@ export default styled.div`
     }
 
     .course__intro {
+      height: 100px;
       font-weight: 300;
       font-size: 14px;
       color: #000000;
+      word-break: break-all;
     }
 
     .course__more-info {

@@ -35,7 +35,6 @@ export function* handleBuyThisCourse(action) {
 }
 
 export function* handleAddCoin(action) {
-  console.log(action, 'action');
   try {
     const { id, money } = action.data;
 

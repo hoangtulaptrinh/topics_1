@@ -6,12 +6,13 @@ export default styled.div`
     display: flex;
 
     .left {
-      margin-left: 50px;
+      margin: 50px 0 0 50px;
       flex: 7;
 
       .intro {
         margin-bottom: 50px;
         font-size: 15px;
+        word-break: break-all;
       }
 
       .content {

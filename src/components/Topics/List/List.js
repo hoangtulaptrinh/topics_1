@@ -12,6 +12,8 @@ import RightContent from '../RightContent';
 import Wrapper from './List.styled';
 import Header from '../../User/Header';
 
+import CUTE from '../../../assets/img/CUTE.jpg';
+
 const List = ({ listTopics, fetchTopics, addThread }) => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -50,14 +52,7 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
               <span className="title">Tạo chủ đề thảo luận</span>
 
               <div className="header">
-                <img
-                  src={
-                    currentUser.image
-                      ? currentUser.image
-                      : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-                  }
-                  alt="avatar"
-                />
+                <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
                 <div className="info">
                   <div className="right-info">
                     <textarea

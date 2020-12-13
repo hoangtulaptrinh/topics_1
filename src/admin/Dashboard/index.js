@@ -15,6 +15,9 @@ import Courses from '../Courses/index';
 import Category from '../Category/index';
 import { withRouter } from 'react-router-dom';
 import Statistical from '../Statistical';
+
+import CUTE from '../../assets/img/CUTE.jpg';
+
 const { Header, Content, Sider } = Layout;
 
 class Dashboard extends React.Component {
@@ -106,7 +109,11 @@ class Dashboard extends React.Component {
               <h1>{titleHeader.toUpperCase()}</h1>
               <div>
                 <span className="name-admin"> Hi, {currentUserDetail.name}</span>
-                <img src={currentUserDetail.image} alt="avatar-admin" className="avt-admin" />
+                <img
+                  src={currentUserDetail.image ? currentUserDetail.image : CUTE}
+                  alt="avatar-admin"
+                  className="avt-admin"
+                />
                 <HomeOutlined
                   style={{ margin: '0 5px 0 10px', fontSize: '30px', cursor: 'pointer' }}
                   onClick={() => history.push('/')}

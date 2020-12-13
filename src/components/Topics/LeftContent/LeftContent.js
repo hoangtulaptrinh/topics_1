@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { loadDetailTopics } from '../../../actions';
 import Wrapper from './LeftContent.styled';
 
+import CUTE from '../../../assets/img/CUTE.jpg';
+
 const List = ({ listTopics, loadDetailTopics }) => {
   const history = useHistory();
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -31,14 +33,7 @@ const List = ({ listTopics, loadDetailTopics }) => {
             key={index}
           >
             <div className="header">
-              <img
-                src={
-                  currentUser.image
-                    ? currentUser.image
-                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-                }
-                alt="avatar"
-              />
+              <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
               <div className="info">
                 <p className="left-info">
                   {thread.author.name}
@@ -76,14 +71,7 @@ const List = ({ listTopics, loadDetailTopics }) => {
             key={index}
           >
             <div className="header">
-              <img
-                src={
-                  currentUser.image
-                    ? currentUser.image
-                    : 'https://scr.vn/wp-content/uploads/2020/07/h%C3%ACnh-n%E1%BB%81n-cute-6.jpg'
-                }
-                alt="avatar"
-              />
+              <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
               <div className="info">
                 <p className="left-info">
                   {thread.author.name}
