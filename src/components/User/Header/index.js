@@ -169,7 +169,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
   const hrefTopics = useMemo(() => {
     if (!listCoursesCurrentUser.length) return '/topics';
 
-    return `/topics?idThread${listCoursesCurrentUser[0]._id}`;
+    return `/topics?idThread=${listCoursesCurrentUser[0]._id}`;
   }, [listCoursesCurrentUser]);
 
   const listNavBar = useMemo(
