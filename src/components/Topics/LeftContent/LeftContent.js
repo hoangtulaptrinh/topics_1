@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import { StarOutlined, UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import { Tooltip } from 'antd';
 
 import { loadDetailTopics } from '../../../actions';
 import Wrapper from './LeftContent.styled';
@@ -51,7 +52,11 @@ const List = ({ listTopics, loadDetailTopics }) => {
                     )}
                   </span>
                 </p>
-                <div className="right-info">{thread.content}</div>
+                <div className="right-info">
+                  <Tooltip title={thread.content}>
+                    <span>{thread.content}</span>
+                  </Tooltip>
+                </div>
               </div>
             </div>
           </div>
@@ -63,7 +68,7 @@ const List = ({ listTopics, loadDetailTopics }) => {
 
         {currentUser.care.map((thread, index) => (
           <div
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', border: '1px solid #707070' }}
             onClick={() => {
               history.push(`/topics/detail?idThread=${thread.idThread}&id=${thread.id}`);
               loadDetailTopics();
@@ -89,7 +94,11 @@ const List = ({ listTopics, loadDetailTopics }) => {
                     )}
                   </span>
                 </p>
-                <div className="right-info">{thread.content}</div>
+                <div className="right-info">
+                  <Tooltip title={thread.content}>
+                    <span>{thread.content}</span>
+                  </Tooltip>
+                </div>
               </div>
             </div>
           </div>

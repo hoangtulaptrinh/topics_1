@@ -16,7 +16,10 @@ export default styled.div`
       margin: 5px;
     }
     .right-info {
-      margin-left: 10px;
+      width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -36,6 +39,16 @@ export default styled.div`
 
     .topic {
       cursor: pointer;
+      margin-top: 10px;
+      border: 1px solid #707070;
+      padding-bottom: 5px;
+
+      .right-info {
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     .course {

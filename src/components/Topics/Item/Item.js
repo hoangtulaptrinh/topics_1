@@ -123,7 +123,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
       </div>
 
       <div className="content">
-        <p>{topic.content}</p>
+        <div style={{ wordBreak: 'break-all' }}>{topic.content}</div>
         {topic.image && <img src={topic.image} alt="img-content" />}
         {topic.video && <video src={topic.video} alt="video-content" controls />}
         {topic.outline && (
