@@ -184,6 +184,11 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
 
       createNewCourse(formData);
       setVisibleModalAdd(false);
+      formik.resetForm();
+      const imageForm = document.getElementById('image-input');
+      imageForm && (imageForm.value = '');
+      const outlineForm = document.getElementById('outline-input');
+      outlineForm && (outlineForm.value = '');
     },
   });
 
@@ -294,9 +299,12 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
         data: formData,
       });
       setVisibleModalAddLesson(false);
+      formikLesson.resetForm();
+      const videoForm = document.getElementById('video-input');
+      videoForm && (videoForm.value = '');
     },
   });
-
+  console.log(formikLesson.values);
   // formik edit lesson
 
   const formikEditLesson = useFormik({

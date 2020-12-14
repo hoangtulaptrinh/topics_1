@@ -3,7 +3,7 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 import { COURSES } from '../constants';
 import { getAllCourses, createNewCourse, createNewLesson, updateCourseAPI, updateLessonAPI } from '../api';
 import { getAllCourses as getAll, setAllCourses } from '../actions';
-import { toastSuccess } from '../helper/toastHelper';
+import { toastError, toastSuccess } from '../helper/toastHelper';
 
 export function* handleGetAllCourses() {
   try {
@@ -20,6 +20,7 @@ export function* handleCreateNewCourse(action) {
     yield put(getAll());
     toastSuccess('Thêm khóa học thành công!!!');
   } catch (error) {
+    toastError('Tên khóa học trùng lặp');
     console.log(error.message);
   }
 }
@@ -50,6 +51,7 @@ export function* handleCreateNewLesson(action) {
     yield put(getAll());
     toastSuccess('Thêm bài học thành công!!!');
   } catch (error) {
+    toastError('Tên bài học bị trùng lặp');
     console.log(error.message);
   }
 }
