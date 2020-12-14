@@ -21,6 +21,7 @@ export function* handleBuyThisCourse(action) {
     const data = {
       idCourse: action.data,
     };
+    console.log(data);
     yield call(buyThisCourseService, data); // phải viết call(fetchTopics, idTopics) thay vì call(fetchTopics(idTopics))
     yield put(refreshCurrentUser());
     yield put(reRender());

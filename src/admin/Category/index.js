@@ -210,6 +210,7 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
                 })
               }
             />
+            {category && !category.name ? <div style={{ color: 'red' }}>{'hãy nhập tên danh mục'}</div> : null}
           </Form.Item>
           <Form.Item {...tailLayout} style={{ marginBottom: '12px' }}>
             <Button type="primary" style={{ marginRight: 12, width: '64px' }} onClick={handleAddCategory}>
@@ -241,6 +242,7 @@ const Category = ({ fetchAllCategory, listCategory, listCourses, moveToCourse, u
                 })
               }
             />
+            {category && !category.name ? <div style={{ color: 'red' }}>{'hãy nhập tên danh mục'}</div> : null}
           </Form.Item>
           <Form.Item label="Khóa học">
             <div id="scroll-modal" style={{ paddingRight: 10, maxHeight: 200, overflowX: 'auto' }}>

@@ -157,8 +157,12 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
       name: Yup.string().required('hãy nhập name'),
       intro: Yup.string().required('hãy nhập intro'),
       cost: Yup.string().required('hãy nhập cost'),
-      image: Yup.string().required('hãy nhập image'),
-      outline: Yup.string().required('hãy nhập outline'),
+      image: Yup.string()
+        .nullable()
+        .required('hãy nhập image'),
+      outline: Yup.string()
+        .nullable()
+        .required('hãy nhập outline'),
       references: Yup.string().required('hãy nhập references'),
     }),
     onSubmit: values => {
@@ -186,6 +190,18 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
   // Formik edit course
   const formikEditCourse = useFormik({
     initialValues: { id: null, name: '', intro: '', cost: '', image: null, outline: null, references: '' },
+    validationSchema: Yup.object({
+      name: Yup.string().required('hãy nhập name'),
+      intro: Yup.string().required('hãy nhập intro'),
+      cost: Yup.string().required('hãy nhập cost'),
+      image: Yup.string()
+        .nullable()
+        .required('hãy nhập image'),
+      outline: Yup.string()
+        .nullable()
+        .required('hãy nhập outline'),
+      references: Yup.string().required('hãy nhập references'),
+    }),
     onSubmit: values => {
       const { id, name, intro, cost, image, outline, references } = values;
 
@@ -247,6 +263,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
     validationSchema: Yup.object({
       name: Yup.string().required('hãy nhập name'),
       exercise: Yup.string().required('hãy nhập exercise'),
+      video: Yup.string()
+        .nullable()
+        .required('hãy thêm video'),
     }),
     onSubmit: values => {
       const { name, exercise, video, question } = values;
@@ -308,6 +327,13 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
         ],
       },
     },
+    validationSchema: Yup.object({
+      name: Yup.string().required('hãy nhập name'),
+      exercise: Yup.string().required('hãy nhập exercise'),
+      video: Yup.string()
+        .nullable()
+        .required('hãy thêm video'),
+    }),
     onSubmit: values => {
       const { id, name, exercise, video, question } = values;
 
@@ -380,6 +406,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikEditLesson.handleBlur}
               value={formikEditLesson.values.name}
             />
+            {formikEditLesson.touched.name && formikEditLesson.errors.name ? (
+              <div style={{ color: 'red' }}>{formikEditLesson.errors.name}</div>
+            ) : null}
           </div>
           <br />
           <div>
@@ -390,6 +419,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikEditLesson.handleBlur}
               value={formikEditLesson.values.exercise}
             />
+            {formikEditLesson.touched.exercise && formikEditLesson.errors.exercise ? (
+              <div style={{ color: 'red' }}>{formikEditLesson.errors.exercise}</div>
+            ) : null}
           </div>
           <br />
 
@@ -404,6 +436,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onChange={event => formikEditLesson.setFieldValue('video', event.target.files[0])}
               onBlur={formikEditLesson.handleBlur}
             />
+            {formikEditLesson.touched.video && formikEditLesson.errors.video ? (
+              <div style={{ color: 'red' }}>{formikEditLesson.errors.video}</div>
+            ) : null}
             {!!currentLesson && !!currentLesson.video && (
               <video src={currentLesson.video} width="100%" height="200px" style={{ marginTop: 10 }} controls />
             )}
@@ -628,16 +663,25 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
           <div>
             <label for="name">Tên khóa học:</label>
             <Input name="name" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.name} />
+            {formik.touched.name && formik.errors.name ? (
+              <div style={{ color: 'red' }}>{formik.errors.name}</div>
+            ) : null}
           </div>
           <br />
           <div>
             <label for="intro">Giới thiệu:</label>
             <Input name="intro" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.intro} />
+            {formik.touched.intro && formik.errors.intro ? (
+              <div style={{ color: 'red' }}>{formik.errors.intro}</div>
+            ) : null}
           </div>
           <br />
           <div>
             <label for="cost">Giá:</label>
             <Input name="cost" onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.cost} />
+            {formik.touched.cost && formik.errors.cost ? (
+              <div style={{ color: 'red' }}>{formik.errors.cost}</div>
+            ) : null}
           </div>
           <br />
           <div>
@@ -648,6 +692,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formik.handleBlur}
               value={formik.values.references}
             />
+            {formik.touched.references && formik.errors.references ? (
+              <div style={{ color: 'red' }}>{formik.errors.references}</div>
+            ) : null}
           </div>
           <br />
           <div className="wrapper-field-upload">
@@ -662,6 +709,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onChange={event => formik.setFieldValue('image', event.target.files[0])}
               onBlur={formik.handleBlur}
             />
+            {formik.touched.image && formik.errors.image ? (
+              <div style={{ color: 'red' }}>{formik.errors.image}</div>
+            ) : null}
           </div>
           <br />
           <div className="wrapper-field-upload">
@@ -675,6 +725,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onChange={event => formik.setFieldValue('outline', event.target.files[0])}
               onBlur={formik.handleBlur}
             />
+            {formik.touched.outline && formik.errors.outline ? (
+              <div style={{ color: 'red' }}>{formik.errors.outline}</div>
+            ) : null}
           </div>
           <br />
           <div className="submit-comment">
@@ -704,6 +757,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikEditCourse.handleBlur}
               value={formikEditCourse.values.name}
             />
+            {formikEditCourse.touched.name && formikEditCourse.errors.name ? (
+              <div style={{ color: 'red' }}>{formikEditCourse.errors.name}</div>
+            ) : null}
           </div>
           <br />
           <div>
@@ -714,6 +770,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikEditCourse.handleBlur}
               value={formikEditCourse.values.intro}
             />
+            {formikEditCourse.touched.intro && formikEditCourse.errors.intro ? (
+              <div style={{ color: 'red' }}>{formikEditCourse.errors.intro}</div>
+            ) : null}
           </div>
           <br />
           <div>
@@ -724,6 +783,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikEditCourse.handleBlur}
               value={formikEditCourse.values.cost}
             />
+            {formikEditCourse.touched.cost && formikEditCourse.errors.cost ? (
+              <div style={{ color: 'red' }}>{formikEditCourse.errors.cost}</div>
+            ) : null}
           </div>
           <br />
           <div>
@@ -734,6 +796,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikEditCourse.handleBlur}
               value={formikEditCourse.values.references}
             />
+            {formikEditCourse.touched.references && formikEditCourse.errors.references ? (
+              <div style={{ color: 'red' }}>{formikEditCourse.errors.references}</div>
+            ) : null}
           </div>
           <br />
           <div className="wrapper-field-upload">
@@ -748,6 +813,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onChange={event => formikEditCourse.setFieldValue('image', event.target.files[0])}
               onBlur={formikEditCourse.handleBlur}
             />
+            {formikEditCourse.touched.image && formikEditCourse.errors.image ? (
+              <div style={{ color: 'red' }}>{formikEditCourse.errors.image}</div>
+            ) : null}
           </div>
           <br />
           <div className="wrapper-field-upload">
@@ -761,6 +829,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onChange={event => formikEditCourse.setFieldValue('outline', event.target.files[0])}
               onBlur={formikEditCourse.handleBlur}
             />
+            {formikEditCourse.touched.outline && formikEditCourse.errors.outline ? (
+              <div style={{ color: 'red' }}>{formikEditCourse.errors.outline}</div>
+            ) : null}
           </div>
           <br />
           <div className="submit-comment">
@@ -790,6 +861,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikLesson.handleBlur}
               value={formikLesson.values.name}
             />
+            {formikLesson.touched.name && formikLesson.errors.name ? (
+              <div style={{ color: 'red' }}>{formikLesson.errors.name}</div>
+            ) : null}
           </div>
           <br />
           <div>
@@ -800,6 +874,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onBlur={formikLesson.handleBlur}
               value={formikLesson.values.exercise}
             />
+            {formikLesson.touched.exercise && formikLesson.errors.exercise ? (
+              <div style={{ color: 'red' }}>{formikLesson.errors.exercise}</div>
+            ) : null}
           </div>
           <br />
 
@@ -814,6 +891,9 @@ const Courses = ({ listCourses, getAllCourses, createNewCourse, createNewLesson,
               onChange={event => formikLesson.setFieldValue('video', event.target.files[0])}
               onBlur={formikLesson.handleBlur}
             />
+            {formikLesson.touched.video && formikLesson.errors.video ? (
+              <div style={{ color: 'red' }}>{formikLesson.errors.video}</div>
+            ) : null}
           </div>
           <br />
 

@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { AiFillClockCircle } from 'react-icons/ai';
 import { BookFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { FaCheck, FaLaptopCode } from 'react-icons/fa';
