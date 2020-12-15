@@ -9,8 +9,8 @@ export default styled.div`
       display: flex;
       flex-direction: column;
 
-      margin-left: 50px;
-      width: 300px;
+      margin-left: 20px;
+      width: 200px;
 
       p {
         font-size: 16px;

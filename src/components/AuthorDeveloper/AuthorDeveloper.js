@@ -13,10 +13,9 @@ const AuthorDeveloper = () => {
           <img src={DUONG} alt="" />
         </div>
         <div className="text-container">
-          <div className="content" style={{ marginTop: 30 }}>
-            <h3 style={{ color: 'white' }}>ADMIN</h3>
+          <div className="content" style={{ marginTop: 15 }}>
             <h3 style={{ color: 'white' }}>Đỗ Tùng Dương</h3>
-            <h4 style={{ color: 'white' }}>Fullstack JavaScript</h4>
+            <h4 style={{ color: 'white' }}>Mearn Stack Developer</h4>
             <h4 style={{ color: 'white' }}>FPT Software</h4>
           </div>
         </div>
@@ -26,8 +25,7 @@ const AuthorDeveloper = () => {
           <img src={DAT} alt="author_dat" />
         </div>
         <div className="text-container">
-          <div className="content" style={{ marginTop: 30 }}>
-            <h3 style={{ color: 'white' }}>SUB ADMIN</h3>
+          <div className="content" style={{ marginTop: 15 }}>
             <h3 style={{ color: 'white' }}>Nguyễn Tiến Đạt</h3>
             <h4 style={{ color: 'white' }}>ReactJS Developer </h4>
             <h4 style={{ color: 'white' }}>Fabbi JSC</h4>

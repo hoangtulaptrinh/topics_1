@@ -234,7 +234,7 @@ body::-webkit-scrollbar-thumb {
   cursor: pointer;
   font-size: 40px;
   position: fixed;
-  top: 90vh;
+  top: 85vh;
   right: 50px;
   color: #006fff;
 }
