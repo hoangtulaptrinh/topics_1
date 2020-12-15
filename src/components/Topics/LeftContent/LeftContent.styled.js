@@ -10,7 +10,8 @@ export default styled.div`
     margin: 15px;
     font-size: 15px;
     img {
-      max-height: 50px;
+      height: 36px;
+      width: 36px;
     }
     .left-info {
       margin: 5px;

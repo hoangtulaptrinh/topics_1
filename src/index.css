@@ -262,6 +262,7 @@ body::-webkit-scrollbar-thumb {
   height: 342px;
 }
 .content-chat > .messenger {
+  max-width: 270px;
   margin-top: 10px;
   border: solid 0.5px #70707054;
   padding: 5px;

@@ -24,8 +24,8 @@ export default styled.div`
     font-weight: 500;
 
     img {
-      height: 40px;
-      width: 43px;
+      height: 36px;
+      width: 36px;
       border-radius: 50%;
     }
 

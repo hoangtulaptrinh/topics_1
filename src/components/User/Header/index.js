@@ -197,7 +197,13 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
           <img alt="logo" src={EAT_SLEEP_CODE} onClick={() => history.push('/')} />
           <div className="nav-bar">
             {listNavBar.map((item, index) => (
-              <p className="nav-bar__item" key={index} onClick={() => history.push(item.href)}>
+              <p
+                className="nav-bar__item"
+                key={index}
+                onClick={() => {
+                  history.push(item.href);
+                }}
+              >
                 {item.title}
               </p>
             ))}
@@ -220,7 +226,7 @@ const Header = ({ listCourses, refreshCurrentUser, getAllCourses, getAllCategory
             <p
               className="nav-bar__item1"
               style={{
-                marginRight: isAdmin ? '0' : '25px',
+                marginRight: isAdmin ? '35px' : '60px',
               }}
             >
               Người Sáng Lập

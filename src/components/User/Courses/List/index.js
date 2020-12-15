@@ -87,7 +87,7 @@ const HomePage = ({ listUsers, listCategorys, listCourses }) => {
         <div className="right">
           {!!showListCourses.length &&
             showListCourses
-              .filter(course => course.name.includes(textSearch))
+              .filter(course => course.name.toLowerCase().includes(textSearch.toLowerCase()))
               .map((course, index) => <CourseItem course={course} key={index} />)}
         </div>
       </div>

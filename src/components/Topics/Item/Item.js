@@ -23,7 +23,7 @@ import { addComment, careTopics } from '../../../actions';
 
 import CUTE from '../../../assets/img/CUTE.jpg';
 
-const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailTopics }) => {
+const Item = ({ listUsers, topic, indexTopic, addComment, careTopics, isDetail, loadDetailTopics }) => {
   const history = useHistory();
   const [showComment, setShowComment] = useState(false);
 
@@ -85,10 +85,19 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
     return `${diffSecondUpdate} giây trước`;
   }, []);
 
+  const imageUser = useCallback(
+    id => {
+      if (!listUsers || !listUsers.listUsers.length) return null;
+
+      return listUsers.listUsers.find(user => user._id === id).image;
+    },
+    [listUsers],
+  );
+
   return (
     <Wrapper>
       <div className="header">
-        <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
+        <img src={imageUser(topic.author.id) || CUTE} alt="avatar" />
         <div
           className="info"
           style={{ cursor: 'pointer' }}
@@ -123,7 +132,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
       </div>
 
       <div className="content">
-        <div style={{ wordBreak: 'break-all' }}>{topic.content}</div>
+        <div style={{ wordBreak: 'break-word' }}>{topic.content}</div>
         {topic.image && <img src={topic.image} alt="img-content" />}
         {topic.video && <video src={topic.video} alt="video-content" controls />}
         {topic.outline && (
@@ -166,7 +175,7 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
               style={index === 0 ? { borderTop: 'none' } : { borderTop: '1px solid #e7e9ec' }}
             >
               <div className="header">
-                <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
+                <img src={imageUser(comment.author_comment.id) || CUTE} alt="avatar" />
                 <div className="info">
                   <p className="left-info">{comment.author_comment.name}</p>
                   <div className="right-info">
@@ -269,8 +278,8 @@ const Item = ({ topic, indexTopic, addComment, careTopics, isDetail, loadDetailT
   );
 };
 
-const mapStatetoProps = ({ reRender }) => {
-  return { reRender };
+const mapStatetoProps = ({ reRender, listUsers }) => {
+  return { reRender, listUsers };
 };
 const mapDispatchToProps = dispatch => {
   return {

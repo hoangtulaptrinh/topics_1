@@ -52,7 +52,7 @@ const List = ({ listTopics, fetchTopics, addThread }) => {
               <span className="title">Tạo chủ đề thảo luận</span>
 
               <div className="header">
-                <img src={currentUser.image ? currentUser.image : CUTE} alt="avatar" />
+                <img src={currentUser && currentUser.image ? currentUser.image : CUTE} alt="avatar" />
                 <div className="info">
                   <div className="right-info">
                     <textarea

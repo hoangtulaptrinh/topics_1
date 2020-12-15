@@ -415,7 +415,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                       width: 500,
                       type: 'pie',
                     },
-                    labels: ['Tổng Số Khóa Học Trong Website', 'Tổng Số Khóa Học Chưa Mua'],
+                    labels: ['Tổng Số Khóa Học Đã Mua', 'Tổng Số Khóa Học Chưa Mua'],
                     responsive: [
                       {
                         breakpoint: 480,
@@ -430,7 +430,7 @@ const HomePage = ({ reRender, listCourses, updateCurrentUser, refreshCurrentUser
                       },
                     ],
                   }}
-                  series={[listCourses.length, listCoursesCurrentUser.length]}
+                  series={[listCoursesCurrentUser.length, listCourses.length - listCoursesCurrentUser.length]}
                   type="pie"
                   width={500}
                 />
